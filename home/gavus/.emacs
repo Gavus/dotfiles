@@ -82,14 +82,15 @@
   (projectile-mode +1)
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
 
-
 ;; Various settings
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (show-paren-mode t)
+(global-linum-mode t)
 (setq inhibit-startup-screen t)
 (load-theme 'tango-dark)
 ;;; End
+
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
