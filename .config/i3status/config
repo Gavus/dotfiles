@@ -1,0 +1,54 @@
+# i3status configuration file.
+# see "man i3status" for documentation.
+
+# It is important that this file is edited as UTF-8.
+# The following line should contain a sharp s:
+# ß
+# If the above line is not correctly displayed, fix your editor first!
+
+general {
+   colors = true
+   interval = 5
+}
+
+order += "window_title"
+order += "volume_status"
+order += "backlight"
+order += "apt_updates"
+order += "disk /"
+order += "wifi"
+order += "load"
+order += "battery_level"
+order += "tztime local"
+
+volume_status {
+   format = "♪ {percentage}%"
+}
+
+apt_updates {
+   format = "[\?not_zero Updates: {apt}]"
+}
+
+backlight {
+   format ="☀ {level}%"
+}
+
+wifi {
+   format = "Wifi: {signal_percent} {ssid} {ip}|Wifi: down"
+}
+
+battery_level {
+   format = "⚡ {percent}%"
+}
+
+tztime local {
+   format = "%d/%m-%y %H:%M:%S"
+}
+
+load {
+   format = "Load: %1min"
+}
+
+disk "/" {
+   format = "Disk: %avail"
+}
