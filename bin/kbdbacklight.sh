@@ -62,7 +62,6 @@ backlight_change()
             return 1
         else
             backlight_set "${value}"
-            notify-send -t 800 "Keyboard brightness set to ${value}"
         fi
         ;;
 
@@ -72,7 +71,6 @@ backlight_change()
         if test "${current}" -lt "${max}" ; then
             value=$(( ${current} + 1 ))
             backlight_set "${value}"
-            notify-send -t 800 "Keyboard brightness set to ${value}"
         fi
         ;;
 
@@ -81,7 +79,6 @@ backlight_change()
         if test "${current}" -gt 0 ; then
             value=$(( ${current}  - 1 ))
             backlight_set "${value}"
-            notify-send -t 800 "Keyboard brightness set to ${value}"
         fi
         ;;
 
@@ -96,7 +93,6 @@ backlight_change()
 
 if test $# -eq 0 ; then
     current_brightness=$( backlight_get )
-    notify-send -t 800 "Keyboard brightness is ${current_brightness}"
 else
     # Handle multiple backlight changes, e.g.:
     #   backlight.sh up up down down up

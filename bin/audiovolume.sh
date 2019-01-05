@@ -14,23 +14,24 @@ volume_change()
         #pactl set-sink-volume 0 +5%
         amixer -D pulse sset Master 5%+
         value=$(amixer -D pulse get Master | grep "Front Left:" | awk '{print $5}')
-        notify-send -t 800 "Volume set to ${value}"
+#        notify-send -t 800 "Volume set to ${value}"
         ;;
 
     [dD][oO][wW][nN])
         # pactl set-sink-volume 0 -5%
         amixer -D pulse sset Master 5%-
         value=$(amixer -D pulse get Master | grep "Front Left:" | awk '{print $5}')
-        notify-send -t 800 "Volume set to ${value}"
+#        notify-send -t 800 "Volume set to ${value}"
         ;;
     [mM][uU][tT][eE])
         # pactl set-sink-mute 0 toggle
         amixer -D pulse set Master 1+ toggle
-        notify-send -t 800 "Volume mute toggled"
+#        notify-send -t 800 "Volume mute toggled"
         ;;
     esac
 }
 
 for change in "$@" ; do
     volume_change "${change}"
+    killall -s USR1 py3status
 done
