@@ -33,7 +33,8 @@ window_title {
 }
 
 wifi {
-   format = "W:{signal_percent} {ip}|W: down"
+   #format = "W:{signal_percent} {ip}|W: down"
+   # format += "${ip}
 }
 
 tztime local {
