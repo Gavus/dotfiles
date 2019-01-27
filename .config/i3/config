@@ -12,17 +12,6 @@ client.urgent           #2f343a #900000 #ffffff #900000   #900000
 client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
 client.background       #ffffff
 
-
-# bar {
-#    colors {
-#       background #00000055
-#    }
-
-#    i3bar_command i3bar -t
-#    status_command py3status
-#    position top
-# }
-
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
@@ -71,9 +60,6 @@ bindsym $mod+space focus mode_toggle
 # focus the parent container
 bindsym $mod+a focus parent
 
-# focus the child container
-#bindsym $mod+d focus child
-
 # switch to workspace
 bindsym $mod+1 workspace 1
 bindsym $mod+2 workspace 2
@@ -105,16 +91,6 @@ bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
-mode "launcher" {
-   bindsym f exec "firefox" && mode "default"
-   bindsym e exec "emacsclient -a '' -c"
-   bindsym t exec "i3-sensible-terminal"
-   bindsym Return mode "default"
-   bindsym Escape mode "default"
-}
-bindsym $mod+p mode "launcher"
-
-
 # resize window (you can also use the mouse for that)
 mode "resize" {
    # These bindings trigger as soon as you enter the resize mode
@@ -130,11 +106,133 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
+#
 # Gaps
+#
 for_window [class="^.*"] border pixel 0
-gaps outer -10
+gaps outer 0
 gaps inner 30
 smart_gaps on
+
+set $mode_gaps Gaps: (o)uter, (i)nner, (h)orizontal, (v)ertical, (t)op, (r)ight, (b)ottom, (l)eft
+set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
+set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
+set $mode_gaps_horiz Horizontal Gaps: +|-|0 (local), Shift + +|-|0 (global)
+set $mode_gaps_verti Vertical Gaps: +|-|0 (local), Shift + +|-|0 (global)
+set $mode_gaps_top Top Gaps: +|-|0 (local), Shift + +|-|0 (global)
+set $mode_gaps_right Right Gaps: +|-|0 (local), Shift + +|-|0 (global)
+set $mode_gaps_bottom Bottom Gaps: +|-|0 (local), Shift + +|-|0 (global)
+set $mode_gaps_left Left Gaps: +|-|0 (local), Shift + +|-|0 (global)
+
+bindsym $mod+Shift+g mode "$mode_gaps"
+mode "$mode_gaps" {
+        bindsym o      mode "$mode_gaps_outer"
+        bindsym i      mode "$mode_gaps_inner"
+        bindsym h      mode "$mode_gaps_horiz"
+        bindsym v      mode "$mode_gaps_verti"
+        bindsym t      mode "$mode_gaps_top"
+        bindsym r      mode "$mode_gaps_right"
+        bindsym b      mode "$mode_gaps_bottom"
+        bindsym l      mode "$mode_gaps_left"
+        bindsym Return mode "$mode_gaps"
+        bindsym Escape mode "default"
+}
+mode "$mode_gaps_outer" {
+        bindsym plus  gaps outer current plus 5
+        bindsym minus gaps outer current minus 5
+        bindsym 0     gaps outer current set 0
+
+        bindsym Shift+plus  gaps outer all plus 5
+        bindsym Shift+minus gaps outer all minus 5
+        bindsym Shift+0     gaps outer all set 0
+
+        bindsym Return mode "$mode_gaps"
+        bindsym Escape mode "default"
+}
+mode "$mode_gaps_inner" {
+        bindsym plus  gaps inner current plus 5
+        bindsym minus gaps inner current minus 5
+        bindsym 0     gaps inner current set 0
+
+        bindsym Shift+plus  gaps inner all plus 5
+        bindsym Shift+minus gaps inner all minus 5
+        bindsym Shift+0     gaps inner all set 0
+
+        bindsym Return mode "$mode_gaps"
+        bindsym Escape mode "default"
+}
+mode "$mode_gaps_horiz" {
+        bindsym plus  gaps horizontal current plus 5
+        bindsym minus gaps horizontal current minus 5
+        bindsym 0     gaps horizontal current set 0
+
+        bindsym Shift+plus  gaps horizontal all plus 5
+        bindsym Shift+minus gaps horizontal all minus 5
+        bindsym Shift+0     gaps horizontal all set 0
+
+        bindsym Return mode "$mode_gaps"
+        bindsym Escape mode "default"
+}
+mode "$mode_gaps_verti" {
+        bindsym plus  gaps vertical current plus 5
+        bindsym minus gaps vertical current minus 5
+        bindsym 0     gaps vertical current set 0
+
+        bindsym Shift+plus  gaps vertical all plus 5
+        bindsym Shift+minus gaps vertical all minus 5
+        bindsym Shift+0     gaps vertical all set 0
+
+        bindsym Return mode "$mode_gaps"
+        bindsym Escape mode "default"
+}
+mode "$mode_gaps_top" {
+        bindsym plus  gaps top current plus 5
+        bindsym minus gaps top current minus 5
+        bindsym 0     gaps top current set 0
+
+        bindsym Shift+plus  gaps top all plus 5
+        bindsym Shift+minus gaps top all minus 5
+        bindsym Shift+0     gaps top all set 0
+
+        bindsym Return mode "$mode_gaps"
+        bindsym Escape mode "default"
+}
+mode "$mode_gaps_right" {
+        bindsym plus  gaps right current plus 5
+        bindsym minus gaps right current minus 5
+        bindsym 0     gaps right current set 0
+
+        bindsym Shift+plus  gaps right all plus 5
+        bindsym Shift+minus gaps right all minus 5
+        bindsym Shift+0     gaps right all set 0
+
+        bindsym Return mode "$mode_gaps"
+        bindsym Escape mode "default"
+}
+mode "$mode_gaps_bottom" {
+        bindsym plus  gaps bottom current plus 5
+        bindsym minus gaps bottom current minus 5
+        bindsym 0     gaps bottom current set 0
+
+        bindsym Shift+plus  gaps bottom all plus 5
+        bindsym Shift+minus gaps bottom all minus 5
+        bindsym Shift+0     gaps bottom all set 0
+
+        bindsym Return mode "$mode_gaps"
+        bindsym Escape mode "default"
+}
+mode "$mode_gaps_left" {
+        bindsym plus  gaps left current plus 5
+        bindsym minus gaps left current minus 5
+        bindsym 0     gaps left current set 0
+
+        bindsym Shift+plus  gaps left all plus 5
+        bindsym Shift+minus gaps left all minus 5
+        bindsym Shift+0     gaps left all set 0
+
+        bindsym Return mode "$mode_gaps"
+        bindsym Escape mode "default"
+}
 
 # Pulse Audio controls
 bindsym XF86AudioRaiseVolume  exec "amixer -D pulse sset Master 5%+ unmute"
@@ -150,10 +248,10 @@ bindsym XF86KbdBrightnessUp   exec "~/bin/kbdbacklight.sh up"
 bindsym XF86KbdBrightnessDown exec "~/bin/kbdbacklight.sh down"
 
 # Touchpad controls
-bindsym XF86TouchpadToggle exec ~/bin/touchpad.sh
+bindsym XF86TouchpadToggle exec "~/bin/touchpad.sh"
 
 # i3lock-fancy
-bindsym $mod+Shift+x exec i3lock-fancy
+bindsym $mod+Shift+x exec "i3lock-fancy"
 
 # polybar
  exec_always --no-startup-id "~/.config/polybar/launch.sh"
@@ -162,17 +260,26 @@ bindsym $mod+Shift+x exec i3lock-fancy
 exec_always --no-startup-id "xrandr --output eDP1 --mode 1920x1080 --rate 59.95"
 
 # compton- transparency
-exec --no-startup-id "compton -c -f"
+exec --no-startup-id "compton -c -f -z"
 
 # Dropbox
 exec_always --no-startup-id "dropbox start"
 
-# Nitrogen
 # Ubuntu login screen can be edited at #lockDialogGroup in file /usr/share/gnome-shell/theme/ubuntu.css
-exec --no-startup-id "nitrogen --restore"
+# Replace #lockDialogGroup with: 
+# #lockDialogGroup {
+#   background: #2c001e url(file:///home/gavus/Pictures/005.png);
+#   background-repeat: no-repeat;
+#   background-size: cover;
+#   background-position: center;
+# }
+
+# feh, background image
+exec_always feh --bg-scale ~/Pictures/005.jpeg
+
 # exec --no-startup-id "i3-msg 'workspace 1; append_layout ~/.config/i3/workspace-1.json'"
-exec --no-startup-id "firefox"
-exec --no-startup-id "emacs"
+exec --no-startup-id "qutebrowser"
+exec --no-startup-id "emacsclient -c -a ''"
 
 # network manager
 exec --no-startup-id "nm-applet"
