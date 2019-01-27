@@ -1,7 +1,8 @@
 [bar/bar]
 
 font-0 = "FontAwesome:pixelsize=12;2.25"
-font-1 = "DejaVu Sans Mono:pixelsize=12;2.25"
+font-1 = "Source Code Pro:pixelsize=12;2.25"
+font-2 = "DejaVu Sans Mono:pixelsize=12;2.25"
 
 # scroll-up = i3wm-wsnext
 # scroll-down = i3wm-wsprev
