@@ -14,6 +14,9 @@ height = 25
 
 radius = 0.0
 
+tray-position = right
+tra-padding = 2
+
 padding-left = 1
 padding-right = 1
 module-margin = 2
@@ -58,7 +61,7 @@ type = internal/xbacklight
 card = intel_backlight
 output = eDP1
 enable-scroll = true
-format = " <label>"
+format = " <label>"
 
 [module/battery]
 type = internal/battery
