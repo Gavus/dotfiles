@@ -25,19 +25,39 @@ modules-left = i3 title
 modules-center = date
 modules-right = alsa xbacklight network cpu memory filesystem battery
 
-background = #292b2e
-foreground = #7590db
+
+; Solarized theme
+[colors]
+base03  = #002b36
+base02  = #073642
+base01  = #586e75
+base00  = #657b83
+base0   = #839496
+base1   = #93a1a1
+base2   = #eee8d5
+base3   = #fdf6e3
+yellow  = #b58900
+orange  = #cb4b16
+red     = #dc322f
+magenta = #d33682
+violet  = #6c71c4
+blue    = #268bd2
+cyan    = #2aa198
+green   = #859900
+
+background = ${colors.base03}
+foreground = ${colors.violet}
 
 [module/i3]
 strip-wsnumbers = true
 type = internal/i3
 
-label-focused-foreground   = #292b2e
-label-focused-background   = #7590db
-label-unfocused-background = #292b2e
-label-unfocused-foreground = #7590db
-label-urgent-background    = #dbb5ab
-label-urgent-foreground    = #292b2e
+label-focused-foreground   = ${colors.base03}
+label-focused-background   = ${colors.violet}
+label-unfocused-background = ${colors.base03}
+label-unfocused-foreground = ${colors.violet}
+label-urgent-background    = ${colors.magenta}
+label-urgent-foreground    = ${colors.base03}
 
 label-focused-padding   = 3
 label-unfocused-padding = 3
@@ -49,7 +69,7 @@ type = internal/date
 interval = 0.5
 date = "%A, %d %B %Y %H:%M:%S"
 # label-background = #97c9dc
-# label-foreground = #292b2e
+# label-foreground = ${colors.base03}
 label-padding = 4
 
 [module/title]
