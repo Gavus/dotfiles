@@ -23,9 +23,9 @@ set $green     #859900
 
 # Theme colors
 # class                 border  backgr. text     indicator child_border
-client.focused          $base03 $base03 $magenta $violet   $green
-client.focused_inactive $base03 $base03 $violet  $base03   $base03
-client.unfocused        $base03 $base03 $violet  $base03   $base03
+client.focused          $base03 $base03 $green   $green    $green
+client.focused_inactive $base03 $base03 $base01  $base03   $base03
+client.unfocused        $base03 $base03 $base01  $base03   $base03
 client.urgent           $base03 $red    $base3   $red      $red
 #client.placeholder      $base03 $base03 $base3 $base03   $base03
 client.background       $base3
@@ -41,8 +41,8 @@ bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
 set $rofi_theme /usr/share/rofi/themes/solarized.rasi
-bindsym $mod+d       exec "rofi -theme $rofi_theme -show drun"
-bindsym $mod+Shift+d exec "rofi -theme $rofi_theme -show run"
+bindsym $mod+d       exec "rofi -theme $rofi_theme -show drun -font 'Source Code Pro Display 14'"
+bindsym $mod+Shift+d exec "rofi -theme $rofi_theme -show run  -font 'Source Code Pro Display 14'"
 
 # change focus
 bindsym $mod+h focus left
@@ -128,7 +128,7 @@ bindsym $mod+r mode "resize"
 #
 # Gaps
 #
-for_window [class="^.*"] border pixel 10
+for_window [class="^.*"] border pixel 4
 gaps outer 0
 gaps inner 25
 smart_gaps on
