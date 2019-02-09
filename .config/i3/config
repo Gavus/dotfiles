@@ -279,7 +279,7 @@ bindsym $mod+Shift+x exec "i3lock-fancy"
 exec_always --no-startup-id "xrandr --output eDP1 --mode 1920x1080 --rate 59.95"
 
 # compton- transparency
-exec --no-startup-id "compton -c -f -z"
+exec --no-startup-id "compton -c -z -C"
 
 # Dropbox
 exec_always --no-startup-id "dropbox start"
@@ -294,11 +294,7 @@ exec_always --no-startup-id "dropbox start"
 # }
 
 # feh, background image
-exec_always feh --bg-scale ~/Pictures/004.jpg
-
-# exec --no-startup-id "i3-msg 'workspace 1; append_layout ~/.config/i3/workspace-1.json'"
-exec --no-startup-id "qutebrowser"
-exec --no-startup-id "emacsclient -c -a ''"
+exec_always feh --bg-scale ~/Pictures/006.png
 
 # network manager
 exec --no-startup-id "nm-applet"
