@@ -1,16 +1,36 @@
 set $mod Mod4
 
 # Fonts
-font pango:Source Code Pro 12
+font pango:Source Code Pro 10
+
+
+# Solarized theme
+set $base03    #002b36
+set $base02    #073642
+set $base01    #586e75
+set $base00    #657b83
+set $base0     #839496
+set $base1     #93a1a1
+set $base2     #eee8d5
+set $base3     #fdf6e3
+set $yellow    #b58900
+set $orange    #cb4b16
+set $red       #dc322f
+set $magenta   #d33682
+set $violet    #6c71c4
+set $blue      #268bd2
+set $cyan      #2aa198
+set $green     #859900
+
 
 # Theme colors
-# class                 border  backgr. text    indicator child_border
-client.focused          #7590db #7590db #292b2e #7590db   #7590db 
-client.focused_inactive #292b2e #292b2e #7590db #292b2e   #292b2e
-client.unfocused        #292b2e #292b2e #7590db #292b2e   #292b2e
-client.urgent           #2f343a #900000 #ffffff #900000   #900000
-client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
-client.background       #ffffff
+# class                 border  backgr. text     indicator child_border
+client.focused          $base03 $base03 $magenta $violet   $green
+client.focused_inactive $base03 $base03 $violet  $base03   $base03
+client.unfocused        $base03 $base03 $violet  $base03   $base03
+client.urgent           $base03 $red    $base3   $red      $red
+#client.placeholder      $base03 $base03 $base3 $base03   $base03
+client.background       $base3
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -109,9 +129,9 @@ bindsym $mod+r mode "resize"
 #
 # Gaps
 #
-for_window [class="^.*"] border pixel 1
+for_window [class="^.*"] border pixel 10
 gaps outer 0
-gaps inner 30
+gaps inner 25
 smart_gaps on
 
 set $mode_gaps Gaps: (o)uter, (i)nner, (h)orizontal, (v)ertical, (t)op, (r)ight, (b)ottom, (l)eft
@@ -275,7 +295,7 @@ exec_always --no-startup-id "dropbox start"
 # }
 
 # feh, background image
-exec_always feh --bg-scale ~/Pictures/005.jpeg
+exec_always feh --bg-scale ~/Pictures/004.jpg
 
 # exec --no-startup-id "i3-msg 'workspace 1; append_layout ~/.config/i3/workspace-1.json'"
 exec --no-startup-id "qutebrowser"

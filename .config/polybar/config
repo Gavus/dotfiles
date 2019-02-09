@@ -11,7 +11,7 @@ fixed-center = true
 
 width = 100%
 height = 25
-
+bottom = true
 radius = 0.0
 
 tray-position = right
@@ -97,7 +97,7 @@ type = internal/fs
 ; Mountpoints to display
 mount-0 = /
 format-mounted = "<label-mounted>"
-label-mounted = " %free%"
+label-mounted = " spacemacs %free%"
 ; Seconds to sleep between updates
 ; Default: 30
 interval = 10
