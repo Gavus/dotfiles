@@ -49,8 +49,8 @@ foreground = ${color.base2}
 strip-wsnumbers = true
 type = internal/i3
 
-label-focused-foreground   = ${color.base03}
-label-focused-background   = ${color.base2}
+label-focused-foreground   = ${color.base2}
+label-focused-background   = ${color.base02}
 label-unfocused-background = ${color.base03}
 label-unfocused-foreground = ${color.base2}
 label-urgent-background    = ${color.magenta}
@@ -113,7 +113,7 @@ type = internal/fs
 ; Mountpoints to display
 mount-0 = /
 format-mounted = "<label-mounted>"
-label-mounted = " spacemacs %free%"
+label-mounted = " %free%"
 ; Seconds to sleep between updates
 ; Default: 30
 interval = 10
@@ -127,4 +127,4 @@ spacing = 4
 [module/memory]
 type = internal/memory
 format = " <label>"
-label = "%gb_used%"
+label = "%gb_used%/%gb_total%"
