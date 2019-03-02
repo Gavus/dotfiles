@@ -3,10 +3,10 @@
 ##   qute://help/configuring.html
 ##   qute://help/settings.html
 
-c.content.user_stylesheets = [
-    'solarized-dark.css',
-    'custom_solarized.css'
-]
+# c.content.user_stylesheets = [
+#     'solarized-dark.css',
+#     'custom_solarized.css'
+# ]
 
 ## This is here so configs done via the GUI are still loaded.
 ## Remove it to not load settings done via the GUI.

@@ -40,19 +40,19 @@ module-margin = 2
 
 modules-left = i3 title
 modules-center = date
-modules-right = alsa xbacklight network cpu memory filesystem battery
+modules-right = alsa xbacklight network xkeyboard cpu memory filesystem battery
 
 background = ${color.base03}
-foreground = ${color.base2}
+foreground = ${color.base1}
 
 [module/i3]
 strip-wsnumbers = true
 type = internal/i3
 
-label-focused-foreground   = ${color.base2}
+label-focused-foreground   = ${color.base1}
 label-focused-background   = ${color.base02}
 label-unfocused-background = ${color.base03}
-label-unfocused-foreground = ${color.base2}
+label-unfocused-foreground = ${color.base1}
 label-urgent-background    = ${color.magenta}
 label-urgent-foreground    = ${color.base03}
 
@@ -69,8 +69,7 @@ label-padding = 4
 
 [module/title]
 type = internal/xwindow
-label-foreground = ${color.green}
-label-maxlen = 50
+label-maxlen = 70
 
 [module/xbacklight]
 type = internal/xbacklight
@@ -124,7 +123,11 @@ fixed-values = true
 ; Default: 2
 spacing = 4
 
+[module/xkeyboard]
+type = internal/xkeyboard
+format =  <label-layout> <label-indicator>
+
 [module/memory]
 type = internal/memory
 format = " <label>"
-label = "%gb_used%/%gb_total%"
+label = "%gb_used%"

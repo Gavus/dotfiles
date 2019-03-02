@@ -27,7 +27,7 @@ client.focused          $base03 $base03 $green   $base02   $base02
 client.focused_inactive $base03 $base03 $base01  $base03   $base03
 client.unfocused        $base03 $base03 $base01  $base03   $base03
 client.urgent           $base03 $red    $base3   $red      $red
-#client.placeholder      $base03 $base03 $base3 $base03   $base03
+client.placeholder      $base03 $base03 $base3 $base03   $base03
 client.background       $base3
 
 # Use Mouse+$mod to drag floating windows to their wanted position
@@ -298,3 +298,7 @@ exec_always feh --bg-scale ~/Pictures/006.png
 
 # network manager
 exec --no-startup-id "nm-applet"
+
+# keyboard layouts
+exec setxkbmap -option 'grp:ctrl_alt_toggle'
+exec setxkbmap -layout se,se -variant ,dvorak
