@@ -253,6 +253,21 @@ mode "$mode_gaps_left" {
         bindsym Escape mode "default"
 }
 
+# Tree save and restore
+set $mode_tree Tree mode: (s)ave (l)oad
+set $mode_tree_load Tree load: (t)est
+bindsym $mod+Shift+t mode "$mode_tree"
+mode "$mode_tree" {
+   bindsym s      exec "i3-save-tree > ~/.config/i3/tree.json"
+   bindsym l      mode "$mode_tree_load"
+   bindsym Escape mode "default"
+}
+
+mode "$mode_tree_load" {
+   bindsym t exec "i3-msg append_layout ~/.config/i3/test.json"
+   bindsym Escape mode "default"
+}
+
 # Pulse Audio controls
 bindsym XF86AudioRaiseVolume  exec "amixer -D pulse sset Master 5%+ unmute"
 bindsym XF86AudioLowerVolume  exec "amixer -D pulse sset Master 5%- unmute"
@@ -271,6 +286,7 @@ bindsym XF86TouchpadToggle exec "~/bin/touchpad.sh"
 
 # i3lock-fancy
 bindsym $mod+Shift+x exec "i3lock-fancy"
+
 
 # polybar
  exec_always --no-startup-id "~/.config/polybar/launch.sh"
@@ -300,5 +316,11 @@ exec_always feh --bg-scale ~/Pictures/006.png
 exec --no-startup-id "nm-applet"
 
 # keyboard layouts
-exec setxkbmap -option 'grp:ctrl_alt_toggle'
-exec setxkbmap -layout se,se -variant ,dvorak
+exec_always setxkbmap -option 'grp:ctrl_alt_toggle'
+exec_always setxkbmap -layout se,se -variant ,dvorak
+
+# HDMI setup
+bindsym $mod+Alt+h exec "xrandr --output HDMI1 --mode 1920x1080"
+
+# Emacs daemon
+exec "emacs --daemon"
