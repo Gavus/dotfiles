@@ -4,11 +4,11 @@ set $mod Mod4
 # Fonts
 font pango:Source Code Pro 10
 
-set $focused   #98971a
-set $unfocused #282828
-set $urgent    #cc241d
-set $foreground #ebdbb2
-set $background #282828
+# set $focused   #98971a
+# set $unfocused #282828
+# set $urgent    #cc241d
+# set $foreground #ebdbb2
+# set $background #282828
 
 # Guide on setup xfce4 with i3:
 # https://feeblenerd.blogspot.com/2015/11/pretty-i3-with-xfce.html
@@ -16,27 +16,27 @@ set $background #282828
 # Theme colors
 # class                 border     backgr.    text       indicator   child_border
 # A client which currently has the focus.
-client.focused          $focused   $focused   $focused   $focused    $focused
+# client.focused          $focused   $focused   $focused   $focused    $focused
 
 # A client which is the focused one of its container, but it does not have the
 #focused at the moment.
-client.focused_inactive $unfocused $unfocused $unfocused $unfocused  $unfocused
+# client.focused_inactive $unfocused $unfocused $unfocused $unfocused  $unfocused
 
 # A client which is not the focused one of its container.
-client.unfocused        $unfocused $unfocused $unfocused $unfocused  $unfocused
+# client.unfocused        $unfocused $unfocused $unfocused $unfocused  $unfocused
 
 # A client which has its urgency hint activated.
-client.urgent           $urgent    $urgent    $urgent    $urgent     $urgent
+# client.urgent           $urgent    $urgent    $urgent    $urgent     $urgent
 
 # Background and text color used to draw placeholder window contents (when
 # restoring layouts). Border and indicator are ignored.
-client.placeholder      $base03    $base03    $base3     $base03     $base03
+# client.placeholder      $base03    $base03    $base3     $base03     $base03
 
 # Background color which will be used to paint the background of the client
 # window on top of which the client will be rendered. Only clients which do not
 # cover the whole area of this window expose the color. Note that this
 # colorclass only takes a single color
-client.background $base3
+# client.background $base3
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
@@ -172,10 +172,10 @@ bindsym $mod+r mode "resize"
 #
 # Gaps
 #
- for_window [class="^.*"] border pixel 1
-gaps outer 10
-gaps inner 17
-smart_gaps on
+ # for_window [class="^.*"] border pixel 1
+# gaps outer 10
+# gaps inner 17
+# smart_gaps on
 
 set $mode_gaps Gaps: (o)uter, (i)nner, (h)orizontal, (v)ertical, (t)op, (r)ight, (b)ottom, (l)eft
 set $mode_gaps_outer  Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
