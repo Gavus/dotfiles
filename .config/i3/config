@@ -1,78 +1,8 @@
-# Modifier key, default is super.
+# Modifier key, Mod4 is super.
 set $mod Mod4
 
 # Fonts
 font pango:Source Code Pro 10
-
-# set $focused   #98971a
-# set $unfocused #282828
-# set $urgent    #cc241d
-# set $foreground #ebdbb2
-# set $background #282828
-
-# Guide on setup xfce4 with i3:
-# https://feeblenerd.blogspot.com/2015/11/pretty-i3-with-xfce.html
-
-# Theme colors
-# class                 border     backgr.    text       indicator   child_border
-# A client which currently has the focus.
-# client.focused          $focused   $focused   $focused   $focused    $focused
-
-# A client which is the focused one of its container, but it does not have the
-#focused at the moment.
-# client.focused_inactive $unfocused $unfocused $unfocused $unfocused  $unfocused
-
-# A client which is not the focused one of its container.
-# client.unfocused        $unfocused $unfocused $unfocused $unfocused  $unfocused
-
-# A client which has its urgency hint activated.
-# client.urgent           $urgent    $urgent    $urgent    $urgent     $urgent
-
-# Background and text color used to draw placeholder window contents (when
-# restoring layouts). Border and indicator are ignored.
-# client.placeholder      $base03    $base03    $base3     $base03     $base03
-
-# Background color which will be used to paint the background of the client
-# window on top of which the client will be rendered. Only clients which do not
-# cover the whole area of this window expose the color. Note that this
-# colorclass only takes a single color
-# client.background $base3
-
-# Start i3bar to display a workspace bar (plus the system information i3status
-# finds out, if available)
-# bar {
-#    colors {
-#       background $background
-#       statusline $foreground
-#       separator $foreground
-#       #                  border, background, text
-#       # Background color of the bar on the currently focused monitor output. If
-#       # not used, the color will be taken from statusline.
-#       focused_workspace  $foreground $foreground $background
-
-#       # Border, background and text color for a workspace button when the
-#       # workspace is active (visible) on some output, but the focus is on
-#       # another one. You can only tell this apart from the focused workspace
-#       # when you are using multiple monitors.
-#       active_workspace   #333333 #5f676a #ffffff
-
-#       # Border, background and text color for a workspace button when the
-#       # workspace does not have focus and is not active (visible) on any output.
-#       # This will be the case for most workspaces.
-#       inactive_workspace $unfocused $unfocused $foreground
-
-#       # Border, background and text color for a workspace button when the
-#       # workspace contains a window with the urgency hint set.
-#       urgent_workspace   $urgent $urgent $background
-
-#       # Border, background and text color for the binding mode indicator. If not
-#       # used, the colors will be taken from urgent_workspace.
-#       binding_mode       #2f343a #900000 #ffffff
-#    }
-#    position top
-#    height 20
-#    status_command i3status
-# }
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -83,10 +13,9 @@ bindsym $mod+Return exec xfce4-terminal --hide-scrollbar --hide-menubar --hide-t
 # kill focused window
 bindsym $mod+Shift+q kill
 
-# start rofi (a program launcher)
-set $rofi_theme /usr/share/rofi/themes/gruvbox-dark-soft.rasi
-bindsym $mod+d       exec "rofi -theme $rofi_theme -show drun -font 'Source Code Pro Display 14'"
-bindsym $mod+Shift+d exec "rofi -theme $rofi_theme -show run  -font 'Source Code Pro Display 14'"
+# start dmenu (a program launcher)
+bindsym $mod+d exec i3-dmenu-desktop
+bindsym $mod++Shift+d exec dmenu_run
 
 # change focus
 bindsym $mod+h focus left
@@ -169,149 +98,6 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-#
-# Gaps
-#
- # for_window [class="^.*"] border pixel 1
-# gaps outer 10
-# gaps inner 17
-# smart_gaps on
-
-set $mode_gaps Gaps: (o)uter, (i)nner, (h)orizontal, (v)ertical, (t)op, (r)ight, (b)ottom, (l)eft
-set $mode_gaps_outer  Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
-set $mode_gaps_inner  Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
-set $mode_gaps_horiz  Horizontal Gaps: +|-|0 (local), Shift + +|-|0 (global)
-set $mode_gaps_verti  Vertical Gaps: +|-|0 (local), Shift + +|-|0 (global)
-set $mode_gaps_top    Top Gaps: +|-|0 (local), Shift + +|-|0 (global)
-set $mode_gaps_right  Right Gaps: +|-|0 (local), Shift + +|-|0 (global)
-set $mode_gaps_bottom Bottom Gaps: +|-|0 (local), Shift + +|-|0 (global)
-set $mode_gaps_left   Left Gaps: +|-|0 (local), Shift + +|-|0 (global)
-
-bindsym $mod+Shift+g mode "$mode_gaps"
-mode "$mode_gaps" {
-   bindsym o      mode "$mode_gaps_outer"
-   bindsym i      mode "$mode_gaps_inner"
-   bindsym h      mode "$mode_gaps_horiz"
-   bindsym v      mode "$mode_gaps_verti"
-   bindsym t      mode "$mode_gaps_top"
-   bindsym r      mode "$mode_gaps_right"
-   bindsym b      mode "$mode_gaps_bottom"
-   bindsym l      mode "$mode_gaps_left"
-   bindsym Return mode "$mode_gaps"
-   bindsym Escape mode "default"
-}
-mode "$mode_gaps_outer" {
-   bindsym plus  gaps outer current plus 5
-   bindsym minus gaps outer current minus 5
-   bindsym 0     gaps outer current set 0
-
-   bindsym Shift+plus  gaps outer all plus 5
-   bindsym Shift+minus gaps outer all minus 5
-   bindsym Shift+0     gaps outer all set 0
-
-   bindsym Return mode "$mode_gaps"
-   bindsym Escape mode "default"
-}
-mode "$mode_gaps_inner" {
-   bindsym plus  gaps inner current plus 5
-   bindsym minus gaps inner current minus 5
-   bindsym 0     gaps inner current set 0
-
-   bindsym Shift+plus  gaps inner all plus 5
-   bindsym Shift+minus gaps inner all minus 5
-   bindsym Shift+0     gaps inner all set 0
-
-   bindsym Return mode "$mode_gaps"
-   bindsym Escape mode "default"
-}
-mode "$mode_gaps_horiz" {
-   bindsym plus  gaps horizontal current plus 5
-   bindsym minus gaps horizontal current minus 5
-   bindsym 0     gaps horizontal current set 0
-
-   bindsym Shift+plus  gaps horizontal all plus 5
-   bindsym Shift+minus gaps horizontal all minus 5
-   bindsym Shift+0     gaps horizontal all set 0
-
-   bindsym Return mode "$mode_gaps"
-   bindsym Escape mode "default"
-}
-mode "$mode_gaps_verti" {
-   bindsym plus  gaps vertical current plus 5
-   bindsym minus gaps vertical current minus 5
-   bindsym 0     gaps vertical current set 0
-
-   bindsym Shift+plus  gaps vertical all plus 5
-   bindsym Shift+minus gaps vertical all minus 5
-   bindsym Shift+0     gaps vertical all set 0
-
-   bindsym Return mode "$mode_gaps"
-   bindsym Escape mode "default"
-}
-mode "$mode_gaps_top" {
-   bindsym plus  gaps top current plus 5
-   bindsym minus gaps top current minus 5
-   bindsym 0     gaps top current set 0
-
-   bindsym Shift+plus  gaps top all plus 5
-   bindsym Shift+minus gaps top all minus 5
-   bindsym Shift+0     gaps top all set 0
-
-   bindsym Return mode "$mode_gaps"
-   bindsym Escape mode "default"
-}
-mode "$mode_gaps_right" {
-   bindsym plus  gaps right current plus 5
-   bindsym minus gaps right current minus 5
-   bindsym 0     gaps right current set 0
-
-   bindsym Shift+plus  gaps right all plus 5
-   bindsym Shift+minus gaps right all minus 5
-   bindsym Shift+0     gaps right all set 0
-
-   bindsym Return mode "$mode_gaps"
-   bindsym Escape mode "default"
-}
-mode "$mode_gaps_bottom" {
-   bindsym plus  gaps bottom current plus 5
-   bindsym minus gaps bottom current minus 5
-   bindsym 0     gaps bottom current set 0
-   
-   bindsym Shift+plus  gaps bottom all plus 5
-   bindsym Shift+minus gaps bottom all minus 5
-   bindsym Shift+0     gaps bottom all set 0
-   
-   bindsym Return mode "$mode_gaps"
-   bindsym Escape mode "default"
-}
-mode "$mode_gaps_left" {
-   bindsym plus  gaps left current plus 5
-   bindsym minus gaps left current minus 5
-   bindsym 0     gaps left current set 0
-   
-   bindsym Shift+plus  gaps left all plus 5
-   bindsym Shift+minus gaps left all minus 5
-   bindsym Shift+0     gaps left all set 0
-   
-   bindsym Return mode "$mode_gaps"
-   bindsym Escape mode "default"
-}
-
-# Tree save and restore
-set $mode_tree Tree mode: (s)ave (l)oad
-set $mode_tree_load Tree load: (t)est
-bindsym $mod+Shift+t mode "$mode_tree"
-mode "$mode_tree" {
-   bindsym s      exec "i3-save-tree > ~/.config/i3/tree.json"
-   bindsym l      mode "$mode_tree_load"
-   bindsym Escape mode "default"
-}
-
-mode "$mode_tree_load" {
-   bindsym t exec "i3-msg append_layout ~/.config/i3/test.json"
-   bindsym Escape mode "default"
-}
-
 # Pulse Audio controls
 bindsym XF86AudioRaiseVolume  exec "amixer -D pulse sset Master 5%+ unmute"
 bindsym XF86AudioLowerVolume  exec "amixer -D pulse sset Master 5%- unmute"
@@ -321,17 +107,9 @@ bindsym XF86AudioMute         exec "amixer -D pulse sset Master toggle"
 bindsym XF86MonBrightnessUp   exec "xbacklight -inc 5%"
 bindsym XF86MonBrightnessDown exec "xbacklight -dec 5%"
 
-# i3lock-fancy
-bindsym $mod+Shift+x exec "i3lock-fancy"
-
-# xrandr
-# exec_always --no-startup-id "xrandr --output eDP1 --mode 1920x1080 --rate 59.95"
-
-# compton- transparency
-exec --no-startup-id "compton -c -z -C"
-
 # feh, background image
 exec_always feh --bg-scale ~/Pictures/002.jpg
 
-# HDMI setup
-bindsym $mod+Alt+h exec "xrandr --output HDMI1 --mode 1920x1080"
+# NetworkManager is the most popular way to manage wireless networks on Linux,
+# and nm-applet is a desktop environment-independent system tray GUI for it.
+exec --no-startup-id nm-applet

@@ -1,60 +1,24 @@
 #+Title: Gustavs dotfiles
 #+AUTHOR: Gustav Johansson
 #+EMAIL: gustavsj@outlook.com
+#+STARTUP: indent
 
 * Gustavs dotfiles
 ** About
-   This is my personal dotfiles for a complete i3 experiance. The dotfiles are
-   specialized for my personal asus laptop running Ubuntu.
-
-   This repository contains configurations for:
-   + Laptop-backlight
-   + Polybar
-   + Ranger
-   + Vim
-   + i3-gaps
-   + Laptop-touchpad
-   + Probably more
+This is my personal dotfiles for a complete i3 experiance. The dotfiles are
+specialized for my personal asus laptop running Opensuse:tumbleweed.
 ** Dependencies
-   The dependencies are but not limited to:
-   + feh:          To handle background images.
-   + xbacklight:   To handle screen brighness.
-   + qutebrowser:  Vim-alike browser.
-   + emacs:        My favourite editor.
-   + dropbox:      Cloud backup.
-   + xrandr:       for screen setup.
-   + polybar:      The statusbar.
-   + i3lock-fancy: The screenlock.
-   + amixer:       Controls the audio volume.
-   + fontAwesome:  Contains icons for polybar.
-   + rofi:         The application launcher.
-   + compton:      Adds shadows for apps.
-
-*** Ubuntu installation:
-    #+BEGIN_SRC
-    sudo apt install \
-      amixer \
-      compton \
-      emacs \
-      feh \
-      fonts-font-awesome \
-      i3 \
-      i3lock-fancy \
-      qutebrowser \
-      rofi \
-      xbacklight \
-      xrandr \
-    #+END_SRC
-
-    + Dropbox can be downloaded from its website, the installer is dpkg.
-    + Polybar installation guide is located at github.
-    + i3-gaps installation guide is located at github.
-    
-*** Laptop specifics
-    The files located in etc/X11 are special for this laptop and should probably
-    not be used.
-
+The dependencies are but not limited to:
++ feh:          To handle background images.
++ xbacklight:   To handle screen brighness.
++ dropbox:      Cloud backup.
++ xrandr:       for screen setup.
++ amixer:       Controls the audio volume.
++ xfce4:        The desktop environment used.
+** Setup xfce4 with i3
+Just follow this [[https://feeblenerd.blogspot.com/2015/11/pretty-i3-with-xfce.html][guide]].
 ** Installation
-   Install all the dependencies as described. The rest of the files must be
-   copied manually. The simplest way is by setup symbolic links using *ln -s src
-   goal*.
+Create symbolic links of the configurations included in this repo.
+#+BEGIN_SRC bash
+ln -s src dest
+#+END_SRC
