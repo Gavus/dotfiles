@@ -89,3 +89,8 @@ set makeprg=bundle\ exec\ rspec\ -f\ QuickfixFormatter
 " - :cl to list errors
 " - :cc# to jump to error by number
 " - :cn and :cp to navigate forward and back
+
+
+" CLANG-FORMAT:
+map <C-I> :py3file /usr/share/vim/addons/syntax/clang-format.py<cr>
+imap <C-I> <c-o>:py3file /usr/share/vim/addons/syntax/clang-format.py<cr>
