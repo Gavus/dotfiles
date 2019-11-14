@@ -1,3 +1,5 @@
 bin/lein
 *~
 *.bak
+*.swp
+**.netrwhist
