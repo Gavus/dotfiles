@@ -7,7 +7,6 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Bundle 'christoomey/vim-tmux-navigator'
-Plugin 'ycm-core/YouCompleteMe'
 call vundle#end()
 filetype plugin on
 
@@ -102,5 +101,5 @@ imap <C-I> <c-o>:py3file /usr/share/vim/addons/syntax/clang-format.py<cr>
 " Format current python file using YAPF:
 " :!yapf -i %
 
-" let g:ycm_collect_identifiers_from_tags_files = 1
-
+set number relativenumber
+set nu rnu
