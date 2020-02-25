@@ -53,46 +53,6 @@ command! MakeTags !ctags -R .
 " - Use ^n and ^p to go back and forth in the suggestion list
 
 
-" FILE BROWSING:
-" Tweaks for browsing
-let g:netrw_banner = 0
-let g:netrw_liststyle = 3
-let g:netrw_browse_split = 4
-let g:netrw_altv = 1
-let g:netrw_winsize = 20
-augroup ProjectDrawer
-	  autocmd!
-	    autocmd VimEnter * :Vexplore
-    augroup END
-" NOW WE CAN:
-" - :edit a folder to open a file browser
-" - <CR>/v/t to open in an h-split/v-split/tab
-" - check |netrw-browse-maps| for more mappings
-
-
-" SNIPPETS:
-" Read an empty HTML template and move cursor to title
-nnoremap ,html :-1read $HOME/.vim/.skeleton.html<CR>3jwf>a
-
-" NOW WE CAN:
-" - Take over the world!
-"   (with much fewer keystrokes)
-
-
-" BUILD INTEGRATION:
-" Steal Mr. Bradley's formatter & add it to our spec_helper
-" http://philipbradley.net/rspec-into-vim-with-quickfix
-
-" Configure the `make` command to run RSpec
-set makeprg=bundle\ exec\ rspec\ -f\ QuickfixFormatter
-
-" NOW WE CAN:
-" - Run :make to run RSpec
-" - :cl to list errors
-" - :cc# to jump to error by number
-" - :cn and :cp to navigate forward and back
-
-
 " CLANG-FORMAT:
 map <C-I> :py3file /usr/share/vim/addons/syntax/clang-format.py<cr>
 imap <C-I> <c-o>:py3file /usr/share/vim/addons/syntax/clang-format.py<cr>
@@ -103,3 +63,6 @@ imap <C-I> <c-o>:py3file /usr/share/vim/addons/syntax/clang-format.py<cr>
 
 set number relativenumber
 set nu rnu
+
+" Disable recording by unmapping its shortcut
+map q <Nop>
