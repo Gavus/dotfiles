@@ -2,10 +2,12 @@ set nocompatible
 syntax enable
 filetype off
 
-" VUNDLE SETUP:
+" VUNDLE SETUP: 
+" Install with :PluginInstall
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
+Plugin 'preservim/nerdtree'
 Bundle 'christoomey/vim-tmux-navigator'
 call vundle#end()
 filetype plugin on
@@ -54,8 +56,8 @@ command! MakeTags !ctags -R .
 
 
 " CLANG-FORMAT:
-map <C-I> :py3file /usr/share/vim/addons/syntax/clang-format.py<cr>
-imap <C-I> <c-o>:py3file /usr/share/vim/addons/syntax/clang-format.py<cr>
+" map <C-I> :py3file /usr/share/vim/addons/syntax/clang-format.py<cr>
+" imap <C-I> <c-o>:py3file /usr/share/vim/addons/syntax/clang-format.py<cr>
 
 
 " Format current python file using YAPF:
@@ -66,3 +68,6 @@ set nu rnu
 
 " Disable recording by unmapping its shortcut
 map q <Nop>
+
+" Nerdtree shortcut
+map <C-n> :NERDTreeToggle<CR>
