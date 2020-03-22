@@ -1,0 +1,6 @@
+[user]
+	name = Gustav Johansson
+	email = gustavsj@outlook.com
+[alias]
+	co = checkout
+	su = submodule update --recursive --init
