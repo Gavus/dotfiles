@@ -8,31 +8,32 @@ setup() {
       echoerr "Flatpak is not found, you have to install it manually!"
       exit 1
   else
-      echo "Flatpak is installed"
+      echo "Flatpak is installed."
   fi
 
-  flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo --user
+  flatpak remote-list | grep -q flathub
+  if [ $? -ne 0 ]; then
+    flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo --user
+  else 
+    echo "flathub already included."
+  fi
 
   echo "Setup is done."
 }
 
 install() {
-  name=$1
   install=$2
-  path=~/bin/$name
 
-  flatpak install flathub $install -y >/dev/null
-  printf "#!/bin/bash \nflatpak run $install \$@\n" > $path
-  chmod +x $path
+  echo "Installing $install..."
+  flatpak install flathub $install -y
+  echo "Done!"
 }
 
 # Main
 setup
 echo "Installing flatpaks"
-install moonlight com.moonlight_stream.Moonlight
-install retroarch org.libretro.RetroArch
 install spotify   com.spotify.Client
 install steam     com.valvesoftware.Steam
 install telegram  org.telegram.desktop
-install vlc       org.videolan.VLC
-install pycharm   com.jetbrains.PyCharm-Community
+
+echo "Finished installing flatpaks"
