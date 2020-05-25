@@ -45,5 +45,9 @@ map q <Nop>
 " Nerdtree shortcut
 map <C-n> :NERDTreeToggle<CR>
 
+" Make searches case insensitive by default
+:set ignorecase
+:set smartcase
+
 packloadall
 silent! helptags ALL
