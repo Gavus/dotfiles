@@ -1,10 +1,10 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 echoerr() { echo "$@" 1>&2; }
 
 setup() {
   echo "Starting setup"
-  if [[ ! -f /usr/bin/flatpak ]]; then
+  if [[ ! -f $(which flatpak) ]]; then
       echoerr "Flatpak is not found, you have to install it manually!"
       exit 1
   else
@@ -32,6 +32,9 @@ install() {
 # Main
 setup
 echo "Installing flatpaks"
+install discord   com.discordapp.Discord
+install minecraft com.mojang.Minecraft
+install remmina   org.remmina.Remmina
 install spotify   com.spotify.Client
 install steam     com.valvesoftware.Steam
 install telegram  org.telegram.desktop
