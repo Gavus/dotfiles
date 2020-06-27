@@ -6,4 +6,4 @@ do
   ln -sr $file ~/$file
 done
 
- 
+echo 'export PS1="[\u@\h \w]$ "' >> ~/.bashrc
