@@ -3,6 +3,10 @@
 ## About
 This is my personal dotfiles for various configurations.
 
-## Installation
-ln -s src dest
+## Nvim
 
+### Installation
+sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+
+Install nvim 0.5+ from github
