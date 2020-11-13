@@ -11,7 +11,6 @@ call plug#end()
 " Editor looks
 set number
 set relativenumber
-set cursorline
 set showmatch
 set list
 set listchars=tab:»\ ,space:·
