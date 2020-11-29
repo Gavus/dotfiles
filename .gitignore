@@ -1,6 +1,4 @@
-bin/lein
 *~
-*.bak
 *.swp
-**.netrwhist
-.vim/bundle
+.vim/**
+!.vim/autoload/plug.vim

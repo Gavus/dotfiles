@@ -1,6 +1,7 @@
-declare -a files=(.config/nvim/init.vim  .local/share/nvim/site/autoload/plug.vim .tmux.conf .inputrc .gitconfig)
+declare -a files=(.config/nvim/init.vim .vimrc .vim .tmux.conf .inputrc .gitconfig)
 
-mkdir -p ~/.config/nvim ~/.local/share/nvim/site/autoload
+mkdir -p ~/.config/nvim
+mkdir -p ~/.vim/autoload
 
 for file in "${files[@]}"
 do
