@@ -1,0 +1,31 @@
+# The purpose here is trying to setup a docker-compose which can take "whatever" docker image and setup a functional development environment with host user.
+#
+# Goals: Not modifying docker image
+# Problems: PS1
+# + Can't modify PS1 when its changed in .bashrc.
+# + UID and GID must be exported before use.
+#
+# https://medium.com/faun/set-current-host-user-for-docker-container-4e521cef9ffc
+# fancy PS1: https://gist.github.com/scmx/242caa249b0ea343e2588adea14479e6
+version: "3.3"
+services:
+    qtc:
+        #build: qtc
+        image: ubuntu:20.04
+        user: $UID:$GID
+        volumes:
+            - $HOME:$HOME:rw
+            - /etc/group:/etc/group:ro
+            - /etc/passwd:/etc/passwd:ro
+            - /etc/shadow:/etc/shadow:ro
+            - /etc/sudoers.d:/etc/sudoers.d:ro
+            - /etc/machine-id:/etc/machine-id:ro
+            - /tmp/.x11-unix:/tmp/.X11-unix:rw
+            - /dev/shm:/dev/shm:rw
+        working_dir: $HOME/workspace
+        stdin_open: true
+        tty: true
+        environment:
+            - DISPLAY
+        network_mode: host
+        entrypoint: /bin/bash
