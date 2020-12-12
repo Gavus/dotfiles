@@ -9,8 +9,8 @@
 # fancy PS1: https://gist.github.com/scmx/242caa249b0ea343e2588adea14479e6
 version: "3.3"
 services:
-    qtc:
-        #build: qtc
+    dev:
+        build: .
         image: ubuntu:20.04
         user: $UID:$GID
         volumes:
@@ -20,12 +20,16 @@ services:
             - /etc/shadow:/etc/shadow:ro
             - /etc/sudoers.d:/etc/sudoers.d:ro
             - /etc/machine-id:/etc/machine-id:ro
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
             - /tmp/.x11-unix:/tmp/.X11-unix:rw
             - /dev/shm:/dev/shm:rw
+            - /var/run/docker.sock:/var/run/docker.sock:rw
         working_dir: $HOME/workspace
         stdin_open: true
         tty: true
         environment:
-            - DISPLAY
+            - PS2=🐳${PS1}
         network_mode: host
+        privileged: true
         entrypoint: /bin/bash
