@@ -2,7 +2,12 @@
 call plug#begin('~/.vim/plugged')
 " Declare the list of plugins.
 Plug 'preservim/nerdtree'
-if has('nvim')
+" Full path fuzzy file,buffer, mru, tag, .. finder for vim.
+Plug 'kien/ctrlp.vim'
+" Clang format support.
+Plug 'rhysd/vim-clang-format'
+if has('nvim-0.5')
+  " Languageserver configs.
   Plug 'neovim/nvim-lspconfig'
 endif
 " List ends here. Plugins become visible to Vim after this call.
