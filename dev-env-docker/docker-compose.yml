@@ -1,0 +1,15 @@
+# UID and GID must be exported before use.
+# Assumes working dir to be located inside $HOME
+version: "3.3"
+services:
+  dev:
+    build: .
+    user: $UID:$GID
+    volumes:
+    - $HOME:$HOME:rw
+    - /etc/passwd:/etc/passwd:ro
+    working_dir: ${PWD}
+    stdin_open: true
+    tty: true
+    network_mode: host
+    entrypoint: /bin/sh
