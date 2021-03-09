@@ -10,6 +10,8 @@ if has('nvim-0.5')
   " Languageserver configs.
   Plug 'neovim/nvim-lspconfig'
 endif
+" Autocompletion
+Plug 'ycm-core/YouCompleteMe'
 " List ends here. Plugins become visible to Vim after this call.
 call plug#end()
 
@@ -53,7 +55,7 @@ set wildignore+=*.o,*.pyc
 "" Clang-format
 map <C-K> :ClangFormat<cr>
 
-"" Clangd integration
+"" language server protocol settings
 if has('nvim-0.5')
   if executable('cmake-language-server')
     lua require'lspconfig'.cmake.setup{}
@@ -62,11 +64,18 @@ if has('nvim-0.5')
   if executable('clangd') && filereadable('compile_commands.json')
   lua require'lspconfig'.clangd.setup{}
     map <F2> :ClangdSwitchSourceHeader<cr>
-    nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
-    nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
-    nnoremap <silent> ]d    <cmd>lua vim.lsp.diagnostic.goto_next { wrap = false }<CR>
-    nnoremap <silent> [d    <cmd>lua vim.lsp.diagnostic.goto_prev { wrap = false }<CR>
-    nnoremap <silent> gh    <cmd>lua vim.lsp.buf.signature_help()<CR>
   endif
+
+  "" Shortcuts
+  nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
+  nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
+  nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
+  nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+  nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
+  nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
+  nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
+  nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+  nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
+
 endif
 
