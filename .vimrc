@@ -12,6 +12,8 @@ if has('nvim-0.5')
 endif
 " Autocompletion
 Plug 'ycm-core/YouCompleteMe'
+" Navigate easily with tmux and vim
+Plug 'christoomey/vim-tmux-navigator'
 " List ends here. Plugins become visible to Vim after this call.
 call plug#end()
 
@@ -79,3 +81,5 @@ if has('nvim-0.5')
 
 endif
 
+" Disable python2 
+let g:loaded_python_provider = 0
