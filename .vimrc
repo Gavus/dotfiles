@@ -11,7 +11,8 @@ if has('nvim-0.5')
   Plug 'neovim/nvim-lspconfig'
 endif
 " Autocompletion
-Plug 'ycm-core/YouCompleteMe'
+" Dont forget pip3 install pynvim
+Plug 'ycm-core/YouCompleteMe', { 'do': './install.py' }
 " Navigate easily with tmux and vim
 Plug 'christoomey/vim-tmux-navigator'
 " List ends here. Plugins become visible to Vim after this call.
@@ -24,7 +25,6 @@ set relativenumber
 set showmatch
 set list
 set encoding=utf8
-set listchars=tab:»\ ,space:·
 
 
 " Indentation settings
@@ -44,8 +44,10 @@ nmap ,n :NERDTreeFind<CR>
 
 
 " Make searches case insensitive by default
-:set ignorecase
-:set smartcase
+set hlsearch
+set incsearch
+set ignorecase
+set smartcase
 
 
 "" File finding
