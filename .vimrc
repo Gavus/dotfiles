@@ -22,6 +22,11 @@ Plug 'junegunn/fzf.vim'
 call plug#end()
 
 
+" Change leader key to space
+nnoremap <SPACE> <Nop>
+let mapleader=" "
+
+
 " Editor looks
 set number
 set relativenumber
@@ -39,6 +44,7 @@ set noexpandtab
 
 " Disable recording by unmapping its shortcut
 map q <Nop>
+
 
 " Nerdtree shortcuts
 map <C-n> :NERDTreeToggle<CR>
@@ -58,8 +64,10 @@ set wildmenu
 set wildignore+=*.o,*.pyc
 
 
-"" Clang-format
-map <C-K> :ClangFormat<cr>
+"" Fuzzy finder shortcuts
+"" search for word at cursor
+nnoremap <silent> <Leader>ag :Ag <C-R><C-W><CR>
+
 
 "" language server protocol settings
 if has('nvim-0.5')
@@ -84,6 +92,7 @@ if has('nvim-0.5')
   nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
 
 endif
+
 
 " Disable python2 
 let g:loaded_python_provider = 0
