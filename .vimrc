@@ -15,6 +15,9 @@ endif
 Plug 'ycm-core/YouCompleteMe', { 'do': './install.py' }
 " Navigate easily with tmux and vim
 Plug 'christoomey/vim-tmux-navigator'
+" fuzzy finder
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 " List ends here. Plugins become visible to Vim after this call.
 call plug#end()
 
@@ -31,12 +34,11 @@ set encoding=utf8
 set tabstop=4
 set softtabstop=2
 set shiftwidth=2
-set expandtab
+set noexpandtab
 
 
 " Disable recording by unmapping its shortcut
 map q <Nop>
-
 
 " Nerdtree shortcuts
 map <C-n> :NERDTreeToggle<CR>
