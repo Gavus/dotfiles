@@ -9,6 +9,11 @@ Plug 'rhysd/vim-clang-format'
 if has('nvim-0.5')
   " Languageserver configs.
   Plug 'neovim/nvim-lspconfig'
+  " markdown preview
+  " :MarkdownPreview
+  " :MarkdownStop
+  " :MarkdownToggl
+  Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 endif
 " Autocompletion
 " Dont forget pip3 install pynvim
@@ -18,6 +23,7 @@ Plug 'christoomey/vim-tmux-navigator'
 " fuzzy finder
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+
 " List ends here. Plugins become visible to Vim after this call.
 call plug#end()
 
