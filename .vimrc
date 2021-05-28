@@ -2,24 +2,33 @@
 call plug#begin('~/.vim/plugged')
 " Declare the list of plugins.
 Plug 'preservim/nerdtree'
+
 " Full path fuzzy file,buffer, mru, tag, .. finder for vim.
 Plug 'kien/ctrlp.vim'
+
 " Clang format support.
 Plug 'rhysd/vim-clang-format'
+
 if has('nvim-0.5')
   " Languageserver configs.
   Plug 'neovim/nvim-lspconfig'
+
+  " Adds LspInstall <language>
+  Plug 'kabouzeid/nvim-lspinstall'
+
   " markdown preview
   " :MarkdownPreview
   " :MarkdownStop
   " :MarkdownToggl
   Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+
+  " autocompletion with lsp
+  Plug 'nvim-lua/completion-nvim'
 endif
-" Autocompletion
-" Dont forget pip3 install pynvim
-Plug 'ycm-core/YouCompleteMe', { 'do': './install.py' }
+
 " Navigate easily with tmux and vim
 Plug 'christoomey/vim-tmux-navigator'
+
 " fuzzy finder
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
@@ -41,20 +50,48 @@ set list
 set encoding=utf8
 
 
+" Enable mouse scrolling from tmux
+set mouse=a
+
+
+" Share clipboard with tmux
+set clipboard+=unnamedplus
+let g:clipboard = {
+      \   'name': 'myClipboard',
+      \   'copy': {
+      \      '+': ['tmux', 'load-buffer', '-'],
+      \      '*': ['tmux', 'load-buffer', '-'],
+      \    },
+      \   'paste': {
+      \      '+': ['tmux', 'save-buffer', '-'],
+      \      '*': ['tmux', 'save-buffer', '-'],
+      \   },
+      \   'cache_enabled': 1,
+      \ }
+
+
 " Indentation settings
 set tabstop=4
 set softtabstop=2
 set shiftwidth=2
-set noexpandtab
+set expandtab
 
 
 " Disable recording by unmapping its shortcut
 map q <Nop>
 
 
-" Nerdtree shortcuts
+" Nerdtree
 map <C-n> :NERDTreeToggle<CR>
 nmap ,n :NERDTreeFind<CR>
+let NERDTreeIgnore=['\.o$', '\.so.*$', '\.pyc$']
+" enable line numbers
+let NERDTreeShowLineNumbers=1
+" make sure relative line numbers are used
+autocmd FileType nerdtree setlocal relativenumber
+" Fix conflix with vim-tmux-navigator
+let g:NERDTreeMapJumpPrevSibling=""
+let g:NERDTreeMapJumpNextSibling=""
 
 
 " Make searches case insensitive by default
@@ -75,30 +112,67 @@ set wildignore+=*.o,*.pyc
 nnoremap <silent> <Leader>ag :Ag <C-R><C-W><CR>
 
 
-"" language server protocol settings
-if has('nvim-0.5')
-  if executable('cmake-language-server')
-    lua require'lspconfig'.cmake.setup{}
-  endif
+" Disable python2
+let g:loaded_python_provider = 0
 
-  if executable('clangd') && filereadable('compile_commands.json')
-  lua require'lspconfig'.clangd.setup{}
-    map <F2> :ClangdSwitchSourceHeader<cr>
-  endif
 
-  "" Shortcuts
-  nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
-  nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
-  nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
-  nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
-  nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
-  nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
-  nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
-  nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
-  nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
-
+" Stop sourcing here if nvim does not support lsp
+if !has('nvim-0.5')
+  finish
 endif
 
 
-" Disable python2 
-let g:loaded_python_provider = 0
+"" Autocomplete completion-nvim settings
+" Use completion-nvim in every buffer
+autocmd BufEnter * lua require'completion'.on_attach()
+
+" Use <Tab> and <S-Tab> to navigate through popup menu
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" Set completeopt to have a better completion experience
+set completeopt=menuone,noinsert,noselect
+
+" Avoid showing message extra message when using completion
+set shortmess+=c
+
+
+lua << EOF
+local nvim_lsp = require('lspconfig')
+
+-- Use an on_attach function to only map the following keys 
+-- after the language server attaches to the current buffer
+local on_attach = function(client, bufnr)
+  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+
+  -- Mappings.
+  local opts = { noremap=true, silent=true }
+
+  -- See `:help vim.lsp.*` for documentation on any of the below functions
+  buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+  buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+  buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+  buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+  buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+  buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+  buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+  buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+  buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+  buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+  buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+end
+
+-- Use a loop to conveniently call 'setup' on multiple servers and
+-- map buffer local keybindings when the language server attaches
+local servers = { "pyright", "clangd", "tsserver" }
+for _, lsp in ipairs(servers) do
+  nvim_lsp[lsp].setup { on_attach = on_attach }
+end
+EOF
