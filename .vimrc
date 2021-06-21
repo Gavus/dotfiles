@@ -9,6 +9,9 @@ Plug 'kien/ctrlp.vim'
 " Clang format support.
 Plug 'rhysd/vim-clang-format'
 
+" automatically detect tab or space indentionm
+Plug 'Raimondi/yaifa'
+
 if has('nvim-0.5')
   " Languageserver configs.
   Plug 'neovim/nvim-lspconfig'
@@ -22,8 +25,8 @@ if has('nvim-0.5')
   " :MarkdownToggl
   Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 
-  " autocompletion with lsp
-  Plug 'nvim-lua/completion-nvim'
+  " recommended autocompletion with lsp
+  Plug 'hrsh7th/nvim-compe'
 endif
 
 " Navigate easily with tmux and vim
@@ -35,6 +38,9 @@ Plug 'junegunn/fzf.vim'
 
 " automatic closing of quotes, parenthesis, brackets, etc.
 Plug 'Raimondi/delimitMate'
+
+" git in vim
+Plug 'tpope/vim-fugitive'
 
 " List ends here. Plugins become visible to Vim after this call.
 call plug#end()
@@ -51,6 +57,18 @@ set relativenumber
 set showmatch
 set list
 set encoding=utf8
+
+
+" folding
+" zo - opens folds
+" zc - closes fold
+" zm - fold all by level
+" zr - open all folds by level
+set foldmethod=indent
+set foldlevel=99
+set foldclose=all
+set foldmethod=syntax
+set nofoldenable
 
 
 " Enable mouse scrolling from tmux
@@ -87,7 +105,8 @@ map q <Nop>
 " Nerdtree
 map <C-n> :NERDTreeToggle<CR>
 nmap ,n :NERDTreeFind<CR>
-let NERDTreeIgnore=['\.o$', '\.so.*$', '\.pyc$']
+let NERDTreeIgnore=['\.o$', '\.so.*$', '\.pyc$', '\~']
+
 " enable line numbers
 let NERDTreeShowLineNumbers=1
 " make sure relative line numbers are used
@@ -125,22 +144,72 @@ if !has('nvim-0.5')
 endif
 
 
-"" Autocomplete completion-nvim settings
-" Use completion-nvim in every buffer
-autocmd BufEnter * lua require'completion'.on_attach()
+"" Autocomplete
+" default compe completion settings
+set completeopt=menuone,noselect
+lua << EOF
+-- Compe setup
+require'compe'.setup {
+  enabled = true;
+  autocomplete = true;
+  debug = false;
+  min_length = 1;
+  preselect = 'enable';
+  throttle_time = 80;
+  source_timeout = 200;
+  incomplete_delay = 400;
+  max_abbr_width = 100;
+  max_kind_width = 100;
+  max_menu_width = 100;
+  documentation = true;
 
-" Use <Tab> and <S-Tab> to navigate through popup menu
-inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+  source = {
+    path = true;
+    nvim_lsp = true;
+  };
+}
 
-" Set completeopt to have a better completion experience
-set completeopt=menuone,noinsert,noselect
+local t = function(str)
+  return vim.api.nvim_replace_termcodes(str, true, true, true)
+end
 
-" Avoid showing message extra message when using completion
-set shortmess+=c
+local check_back_space = function()
+    local col = vim.fn.col('.') - 1
+    if col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
+        return true
+    else
+        return false
+    end
+end
+
+-- Use (s-)tab to:
+--- move to prev/next item in completion menuone
+--- jump to prev/next snippet's placeholder
+_G.tab_complete = function()
+  if vim.fn.pumvisible() == 1 then
+    return t "<C-n>"
+  elseif check_back_space() then
+    return t "<Tab>"
+  else
+    return vim.fn['compe#complete']()
+  end
+end
+_G.s_tab_complete = function()
+  if vim.fn.pumvisible() == 1 then
+    return t "<C-p>"
+  else
+    return t "<S-Tab>"
+  end
+end
+
+vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", {expr = true})
+vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
+vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+EOF
 
 
-
+"" lspconfig
 lua << EOF
 local nvim_lsp = require('lspconfig')
 
@@ -158,7 +227,8 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
   buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
   buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  buf_set_keymap('n', '<space>h', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  buf_set_keymap("n", "H", "<cmd>ClangdSwitchSourceHeader<CR>", opts)
   buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
   buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
   buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
