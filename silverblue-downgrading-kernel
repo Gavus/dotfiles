@@ -1,0 +1,3 @@
+https://koji.fedoraproject.org/koji/packageinfo?packageID=8
+$ rpm-ostree override replace kernel-5.1.9-300.fc30.x86_64.rpm kernel-core-5.1.9-300.fc30.x86_64.rpm kernel-modules-5.1.9-300.fc30.x86_64.rpm kernel-modules-extra-5.1.9-300.fc30.x86_64.rpm
+https://discussion.fedoraproject.org/t/downgrading-kernel-on-silverblue/1928/2

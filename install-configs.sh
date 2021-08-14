@@ -1,4 +1,4 @@
-declare -a files=(.config/nvim/init.vim .vimrc .vim .tmux.conf .inputrc .gitconfig)
+declare -a files=(.config/nvim/init.vim .vimrc .vim .tmux.conf .inputrc .gitconfig .bashrc)
 
 mkdir -p ~/.config/nvim
 

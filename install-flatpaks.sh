@@ -29,9 +29,9 @@ flatpak install flathub \
 	com.mojang.Minecraft \
 	com.spotify.Client \
 	com.valvesoftware.Steam \
-	org.gimp.GIMP \
-	org.remmina.Remmina \
-	org.sugarlabs.FotoToon \
+	com.microsoft.Teams \
+	com.slack.Slack \
 	org.telegram.desktop \
+	com.microsoft.Teams \
 	-y
 echo "Done"
