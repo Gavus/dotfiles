@@ -9,8 +9,12 @@ Plug 'kien/ctrlp.vim'
 " Clang format support.
 Plug 'rhysd/vim-clang-format'
 
-" automatically detect tab or space indentionm
+" automatically detect tab or space indention.
 Plug 'Raimondi/yaifa'
+
+" A personal wiki for organizing.
+" press <Leader>ww to get to the wiki.
+Plug 'vimwiki/vimwiki'
 
 if has('nvim-0.5')
   " Languageserver configs.
@@ -69,6 +73,12 @@ set foldlevel=99
 set foldclose=all
 set foldmethod=syntax
 set nofoldenable
+
+
+" Settings required by vimwiki
+set nocompatible
+filetype plugin on
+syntax on
 
 
 " Enable mouse scrolling from tmux
