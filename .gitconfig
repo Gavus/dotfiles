@@ -4,3 +4,10 @@
 [alias]
 	co = checkout
 	su = submodule update --recursive --init
+	a = "add ."
+	b = "branch"
+	c = "commit"
+	ca = "commit --amend"
+	d = "diff"
+	co = "checkout"
+	s = "status"
