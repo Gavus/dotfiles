@@ -27,4 +27,5 @@ fi
 unset rc
 
 alias vim="nvim"
-alias git="g"
+alias g="git"
+alias te="toolbox enter"
