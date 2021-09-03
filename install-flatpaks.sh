@@ -26,12 +26,13 @@ setup
 echo "Installing flatpaks"
 flatpak install flathub \
 	com.discordapp.Discord \
+	com.microsoft.Teams \
+	com.microsoft.Teams \
 	com.mojang.Minecraft \
+	com.slack.Slack \
 	com.spotify.Client \
 	com.valvesoftware.Steam \
-	com.microsoft.Teams \
-	com.slack.Slack \
+	io.bit3.WhatsAppQT \
 	org.telegram.desktop \
-	com.microsoft.Teams \
 	-y
 echo "Done"
