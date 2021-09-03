@@ -11,3 +11,5 @@
 	d = "diff"
 	co = "checkout"
 	s = "status"
+[core]
+	editor = nvim

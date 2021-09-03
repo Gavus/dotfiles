@@ -29,3 +29,6 @@ unset rc
 alias vim="nvim"
 alias g="git"
 alias te="toolbox enter"
+
+export VISUAL=nvim
+export EDITOR="$VISUAL"
