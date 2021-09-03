@@ -27,7 +27,6 @@ echo "Installing flatpaks"
 flatpak install flathub \
 	com.discordapp.Discord \
 	com.microsoft.Teams \
-	com.microsoft.Teams \
 	com.mojang.Minecraft \
 	com.slack.Slack \
 	com.spotify.Client \
