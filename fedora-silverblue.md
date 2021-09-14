@@ -1,14 +1,14 @@
-# Gustavs dotfiles
-
-## About
-This is my personal dotfiles for various configurations.
-
 ## Install on fedora silverblue
 
 ### Rebasing to rawhide
 ```
 rpm-ostree reset -r
 rpm-ostree rebase fedora:fedora/rawhide/x86_64/silverblue -r
+```
+
+### Remove packages from base image
+```
+rpm-ostree override remove firefox
 ```
 
 ### Installing my packages on rpm-ostree
@@ -21,4 +21,3 @@ rpm-ostree install -r --idempotent \
     tmux \
     neovim \
 ```
-
