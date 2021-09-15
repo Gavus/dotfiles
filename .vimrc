@@ -61,7 +61,8 @@ set relativenumber
 set showmatch
 set list
 set encoding=utf8
-
+set colorcolumn=80
+hi ColorColumn ctermbg=darkgray
 
 " folding
 " zo - opens folds
