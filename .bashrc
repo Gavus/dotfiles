@@ -26,6 +26,9 @@ fi
 
 unset rc
 
+bind 'set show-all-if-ambiguous on'
+bind 'TAB:menu-complete'
+
 alias vim="nvim"
 alias g="git"
 alias te="toolbox enter"
