@@ -31,7 +31,6 @@ flatpak install flathub \
 	com.slack.Slack \
 	com.spotify.Client \
 	com.valvesoftware.Steam \
-	io.bit3.WhatsAppQT \
 	org.mozilla.firefox \
 	org.telegram.desktop \
 	-y
