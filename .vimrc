@@ -58,7 +58,7 @@ set relativenumber
 set showmatch
 set list
 set encoding=utf8
-set colorcolumn=80
+autocmd FileType c set colorcolumn=80
 autocmd FileType python set colorcolumn=128
 hi ColorColumn ctermbg=darkgray
 
