@@ -6,9 +6,6 @@ Plug 'preservim/nerdtree'
 " Full path fuzzy file,buffer, mru, tag, .. finder for vim.
 Plug 'kien/ctrlp.vim'
 
-" Clang format support.
-Plug 'rhysd/vim-clang-format'
-
 " automatically detect tab or space indention.
 Plug 'Raimondi/yaifa'
 
@@ -62,6 +59,7 @@ set showmatch
 set list
 set encoding=utf8
 set colorcolumn=80
+autocmd FileType python set colorcolumn=128
 hi ColorColumn ctermbg=darkgray
 
 " folding
