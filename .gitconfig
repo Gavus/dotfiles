@@ -2,14 +2,16 @@
 	name = Gustav Johansson
 	email = gustavsj@outlook.com
 [alias]
-	co = checkout
-	su = submodule update --recursive --init
 	a = "add ."
 	b = "branch"
 	c = "commit"
-	ca = "commit --amend"
-	d = "diff"
+	ca = "commit  --amend"
 	co = "checkout"
+	d = "diff"
+	l = "log"
+	m = "merge"
+	r = "reset"
 	s = "status"
+	su = "submodule update --recursive --init"
 [core]
 	editor = nvim
