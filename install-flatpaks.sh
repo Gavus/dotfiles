@@ -31,8 +31,9 @@ flatpak install flathub \
 	com.slack.Slack \
 	com.spotify.Client \
 	com.valvesoftware.Steam \
-	com.valvesoftware.Steam.CompatibilityTool.Proton
+	com.valvesoftware.Steam.CompatibilityTool.Proton \
 	org.mozilla.firefox \
+	org.remmina.Remmina \
 	org.telegram.desktop \
 	-y
 echo "Done"
