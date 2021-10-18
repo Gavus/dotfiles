@@ -17,7 +17,9 @@ sudo rpm-ostree install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free
 
 rpm-ostree install -r --idempotent \
     VirtualBox \
+    docker-compose \
     mozilla-openh264 \
-    tmux \
     neovim \
+    podman-docker \
+    tmux \
 ```
