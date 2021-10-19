@@ -62,22 +62,24 @@ autocmd FileType c set colorcolumn=80
 autocmd FileType python set colorcolumn=128
 hi ColorColumn ctermbg=darkgray
 
+
 " folding
 " zo - opens folds
 " zc - closes fold
 " zm - fold all by level
 " zr - open all folds by level
-set foldmethod=indent
-set foldlevel=99
-set foldclose=all
-set foldmethod=syntax
-set nofoldenable
+autocmd Filetype c set foldmethod=syntax
+autocmd Filetype c set foldnestmax=1
+autocmd Filetype python set foldmethod=indent
+autocmd Filetype python set foldnestmax=2
 
 
 " Settings required by vimwiki
 set nocompatible
 filetype plugin on
 syntax on
+let g:vimwiki_list = [{'path': '~/vimwiki/',
+                      \ 'syntax': 'markdown', 'ext': '.md'}]
 
 
 " Enable mouse scrolling from tmux
@@ -115,6 +117,7 @@ map q <Nop>
 map <C-n> :NERDTreeToggle<CR>
 nmap ,n :NERDTreeFind<CR>
 let NERDTreeIgnore=['\.o$', '\.so.*$', '\.pyc$', '\~']
+let g:NERDTreeWinPos = "right"
 
 " enable line numbers
 let NERDTreeShowLineNumbers=1
