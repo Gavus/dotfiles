@@ -2,6 +2,7 @@
 call plug#begin('~/.vim/plugged')
 " Declare the list of plugins.
 Plug 'preservim/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 
 " Full path fuzzy file,buffer, mru, tag, .. finder for vim.
 Plug 'kien/ctrlp.vim'
@@ -61,6 +62,10 @@ set encoding=utf8
 autocmd FileType c set colorcolumn=80
 autocmd FileType python set colorcolumn=128
 hi ColorColumn ctermbg=darkgray
+
+
+" Sort each word in visual mode.
+:vnoremap <Leader>s d:execute 'normal i' . join(sort(split(getreg('"'))), ' ')<CR>
 
 
 " folding
