@@ -14,6 +14,13 @@ Plug 'Raimondi/yaifa'
 " press <Leader>ww to get to the wiki.
 Plug 'vimwiki/vimwiki'
 
+" Display git changes next to line number. Move with [c or ]c.
+Plug 'airblade/vim-gitgutter'
+
+" Presenting mode for markdown files.
+" : PresentingStart
+Plug 'sotte/presenting.vim'
+
 if has('nvim-0.5')
   " Languageserver configs.
   Plug 'neovim/nvim-lspconfig'
@@ -26,6 +33,8 @@ if has('nvim-0.5')
   " :MarkdownStop
   " :MarkdownToggl
   Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+" Remove error highlights. For example underscore.
+hi link markdownError Normal
 
   " recommended autocompletion with lsp
   Plug 'hrsh7th/nvim-compe'
