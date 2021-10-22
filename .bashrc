@@ -32,6 +32,8 @@ alias te="toolbox enter"
 alias tc="toolbox create"
 alias l="ls -lah"
 alias dc="docker-compose"
+alias vimwiki="vim -c VimwikiIndex"
+
 
 export VISUAL=nvim
 export EDITOR="$VISUAL"
