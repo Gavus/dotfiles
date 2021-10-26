@@ -3,6 +3,8 @@ call plug#begin('~/.vim/plugged')
 " Declare the list of plugins.
 Plug 'preservim/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'ryanoasis/vim-devicons'
 
 " Full path fuzzy file,buffer, mru, tag, .. finder for vim.
 Plug 'kien/ctrlp.vim'
@@ -17,33 +19,29 @@ Plug 'vimwiki/vimwiki'
 " Display git changes next to line number. Move with [c or ]c.
 Plug 'airblade/vim-gitgutter'
 
-" Presenting mode for markdown files.
-" : PresentingStart
+" Presenting mode for markdown files. : PresentingStart.
 Plug 'sotte/presenting.vim'
 
 if has('nvim-0.5')
   " Languageserver configs.
   Plug 'neovim/nvim-lspconfig'
 
-  " Adds LspInstall <language>
+  " Adds LspInstall <language>.
   Plug 'kabouzeid/nvim-lspinstall'
 
-  " markdown preview
-  " :MarkdownPreview
-  " :MarkdownStop
-  " :MarkdownToggl
+  " markdown preview.
+  " :MarkdownPreview.
   Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
-" Remove error highlights. For example underscore.
-hi link markdownError Normal
 
-  " recommended autocompletion with lsp
+
+  " recommended autocompletion with lsp.
   Plug 'hrsh7th/nvim-compe'
 endif
 
-" Navigate easily with tmux and vim
+" Navigate easily with tmux and vim.
 Plug 'christoomey/vim-tmux-navigator'
 
-" fuzzy finder
+" fuzzy finder.
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
@@ -57,12 +55,17 @@ Plug 'tpope/vim-fugitive'
 call plug#end()
 
 
-" Change leader key to space
+" Change leader key to space.
 nnoremap <SPACE> <Nop>
 let mapleader=" "
 
 
-" Editor looks
+" Markdown preview.
+" Remove error highlights. For example underscore.
+hi link markdownError Normal
+
+
+" Editor looks.
 set number
 set relativenumber
 set showmatch
@@ -77,18 +80,18 @@ hi ColorColumn ctermbg=darkgray
 :vnoremap <Leader>s d:execute 'normal i' . join(sort(split(getreg('"'))), ' ')<CR>
 
 
-" folding
-" zo - opens folds
-" zc - closes fold
-" zm - fold all by level
-" zr - open all folds by level
+" Folding.
+" zo - opens folds.
+" zc - closes fold.
+" zm - fold all by level.
+" zr - open all folds by level.
 autocmd Filetype c set foldmethod=syntax
 autocmd Filetype c set foldnestmax=1
 autocmd Filetype python set foldmethod=indent
 autocmd Filetype python set foldnestmax=2
 
 
-" Settings required by vimwiki
+" Settings required by vimwiki.
 set nocompatible
 filetype plugin on
 syntax on
@@ -96,11 +99,11 @@ let g:vimwiki_list = [{'path': '~/vimwiki/',
                       \ 'syntax': 'markdown', 'ext': '.md'}]
 
 
-" Enable mouse scrolling from tmux
+" Enable mouse scrolling from tmux.
 set mouse=a
 
 
-" Share clipboard with tmux
+" Share clipboard with tmux.
 set clipboard+=unnamedplus
 let g:clipboard = {
       \   'name': 'myClipboard',
@@ -116,62 +119,67 @@ let g:clipboard = {
       \ }
 
 
-" Indentation settings
+" Indentation settings.
 set tabstop=4
 set softtabstop=2
 set shiftwidth=2
 set expandtab
 
 
-" Disable recording by unmapping its shortcut
+" Disable recording by unmapping its shortcut.
 map q <Nop>
 
 
-" Nerdtree
+" Nerdtree.
 map <C-n> :NERDTreeToggle<CR>
 nmap ,n :NERDTreeFind<CR>
 let NERDTreeIgnore=['\.o$', '\.so.*$', '\.pyc$', '\~']
 let g:NERDTreeWinPos = "right"
 
-" enable line numbers
+
+" Needed by vim-devicons.
+set encoding=UTF-8
+
+
+" enable line numbers.
 let NERDTreeShowLineNumbers=1
-" make sure relative line numbers are used
+" make sure relative line numbers are used.
 autocmd FileType nerdtree setlocal relativenumber
 " Fix conflix with vim-tmux-navigator
 let g:NERDTreeMapJumpPrevSibling=""
 let g:NERDTreeMapJumpNextSibling=""
 
 
-" Make searches case insensitive by default
+" Make searches case insensitive by default.
 set hlsearch
 set incsearch
 set ignorecase
 set smartcase
 
 
-"" File finding
+"" File finding.
 set path=.,**
 set wildmenu
 set wildignore+=*.o,*.pyc
 
 
-"" Fuzzy finder shortcuts
-"" search for word at cursor
+"" Fuzzy finder shortcuts.
+"" search for word at cursor.
 nnoremap <silent> <Leader>ag :Ag <C-R><C-W><CR>
 
 
-" Disable python2
+" Disable python2.
 let g:loaded_python_provider = 0
 
 
-" Stop sourcing here if nvim does not support lsp
+" Stop sourcing here if nvim does not support lsp.
 if !has('nvim-0.5')
   finish
 endif
 
 
-"" Autocomplete
-" default compe completion settings
+"" Autocomplete.
+" default compe completion settings.
 set completeopt=menuone,noselect
 lua << EOF
 -- Compe setup
