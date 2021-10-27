@@ -10,7 +10,8 @@ if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]
 then
     PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 fi
-export PATH
+
+export PATH="$PATH:~/.local/share/nvim/lspinstall/*/node_modules/.bin/"
 
 # Uncomment the following line if you don't like systemctl's auto-paging feature:
 # export SYSTEMD_PAGER=
