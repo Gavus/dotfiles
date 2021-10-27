@@ -5,51 +5,22 @@ Plug 'preservim/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'ryanoasis/vim-devicons'
-
-" Full path fuzzy file,buffer, mru, tag, .. finder for vim.
-Plug 'kien/ctrlp.vim'
-
-" automatically detect tab or space indention.
-Plug 'Raimondi/yaifa'
-
-" A personal wiki for organizing.
-" press <Leader>ww to get to the wiki.
-Plug 'vimwiki/vimwiki'
-
-" Display git changes next to line number. Move with [c or ]c.
-Plug 'airblade/vim-gitgutter'
-
-" Presenting mode for markdown files. : PresentingStart.
-Plug 'sotte/presenting.vim'
+Plug 'kien/ctrlp.vim' " Full path fuzzy file,buffer, mru, tag, .. finder for vim.
+Plug 'Raimondi/yaifa' " automatically detect tab or space indention.
+Plug 'vimwiki/vimwiki' " A personal wiki for organizing. press <Leader>ww to get to the wiki.
+Plug 'airblade/vim-gitgutter' " Display git changes next to line number. Move with [c or ]c.
+Plug 'sotte/presenting.vim' " Presenting mode for markdown files. : PresentingStart.
+Plug 'christoomey/vim-tmux-navigator' " Navigate easily with tmux and vim.
+Plug 'Raimondi/delimitMate' " automatic closing of quotes, parenthesis, brackets, etc.
+Plug 'tpope/vim-fugitive' " git in vim
 
 if has('nvim-0.5')
-  " Languageserver configs.
-  Plug 'neovim/nvim-lspconfig'
-
-  " Adds LspInstall <language>.
-  Plug 'kabouzeid/nvim-lspinstall'
-
-  " markdown preview.
-  " :MarkdownPreview.
-  Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
-
-
-  " recommended autocompletion with lsp.
-  Plug 'hrsh7th/nvim-compe'
+  Plug 'neovim/nvim-lspconfig' " Languageserver configs.
+  Plug 'kabouzeid/nvim-lspinstall' " Easy Lsp install. LspInstall <language>.
+  Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']} " :MarkdownPreview
+  Plug 'hrsh7th/nvim-compe' " recommended autocompletion with lsp.
 endif
 
-" Navigate easily with tmux and vim.
-Plug 'christoomey/vim-tmux-navigator'
-
-" fuzzy finder.
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-
-" automatic closing of quotes, parenthesis, brackets, etc.
-Plug 'Raimondi/delimitMate'
-
-" git in vim
-Plug 'tpope/vim-fugitive'
 
 " List ends here. Plugins become visible to Vim after this call.
 call plug#end()
@@ -279,7 +250,7 @@ end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { "pyright", "clangd", "tsserver" }
+local servers = { "pyright", "clangd" }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup { on_attach = on_attach }
 end
