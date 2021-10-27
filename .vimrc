@@ -1,22 +1,22 @@
 " Plugins will be downloaded under the specified directory.
 call plug#begin('~/.vim/plugged')
 " Declare the list of plugins.
-Plug 'preservim/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-Plug 'ryanoasis/vim-devicons'
+Plug 'preservim/nerdtree' " A file explorer.
+Plug 'Xuyuanp/nerdtree-git-plugin' " Adds icons for git changes in nerd tree.
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight' " Nice icons for nerd tree, requires vim-devicons.
+Plug 'ryanoasis/vim-devicons' " Makes it possible to use nerd font(?).
 Plug 'kien/ctrlp.vim' " Full path fuzzy file,buffer, mru, tag, .. finder for vim.
-Plug 'Raimondi/yaifa' " automatically detect tab or space indention.
+Plug 'Raimondi/yaifa' " Automatically detect tab or space indention.
 Plug 'vimwiki/vimwiki' " A personal wiki for organizing. press <Leader>ww to get to the wiki.
 Plug 'airblade/vim-gitgutter' " Display git changes next to line number. Move with [c or ]c.
 Plug 'sotte/presenting.vim' " Presenting mode for markdown files. : PresentingStart.
 Plug 'christoomey/vim-tmux-navigator' " Navigate easily with tmux and vim.
-Plug 'Raimondi/delimitMate' " automatic closing of quotes, parenthesis, brackets, etc.
-Plug 'tpope/vim-fugitive' " git in vim
+Plug 'Raimondi/delimitMate' " Automatic closing of quotes, parenthesis, brackets, etc.
+Plug 'tpope/vim-fugitive' " Git in vim
 
 if has('nvim-0.5')
   Plug 'neovim/nvim-lspconfig' " Languageserver configs.
-  Plug 'hrsh7th/cmp-nvim-lsp' "Recommended autocomplete.
+  Plug 'hrsh7th/cmp-nvim-lsp' " Recommended autocomplete.
   Plug 'hrsh7th/cmp-buffer'
   Plug 'hrsh7th/cmp-path'
   Plug 'hrsh7th/cmp-cmdline'
@@ -108,23 +108,21 @@ map q <Nop>
 
 
 " Nerdtree.
+" Open nerdtree.
 map <C-n> :NERDTreeToggle<CR>
+" Locate open buffer in nerdtree.
 nmap ,n :NERDTreeFind<CR>
-let NERDTreeIgnore=['\.o$', '\.so.*$', '\.pyc$', '\~']
+let NERDTreeIgnore=['\.o$', '\.so.*$', '\.pyc$', '\~'] " Ignore certain filetypes.
 let g:NERDTreeWinPos = "right"
+let NERDTreeShowLineNumbers=1 " Enable line numbers.
+autocmd FileType nerdtree setlocal relativenumber " Make sure relative line numbers are used.
+" Fix conflix with vim-tmux-navigator
+let g:NERDTreeMapJumpPrevSibling=""
+let g:NERDTreeMapJumpNextSibling=""
 
 
 " Needed by vim-devicons.
 set encoding=UTF-8
-
-
-" enable line numbers.
-let NERDTreeShowLineNumbers=1
-" make sure relative line numbers are used.
-autocmd FileType nerdtree setlocal relativenumber
-" Fix conflix with vim-tmux-navigator
-let g:NERDTreeMapJumpPrevSibling=""
-let g:NERDTreeMapJumpNextSibling=""
 
 
 " Make searches case insensitive by default.
@@ -140,17 +138,14 @@ set wildmenu
 set wildignore+=*.o,*.pyc
 
 
-"" Fuzzy finder shortcuts.
-"" search for word at cursor.
+" Fuzzy finder shortcuts. Search for word at cursor.
 nnoremap <silent> <Leader>ag :Ag <C-R><C-W><CR>
 
 
-" Disable python2.
-let g:loaded_python_provider = 0
+let g:loaded_python_provider = 0 " Disable python2.
 
 
-" Stop sourcing here if nvim does not support lsp.
-if !has('nvim-0.5')
+if !has('nvim-0.5') " Stop sourcing here if nvim does not support lsp.
   finish
 endif
 
@@ -247,7 +242,7 @@ end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { "pyright", "clangd", "vimls" }
+local servers = { "clangd", "pyright", "vimls" }
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup { on_attach = on_attach, capabilities = capabilities }
