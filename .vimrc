@@ -13,6 +13,8 @@ Plug 'sotte/presenting.vim' " Presenting mode for markdown files. : PresentingSt
 Plug 'christoomey/vim-tmux-navigator' " Navigate easily with tmux and vim.
 Plug 'Raimondi/delimitMate' " Automatic closing of quotes, parenthesis, brackets, etc.
 Plug 'tpope/vim-fugitive' " Git in vim
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 
 if has('nvim-0.5')
   Plug 'neovim/nvim-lspconfig' " Languageserver configs.
@@ -138,7 +140,8 @@ set wildmenu
 set wildignore+=*.o,*.pyc
 
 
-" Fuzzy finder shortcuts. Search for word at cursor.
+"" Fuzzy finder shortcuts
+"" search for word at cursor
 nnoremap <silent> <Leader>ag :Ag <C-R><C-W><CR>
 
 
