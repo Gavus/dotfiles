@@ -4,7 +4,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'preservim/nerdtree' " A file explorer.
 Plug 'Xuyuanp/nerdtree-git-plugin' " Adds icons for git changes in nerd tree.
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight' " Nice icons for nerd tree, requires vim-devicons.
-Plug 'ryanoasis/vim-devicons' " Makes it possible to use nerd font(?).
+Plug 'ryanoasis/vim-devicons' " Makes it possible to use nerd iconds. Download Source Code Pro Nerd Font.
 Plug 'kien/ctrlp.vim' " Full path fuzzy file,buffer, mru, tag, .. finder for vim.
 Plug 'Raimondi/yaifa' " Automatically detect tab or space indention.
 Plug 'vimwiki/vimwiki' " A personal wiki for organizing. press <Leader>ww to get to the wiki.
