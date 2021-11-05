@@ -36,6 +36,7 @@ alias dc="docker-compose"
 alias vimwiki="vim -c VimwikiIndex"
 
 
+export PS1="[\u@\h] [\w] [$(git rev-parse --abbrev-ref HEAD)]\n\$ "
 export VISUAL=nvim
 export EDITOR="$VISUAL"
 export UID
