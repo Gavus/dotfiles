@@ -36,7 +36,15 @@ alias dc="docker-compose"
 alias vimwiki="vim -c VimwikiIndex"
 
 
-export PS1="[\u@\h] [\w] [$(git rev-parse --abbrev-ref HEAD)]\n\$ "
+parse_git_branch() {
+	git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
+}
+GREEN="\e[0;32m"
+RED="\e[0;31m"
+BROWN="\e[0;33m"
+STOP_COLOR="\e[m"
+
+export PS1="${GREEN}\u@\h ${BROWN}\w ${RED}\$(parse_git_branch)${STOP_COLOR}\n\$ "
 export VISUAL=nvim
 export EDITOR="$VISUAL"
 export UID

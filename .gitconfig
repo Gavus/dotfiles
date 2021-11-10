@@ -8,6 +8,7 @@
 	ca = "commit  --amend"
 	co = "checkout"
 	d = "diff"
+	ds = "diff --staged"
 	l = "log"
 	m = "merge"
 	r = "reset"
@@ -15,3 +16,5 @@
 	su = "submodule update --recursive --init"
 [core]
 	editor = nvim
+[pull]
+	rebase = true
