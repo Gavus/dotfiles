@@ -99,13 +99,6 @@ let g:clipboard = {
       \ }
 
 
-" Indentation settings.
-set tabstop=2
-set softtabstop=2
-set shiftwidth=2
-set expandtab
-
-
 " Disable recording by unmapping its shortcut.
 map q <Nop>
 
