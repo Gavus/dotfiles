@@ -25,8 +25,8 @@ if has('nvim-0.5')
   Plug 'hrsh7th/nvim-cmp'
   Plug 'hrsh7th/cmp-vsnip' " Snipping tool for lsp.
   Plug 'hrsh7th/vim-vsnip'
-  Plug 'kabouzeid/nvim-lspinstall' " Easy Lsp install. LspInstall <language>.
-  Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']} " :MarkdownPreview
+  Plug 'williamboman/nvim-lsp-installer' " Easy Lsp install. :LspInstall <language>.
+  Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']} " :MarkdownPreview.
 endif
 
 
@@ -53,6 +53,7 @@ set encoding=utf8
 autocmd FileType c set colorcolumn=80
 autocmd FileType python set colorcolumn=128
 hi ColorColumn ctermbg=darkgray
+hi Pmenu ctermbg=blue
 
 
 " Sort each word in visual mode.
