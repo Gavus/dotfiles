@@ -5,6 +5,11 @@ if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
 
+# bash autocomplete
+if [ -f /etc/profile.d/bash_completion.sh ]; then
+	. /etc/profile.d/bash_completion.sh
+fi
+
 # User specific environment
 if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]
 then
