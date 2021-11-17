@@ -10,6 +10,7 @@
 	d = "diff"
 	ds = "diff --staged"
 	l = "log"
+	lg = "log --graph --oneline --all"
 	m = "merge"
 	r = "reset"
 	s = "status"
