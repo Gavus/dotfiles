@@ -13,18 +13,19 @@ Plug 'sotte/presenting.vim' " Presenting mode for markdown files. : PresentingSt
 Plug 'christoomey/vim-tmux-navigator' " Navigate easily with tmux and vim.
 Plug 'Raimondi/delimitMate' " Automatic closing of quotes, parenthesis, brackets, etc.
 Plug 'tpope/vim-fugitive' " Git in vim
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " :Ag whatever
+Plug 'junegunn/fzf.vim' 
+Plug 'vim-scripts/DoxygenToolkit.vim' " Add doxygen comment with :Dox
 
 if has('nvim-0.5')
-  Plug 'neovim/nvim-lspconfig'
-  Plug 'hrsh7th/cmp-nvim-lsp'
-  Plug 'hrsh7th/cmp-buffer'
-  Plug 'hrsh7th/cmp-path'
-  Plug 'hrsh7th/cmp-cmdline'
-  Plug 'hrsh7th/nvim-cmp'
+  Plug 'neovim/nvim-lspconfig' " Language server configs.
+  Plug 'hrsh7th/cmp-nvim-lsp' " Autocomplete with lsp.
+  Plug 'hrsh7th/cmp-buffer' " Autocomplete inside buffer.
+  Plug 'hrsh7th/cmp-path' " Autocomplete in path.
+  Plug 'hrsh7th/cmp-cmdline' " Autocomplete in cmdline (:).
+  Plug 'hrsh7th/nvim-cmp' " The actual autocomplete plugin.
+  Plug 'saadparwaiz1/cmp_luasnip' "Autocomplete snipping tool.
   Plug 'L3MON4D3/LuaSnip' " For luasnip users.
-  Plug 'saadparwaiz1/cmp_luasnip'
   Plug 'williamboman/nvim-lsp-installer' " Easy Lsp install. :LspInstall <language>.
   Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']} " :MarkdownPreview.
 endif
@@ -49,6 +50,7 @@ set relativenumber
 set showmatch
 set list
 set encoding=utf8
+filetype plugin indent on "
 autocmd FileType c set colorcolumn=80
 autocmd FileType python set colorcolumn=128
 hi ColorColumn ctermbg=darkgray
