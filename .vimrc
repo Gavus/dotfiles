@@ -24,8 +24,9 @@ if has('nvim-0.5')
   Plug 'hrsh7th/cmp-path' " Autocomplete in path.
   Plug 'hrsh7th/cmp-cmdline' " Autocomplete in cmdline (:).
   Plug 'hrsh7th/nvim-cmp' " The actual autocomplete plugin.
-  Plug 'saadparwaiz1/cmp_luasnip' "Autocomplete snipping tool.
-  Plug 'L3MON4D3/LuaSnip' " For luasnip users.
+  Plug 'hrsh7th/cmp-vsnip' " Autocomplete snippets.
+  Plug 'hrsh7th/vim-vsnip' " VSCode(LSP)'s snippet feature in vim.
+  Plug 'rafamadriz/friendly-snippets' " The actual snippets.
   Plug 'williamboman/nvim-lsp-installer' " Easy Lsp install. :LspInstall <language>.
   Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']} " :MarkdownPreview.
 endif
@@ -68,6 +69,8 @@ hi Pmenu ctermbg=blue
 " zr - open all folds by level.
 autocmd Filetype c set foldmethod=syntax
 autocmd Filetype c set foldnestmax=1
+autocmd Filetype go set foldmethod=syntax
+autocmd Filetype go set foldnestmax=1
 autocmd Filetype python set foldmethod=indent
 autocmd Filetype python set foldnestmax=2
 
@@ -102,6 +105,10 @@ let g:clipboard = {
 
 " Disable recording by unmapping its shortcut.
 map q <Nop>
+
+
+" Ctrlp Settings
+let g:ctrlp_show_hidden = 1
 
 
 " Nerdtree.
@@ -141,6 +148,9 @@ nnoremap <silent> <Leader>ag :Ag <C-R><C-W><CR>
 
 
 let g:loaded_python_provider = 0 " Disable python2.
+
+
+set completeopt=menu,menuone,noselect " Settings for insert mode completion.
 
 
 if !has('nvim-0.5') " Stop sourcing here if nvim does not support lsp.
