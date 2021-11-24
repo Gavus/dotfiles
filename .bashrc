@@ -53,6 +53,10 @@ RED="\e[0;31m"
 BROWN="\e[0;33m"
 STOP_COLOR="\e[m"
 
+agv () {
+	ag $1 | awk -F: 'NR==1{printf "%s +%s", $1, $2}' | xargs -r nvim
+}
+
 export PS1="${GREEN}\u@\h${TOOLBOX_NAME} ${BROWN}\w ${RED}\$(parse_git_branch)${STOP_COLOR}\n\$ "
 export VISUAL=nvim
 export EDITOR="$VISUAL"
