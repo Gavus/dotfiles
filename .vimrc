@@ -87,20 +87,22 @@ let g:vimwiki_list = [{'path': '~/vimwiki/',
 set mouse=a
 
 
-" Share clipboard with tmux.
-set clipboard+=unnamedplus
-let g:clipboard = {
-      \   'name': 'myClipboard',
-      \   'copy': {
-      \      '+': ['tmux', 'load-buffer', '-'],
-      \      '*': ['tmux', 'load-buffer', '-'],
-      \    },
-      \   'paste': {
-      \      '+': ['tmux', 'save-buffer', '-'],
-      \      '*': ['tmux', 'save-buffer', '-'],
-      \   },
-      \   'cache_enabled': 1,
-      \ }
+if executable('tmux')
+  " Share clipboard with tmux.
+  set clipboard+=unnamedplus
+  let g:clipboard = {
+        \   'name': 'myClipboard',
+        \   'copy': {
+        \      '+': ['tmux', 'load-buffer', '-'],
+        \      '*': ['tmux', 'load-buffer', '-'],
+        \    },
+        \   'paste': {
+        \      '+': ['tmux', 'save-buffer', '-'],
+        \      '*': ['tmux', 'save-buffer', '-'],
+        \   },
+        \   'cache_enabled': 1,
+        \ }
+endif
 
 
 " Disable recording by unmapping its shortcut.
