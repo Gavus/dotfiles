@@ -2,7 +2,7 @@
 	name = Gustav Johansson
 	email = gustavsj@outlook.com
 [alias]
-	a = "add ."
+	a = "add"
 	b = "branch"
 	c = "commit"
 	ca = "commit  --amend"
