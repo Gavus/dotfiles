@@ -9,13 +9,11 @@ Plug 'kien/ctrlp.vim' " Full path fuzzy file,buffer, mru, tag, .. finder for vim
 Plug 'Raimondi/yaifa' " Automatically detect tab or space indention.
 Plug 'vimwiki/vimwiki' " A personal wiki for organizing. press <Leader>ww to get to the wiki.
 Plug 'airblade/vim-gitgutter' " Display git changes next to line number. Move with [c or ]c.
-Plug 'sotte/presenting.vim' " Presenting mode for markdown files. : PresentingStart.
 Plug 'christoomey/vim-tmux-navigator' " Navigate easily with tmux and vim.
-Plug 'Raimondi/delimitMate' " Automatic closing of quotes, parenthesis, brackets, etc.
 Plug 'tpope/vim-fugitive' " Git in vim
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " :Ag whatever
 Plug 'junegunn/fzf.vim' 
-Plug 'vim-scripts/DoxygenToolkit.vim' " Add doxygen comment with :Dox
+Plug 'morhetz/gruvbox' " Gruvbox theme.
 
 if has('nvim-0.5')
   Plug 'neovim/nvim-lspconfig' " Language server configs.
@@ -56,6 +54,7 @@ autocmd FileType c set colorcolumn=80
 autocmd FileType python set colorcolumn=128
 hi ColorColumn ctermbg=darkgray
 hi Pmenu ctermbg=blue
+autocmd vimenter * ++nested colorscheme gruvbox
 
 
 " Sort each word in visual mode.
