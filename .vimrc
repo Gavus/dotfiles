@@ -12,8 +12,9 @@ Plug 'airblade/vim-gitgutter' " Display git changes next to line number. Move wi
 Plug 'christoomey/vim-tmux-navigator' " Navigate easily with tmux and vim.
 Plug 'tpope/vim-fugitive' " Git in vim
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " :Ag whatever
-Plug 'junegunn/fzf.vim' 
+Plug 'junegunn/fzf.vim'
 Plug 'morhetz/gruvbox' " Gruvbox theme.
+Plug 'ap/vim-css-color' " Make hex colors show their true color.
 
 if has('nvim-0.5')
   Plug 'neovim/nvim-lspconfig' " Language server configs.

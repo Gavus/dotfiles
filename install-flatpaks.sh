@@ -32,6 +32,7 @@ flatpak install flathub \
 	com.spotify.Client \
 	com.valvesoftware.Steam \
 	com.valvesoftware.Steam.CompatibilityTool.Proton \
+	flathub org.gimp.GIMP \
 	org.mozilla.firefox \
 	org.remmina.Remmina \
 	org.telegram.desktop \
