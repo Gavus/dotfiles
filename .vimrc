@@ -62,6 +62,10 @@ autocmd vimenter * ++nested colorscheme gruvbox
 :vnoremap <Leader>s d:execute 'normal i' . join(sort(split(getreg('"'))), ' ')<CR>
 
 
+" Place swapfiles in same path as original file.
+set directory="."
+
+
 " Folding.
 " zo - opens folds.
 " zc - closes fold.
