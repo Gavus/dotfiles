@@ -30,6 +30,14 @@ fi
 
 unset rc
 
+av () {
+	ag $1 | awk -F: 'NR==1{printf "%s +%s\n", $1, $2}' | xargs -r nvim
+}
+
+fv () {
+	nvim $(find . -wholename "*$1*" -print | head -n 1)
+}
+
 alias vim="nvim"
 alias g="git"
 alias t="toolbox"
@@ -40,9 +48,11 @@ alias l="ls -lah"
 alias vimwiki="vim -c VimwikiIndex"
 
 if [ -f "/run/.containerenv" ]; then
-	TOOLBOX_NAME=-$(cat /run/.containerenv | grep 'name=' | sed -e 's/^name="\(.*\)"$/\1/')
+	TOOLBOX_NAME="$(cat /run/.containerenv | grep 'name=' | sed -e 's/^name="\(.*\)"$/\1/')"
+elif [ -f "/.dockerenv" ]; then
+	TOOLBOX_NAME="docker-$(cat /etc/os-release | grep 'VERSION=' | sed -e 's/^VERSION="\(.*\)"$/\1/')"
 else
-	TOOLBOX_NAME=""
+	TOOLBOX_NAME="\h"
 fi
 
 parse_git_branch() {
@@ -53,15 +63,7 @@ RED="\e[0;31m"
 BROWN="\e[0;33m"
 STOP_COLOR="\e[m"
 
-av () {
-	ag $1 | awk -F: 'NR==1{printf "%s +%s\n", $1, $2}' | xargs -r nvim
-}
-
-fv () {
-	nvim $(find . -wholename "*$1*" -print | head -n 1)
-}
-
-export PS1="${GREEN}\u@\h${TOOLBOX_NAME} ${BROWN}\w ${RED}\$(parse_git_branch)${STOP_COLOR}\n\$ "
+export PS1="${GREEN}\u@${TOOLBOX_NAME} ${BROWN}\w ${RED}\$(parse_git_branch)${STOP_COLOR}\n\$ "
 export VISUAL=nvim
 export EDITOR="$VISUAL"
 export UID
