@@ -1,9 +1,10 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 declare -a files=(\
   .bashrc \
   .bashrc.d \
-  .config/nvim \
+  .config/nvim/init.vim \
+  .config/nvim/lua/init.lua \
   .gitconfig \
   .inputrc \
   .tmux.conf \
@@ -15,6 +16,6 @@ mkdir -p ~/.config/nvim/lua
 
 for file in "${files[@]}"
 do
-  mv ~/$file ~/${file}.bak
+  mv ~/$file ~/${file}.bak 2>/dev/null
   ln -sr $file ~/$file
 done
