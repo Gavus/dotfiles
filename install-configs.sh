@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
 
 declare -a files=(\
-  .config/nvim \
-  .vimrc \
-  .vim \
-  .tmux.conf \
-  .inputrc \
-  .gitconfig \
   .bashrc \
+  .bashrc.d \
+  .config/nvim \
+  .gitconfig \
+  .inputrc \
+  .tmux.conf \
+  .vim \
+  .vimrc \
 )
 
 mkdir -p ~/.config/nvim/lua
