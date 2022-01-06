@@ -1,3 +1,5 @@
+#!/bin/bash -e
+
 if [ -f "/run/.containerenv" ]; then
 	TOOLBOX_NAME="$(cat /run/.containerenv | grep 'name=' | sed -e 's/^name="\(.*\)"$/\1/')"
 elif [ -f "/.dockerenv" ]; then

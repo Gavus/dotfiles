@@ -1,3 +1,5 @@
+#!/bin/bash -e
+
 export VISUAL=nvim
 export EDITOR="$VISUAL"
 export UID
