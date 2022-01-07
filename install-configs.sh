@@ -16,6 +16,6 @@ mkdir -p ~/.config/nvim/lua
 
 for file in "${files[@]}"
 do
-  mv ~/$file ~/${file}.bak 2>/dev/null
+  mv ~/$file ~/${file}.bak
   ln -sr $file ~/$file
 done
