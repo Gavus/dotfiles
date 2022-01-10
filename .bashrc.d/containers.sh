@@ -5,7 +5,15 @@ alias te="toolbox enter"
 alias tc="toolbox create"
 alias tl="toolbox list"
 
-if test $(which podman 2>/dev/null); then
+de() {
+	if test "$#" -ne 1; then
+		echo "de <container-name/container-id>"
+	else
+		docker exec -it $1 bash
+	fi
+}
+
+if test "$(which podman 2>/dev/null)"; then
 	alias docker="podman"
 fi
 
