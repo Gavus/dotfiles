@@ -1,11 +1,23 @@
 #!/bin/bash -e
-if [ ! -d "squashfs-root" ]; then
-	if [ ! -f "nvim.appimage" ]; then
-		wget https://github.com/neovim/neovim/releases/download/v0.6.1/nvim.appimage
-	fi
-	chmod +x ./nvim.appimage
-	./nvim.appimage --appimage-extract
+
+version=v0.6.1
+dirname=nvim-linux64
+installpath=/usr/local/$dirname
+tarfile=$dirname.tar.gz
+url=https://github.com/neovim/neovim/releases/download/$version/$tarfile
+
+if test -d "$installpath"; then
+	echo "nvim $version is already installed"
+	exit 0
 fi
 
-sudo cp -r ./squashfs-root/usr /
-rm -rf ./squashfs-root ./nvim.appimage
+if test ! -d "$dirname"; then
+	if [ ! -f "$tarfile" ]; then
+		wget $url
+	fi
+	tar -xzvf $tarfile
+	rm $tarfile
+fi
+
+mv $dirname $installpath
+ln -srf $installpath/bin/* /usr/local/bin/

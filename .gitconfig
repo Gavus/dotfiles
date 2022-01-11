@@ -6,6 +6,7 @@
 	b = "branch"
 	c = "commit"
 	ca = "commit  --amend"
+	cane = "commit --amend --no-edit"
 	co = "checkout"
 	d = "diff"
 	ds = "diff --staged"

@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash -e
 
 echoerr() { echo "$@" 1>&2; }
 

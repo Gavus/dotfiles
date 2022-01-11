@@ -158,7 +158,7 @@ nnoremap <silent> <Leader>ag :Ag <C-R><C-W><CR>
 
 
 let g:loaded_python_provider = 0 " Disable python2.
-
+let g:python3_host_prog = '/usr/bin/python3'
 
 set completeopt=menu,menuone,noselect " Settings for insert mode completion.
 
