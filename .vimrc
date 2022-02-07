@@ -9,7 +9,6 @@ Plug 'kien/ctrlp.vim' " Full path fuzzy file,buffer, mru, tag, .. finder for vim
 Plug 'Raimondi/yaifa' " Automatically detect tab or space indention.
 Plug 'vimwiki/vimwiki' " A personal wiki for organizing. press <Leader>ww to get to the wiki.
 Plug 'airblade/vim-gitgutter' " Display git changes next to line number. Move with [c or ]c.
-Plug 'christoomey/vim-tmux-navigator' " Navigate easily with tmux and vim.
 Plug 'tpope/vim-fugitive' " Git in vim
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " :Ag whatever
 Plug 'junegunn/fzf.vim'
