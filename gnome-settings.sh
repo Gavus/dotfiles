@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 # misc
-gsettings set org.gnome.desktop.wm.preferences button-layout ":close"
+gsettings set org.gnome.desktop.wm.preferences button-layout ":minimize,close"
 gsettings set org.gnome.desktop.calendar show-weekdate true
 gsettings set org.gnome.desktop.session idle-delay 0
 #gsettings set org.gnome.desktop.interface scaling-factor 2
