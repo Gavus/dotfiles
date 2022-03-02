@@ -52,8 +52,6 @@ set encoding=utf8
 filetype plugin indent on "
 autocmd FileType c set colorcolumn=80
 autocmd FileType python set colorcolumn=128
-hi ColorColumn ctermbg=darkgray
-hi Pmenu ctermbg=blue
 autocmd vimenter * ++nested colorscheme gruvbox
 
 
@@ -76,6 +74,8 @@ autocmd Filetype go set foldmethod=syntax
 autocmd Filetype go set foldnestmax=1
 autocmd Filetype python set foldmethod=indent
 autocmd Filetype python set foldnestmax=2
+" Don't fold comments when foldmenthod is syntax.
+let g:c_no_comment_fold = 1
 
 
 " Settings required by vimwiki.
