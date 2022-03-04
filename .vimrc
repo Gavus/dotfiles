@@ -162,6 +162,9 @@ let g:python3_host_prog = '/usr/bin/python3'
 set completeopt=menu,menuone,noselect " Settings for insert mode completion.
 
 
+"  Always show at least one line above/below the cursor.
+set scrolloff=1
+
 if !has('nvim-0.5') " Stop sourcing here if nvim does not support lsp.
   finish
 endif
