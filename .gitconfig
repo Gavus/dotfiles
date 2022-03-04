@@ -18,6 +18,7 @@
 	su = "submodule update --recursive --init"
 [core]
 	editor = nvim
+	excludesfile = ~/.gitignore
 [pull]
 	rebase = true
 [color]
