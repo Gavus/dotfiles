@@ -12,7 +12,6 @@ Plug 'airblade/vim-gitgutter' " Display git changes next to line number. Move wi
 Plug 'tpope/vim-fugitive' " Git in vim
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " :Ag whatever
 Plug 'junegunn/fzf.vim'
-Plug 'morhetz/gruvbox' " Gruvbox theme.
 Plug 'ap/vim-css-color' " Make hex colors show their true color.
 
 if has('nvim-0.5')
@@ -52,7 +51,8 @@ set encoding=utf8
 filetype plugin indent on "
 autocmd FileType c set colorcolumn=80
 autocmd FileType python set colorcolumn=128
-autocmd vimenter * ++nested colorscheme gruvbox
+hi ColorColumn ctermbg=darkgray " Change color on 'maxcharline'.
+hi Pmenu ctermbg=blue " Change color on 'maxcharline'.
 
 
 " Sort each word in visual mode.
