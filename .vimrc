@@ -13,6 +13,7 @@ Plug 'tpope/vim-fugitive' " Git in vim
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " :Ag whatever
 Plug 'junegunn/fzf.vim'
 Plug 'ap/vim-css-color' " Make hex colors show their true color.
+Plug 'easymotion/vim-easymotion' " vimium like navigation. <Leader><Leader>.
 
 if has('nvim-0.5')
   Plug 'neovim/nvim-lspconfig' " Language server configs.
