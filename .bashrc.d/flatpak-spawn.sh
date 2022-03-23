@@ -1,5 +1,5 @@
 #!/bin/bash -e
 
 host() {
-    h $@
+    flatpak-spawn --host $@
 }
