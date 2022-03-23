@@ -83,14 +83,11 @@ cmp.setup.cmdline(':', {
 -- Add additional capabilities supported by nvim-cmp.
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 -- Enable some language servers with the additional completion capabilities offered by nvim-cmp.
-local servers = { "clangd", "dockerls", "gopls", "html", "pyright", "vimls" }
 local lsp_installer = require('nvim-lsp-installer')
-for _, lsp in ipairs(servers) do
-  lsp_installer.on_server_ready(function(server)
-    local opts = {
-      on_attach = on_attach,
-      capabilities = capabilities,
-    }
-    server:setup(opts)
-  end)
-end
+lsp_installer.on_server_ready(function(server)
+  local opts = {
+    on_attach = on_attach,
+    capabilities = capabilities,
+  }
+  server:setup(opts)
+end)
