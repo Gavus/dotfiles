@@ -11,13 +11,3 @@ alias v="nvim"
 alias vi="nvim"
 alias vim="nvim"
 alias vimwiki="vim -c VimwikiIndex"
-
-# Open nvim where git detected changes.
-vg() {
-	nvim +"Git difftool $@"
-}
-
-# Open nvim and ag search.
-va() {
-	nvim +"Ag $@"
-}
