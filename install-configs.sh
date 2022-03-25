@@ -1,23 +1,20 @@
 #!/bin/bash
 
-declare -a files=(\
-  .bashrc \
-  .bashrc.d \
-  .config/nvim/init.vim \
-  .config/nvim/lua/init.lua \
-  .gitconfig \
-  .inputrc \
-  .tmux.conf \
-  .vim \
-  .vimrc \
+declare -a symlinks=(\
+	.bashrc \
+	.bashrc.d \
+	.config/nvim \
+	.inputrc \
+	.tmux.conf \
+	.vim \
+	.vimrc \
 )
 
-mkdir -p ~/.config/nvim/lua
+mkdir ~/.config/nvim -p
 
-for file in "${files[@]}"
-do
-  mv ~/$file ~/${file}.bak
-  ln -sr $file ~/$file
+for file in "${symlinks[@]}"; do
+	mv ~/$file ~/${file}.bak; true
+	ln -sr $file ~/$file
 done
 
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+test ! -d "~/.tmux/plugins/tpm" || git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm

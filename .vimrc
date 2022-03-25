@@ -14,7 +14,6 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " :Ag whatever
 Plug 'junegunn/fzf.vim'
 Plug 'ap/vim-css-color' " Make hex colors show their true color.
 Plug 'easymotion/vim-easymotion' " vimium like navigation. <Leader><Leader>.
-Plug 'christoomey/vim-tmux-navigator' " Easy navigation between vim and tmux.
 
 if has('nvim-0.5')
   Plug 'neovim/nvim-lspconfig' " Language server configs.
@@ -27,7 +26,11 @@ if has('nvim-0.5')
   Plug 'hrsh7th/vim-vsnip' " VSCode(LSP)'s snippet feature in vim.
   Plug 'rafamadriz/friendly-snippets' " The actual snippets.
   Plug 'williamboman/nvim-lsp-installer' " Easy Lsp install. :LspInstall <language>.
-  Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']} " :MarkdownPreview.
+  Plug 'nvim-treesitter/nvim-treesitter'
+  Plug 'akinsho/toggleterm.nvim' " Create a terminal inside nvim with :toggleterm.
+  Plug 'ellisonleao/gruvbox.nvim' " Gruvbox theme.
+  Plug 'nvim-lualine/lualine.nvim' " A fancy new status line.
+  Plug 'oberblastmeister/zoom.nvim' " Zoom a window and the unzoom with :zoom.
 endif
 
 
@@ -176,3 +179,4 @@ endif
 lua << EOF
   require('init')
 EOF
+
