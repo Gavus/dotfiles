@@ -1,6 +1,6 @@
 local config = {
   -- Theme
-  colorscheme = "gruvbox",
+  colorscheme = "default_theme",
   -- Default theme configuration
   default_theme = {
     diagnostics_style = "none",
@@ -10,7 +10,7 @@ local config = {
     },
     -- Modify the highlight groups
     highlights = function(highlights)
-      local C = require "gruvbox.colors"
+      local C = require "default_theme.colors"
 
       highlights.Normal = { fg = C.fg, bg = C.bg }
       return highlights
@@ -26,9 +26,11 @@ local config = {
   plugins = {
     -- Add plugins, the packer syntax without the "use"
     init = {
-      { "ellisonleao/gruvbox.nvim" },
-      { "ctrlpvim/ctrlp.vim" },
       { "tpope/vim-fugitive" },
+      { "nmac427/guess-indent.nvim",
+         config = function() require('guess-indent').setup {} end, 
+      },
+      { "aserowy/tmux.nvim" },
     },
     -- All other entries override the setup() call for default plugins
     treesitter = {
@@ -37,7 +39,7 @@ local config = {
     packer = {
       compile_path = vim.fn.stdpath "config" .. "/lua/packer_compiled.lua",
     },
-    nvimtree = {
+    ["nvimtree"] = {
       view = {
         side = "right",
         number = true,
