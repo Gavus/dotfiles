@@ -1,17 +1,15 @@
 #!/bin/bash
 
-declare -a files=(\
-  .bashrc \
-  .bashrc.d \
-  .gitconfig \
-  .inputrc \
-  .tmux.conf \
+declare -a symlinks=(\
+	.bashrc \
+	.bashrc.d \
+	.inputrc \
+	.tmux.conf \
 )
 
-for file in "${files[@]}"
-do
-  mv ~/$file ~/${file}.bak
-  ln -sr $file ~/$file
+for file in "${symlinks[@]}"; do
+	mv ~/$file ~/${file}.bak; true
+	ln -sr $file ~/$file
 done
 
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+test ! -d "~/.tmux/plugins/tpm" || git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
