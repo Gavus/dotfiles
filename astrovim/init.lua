@@ -1,8 +1,6 @@
 local config = {
-
-  -- Set colorscheme
-  colorscheme = "default_theme",
-
+  -- Theme
+  colorscheme = "gruvbox",
   -- Default theme configuration
   default_theme = {
     diagnostics_style = "none",
@@ -12,7 +10,7 @@ local config = {
     },
     -- Modify the highlight groups
     highlights = function(highlights)
-      local C = require "default_theme.colors"
+      local C = require "gruvbox.colors"
 
       highlights.Normal = { fg = C.fg, bg = C.bg }
       return highlights
@@ -21,35 +19,16 @@ local config = {
 
   -- Disable default plugins
   enabled = {
-    bufferline = true,
-    nvim_tree = true,
-    lualine = true,
-    lspsaga = true,
-    gitsigns = true,
-    colorizer = true,
-    toggle_term = true,
-    comment = true,
-    symbols_outline = true,
-    indent_blankline = true,
-    dashboard = true,
-    which_key = true,
     neoscroll = false,
-    ts_rainbow = true,
-    ts_autotag = true,
   },
 
   -- Configure plugins
   plugins = {
     -- Add plugins, the packer syntax without the "use"
     init = {
-      -- { "andweeb/presence.nvim" },
-      -- {
-      --   "ray-x/lsp_signature.nvim",
-      --   event = "BufRead",
-      --   config = function()
-      --     require("lsp_signature").setup()
-      --   end,
-      -- },
+      { "ellisonleao/gruvbox.nvim" },
+      { "ctrlpvim/ctrlp.vim" },
+      { "tpope/vim-fugitive" },
     },
     -- All other entries override the setup() call for default plugins
     treesitter = {
@@ -57,6 +36,13 @@ local config = {
     },
     packer = {
       compile_path = vim.fn.stdpath "config" .. "/lua/packer_compiled.lua",
+    },
+    nvimtree = {
+      view = {
+        side = "right",
+        number = true,
+        relativenumber = true,
+      },
     },
   },
 
@@ -69,7 +55,6 @@ local config = {
   ["which-key"] = {
     -- Add bindings to the normal mode <leader> mappings
     register_n_leader = {
-      -- ["N"] = { "<cmd>tabnew<cr>", "New Buffer" },
     },
   },
 

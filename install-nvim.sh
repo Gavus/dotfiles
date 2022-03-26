@@ -28,15 +28,17 @@ install-nvim() {
 }
 
 install-astrovim() {
-  if test -d "~/.config/nvim"; then
-    echo "a nvim configuration already exists."
+  if test "$(git -C ~/.config/nvim remote get-url origin)" == "https://github.com/kabinspace/AstroVim"; then
+    echo astrovim is already installed;
     return
   fi
+  nvim +PackerSync
+	ln -srf ./astrovim ~/.config/nvim/lua/user
+}
 
-	git clone https://github.com/kabinspace/AstroVim ~/.config/nvim
-	nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
-	mkdir -p ~/.config/nvim/lua/user
-	ln -srf ./astrovim-config.lua ~/.config/nvim/lua/user/init.lua
+install-dependencies-ubuntu() {
+  sudo apt install -y python3-pip clangd gcc unzip
+  pip3 install pynvim
 }
 
 install-nvim
