@@ -31,6 +31,7 @@ local config = {
          config = function() require('guess-indent').setup {} end, 
       },
       { "aserowy/tmux.nvim" },
+      { "ellisonleao/gruvbox.nvim" }
     },
     -- All other entries override the setup() call for default plugins
     treesitter = {
