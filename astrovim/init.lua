@@ -28,7 +28,7 @@ local config = {
     init = {
       { "tpope/vim-fugitive" },
       { "nmac427/guess-indent.nvim",
-         config = function() require('guess-indent').setup {} end, 
+         config = function() require('guess-indent').setup {} end,
       },
       { "aserowy/tmux.nvim" },
       { "ellisonleao/gruvbox.nvim" }
@@ -40,7 +40,7 @@ local config = {
     packer = {
       compile_path = vim.fn.stdpath "config" .. "/lua/packer_compiled.lua",
     },
-    ["nvimtree"] = {
+    ["nvim-tree"] = {
       view = {
         side = "right",
         number = true,
