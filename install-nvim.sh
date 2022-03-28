@@ -31,13 +31,13 @@ install-astrovim() {
 	if test "$(git -C ~/.config/nvim remote get-url origin)" == "https://github.com/kabinspace/AstroVim"; then
 		echo astrovim is already installed;
 		return
-  	fi
-  mkdir -p ~/.config
+		fi
+	mkdir -p ~/.config
 	git clone https://github.com/kabinspace/AstroVim ~/.config/nvim
-  mkdir -p ~/.config/nvim/lua/user
-	ln -srf ./astrovim/init.lua ~/.config/nvim/lua/user/
+	ln -srf ./astrovim ~/.config/nvim/lua/user
 	nvim +PackerSync
 }
+
 
 install-dependencies-ubuntu() {
 	sudo apt install -y python3-pip clangd gcc unzip

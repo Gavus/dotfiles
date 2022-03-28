@@ -1,3 +1,7 @@
+-- Show tabs
+vim.opt.listchars="tab:▷▷"
+vim.opt.list = true
+
 -- Load gruvbox theme if available
 local colorscheme = "default_theme"
 local colorscheme_avail, _ = pcall(require, "gruvbox")
