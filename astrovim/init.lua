@@ -33,18 +33,32 @@ local config = {
   plugins = {
     -- Add plugins, the packer syntax without the "use"
     init = {
-      { "tpope/vim-fugitive" },
-      { "nmac427/guess-indent.nvim",
-         config = function() require('guess-indent').setup {} end,
+      { "tpope/vim-fugitive" }, -- Git in nvim
+      { "nmac427/guess-indent.nvim", -- Guess tabs or whitespace indention
+        config = function() require('guess-indent').setup {} end,
       },
-      { "aserowy/tmux.nvim" },
-      { "ellisonleao/gruvbox.nvim" }
+      { "aserowy/tmux.nvim" }, -- Make copypaste between tmux and vim work
+      { "ellisonleao/gruvbox.nvim" }, -- The theme
     },
-    ["nvim-tree"] = {
+    ["nvim-tree"] = { -- File explorer
       view = {
-        side = "right",
         number = true,
         relativenumber = true,
+        side = "right",
+      },
+    },
+  },
+
+  -- Modify which-key registration
+  ["which-key"] = {
+    -- Add bindings to the normal mode <leader> mappings
+    register_n_leader = {
+      ["lk"] = { "<cmd>lua vim.lsp.buf.signature_help()<CR>", "Signature help" },
+      ["lh"] = { "<cmd>lua vim.lsp.buf.hover()<CR>", "Hover" },
+      lg = {
+        name = "Goto",
+        d = { "<cmd>lua vim.lsp.buf.definition()<CR>", "Definition" },
+        D = { "<cmd>lua vim.lsp.buf.declaration()<CR>", "Declaration" },
       },
     },
   },
