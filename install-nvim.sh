@@ -30,12 +30,13 @@ install-nvim() {
 install-astrovim() {
 	if test "$(git -C ~/.config/nvim remote get-url origin)" == "https://github.com/kabinspace/AstroVim"; then
 		echo astrovim is already installed;
-		return
-		fi
-	mkdir -p ~/.config
-	git clone https://github.com/kabinspace/AstroVim ~/.config/nvim
-	ln -srf ./astrovim ~/.config/nvim/lua/user
+	else
+		mkdir -p ~/.config
+		git clone https://github.com/kabinspace/AstroVim ~/.config/nvim
+		ln -srf ./astrovim ~/.config/nvim/lua/user
+	fi
 	nvim +PackerSync
+	ln -srf ./astrovim ~/.config/nvim/lua/user
 }
 
 
