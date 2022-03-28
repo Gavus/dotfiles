@@ -32,10 +32,11 @@ install-astrovim() {
 		echo astrovim is already installed;
 		return
   	fi
-  	mkdir -p ~/.config/nvim
-  	git clone https://github.com/kabinspace/AstroVim ~/.config/nvim
-  	nvim +PackerSync
-	ln -srf ./astrovim ~/.config/nvim/lua/user
+  mkdir -p ~/.config
+	git clone https://github.com/kabinspace/AstroVim ~/.config/nvim
+  mkdir -p ~/.config/nvim/lua/user
+	ln -srf ./astrovim/init.lua ~/.config/nvim/lua/user/
+	nvim +PackerSync
 }
 
 install-dependencies-ubuntu() {

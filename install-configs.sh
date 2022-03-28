@@ -12,4 +12,6 @@ for file in "${symlinks[@]}"; do
 	ln -sr $file ~/$file
 done
 
-test ! -d "~/.tmux/plugins/tpm" || git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+if test ! -d "~/.tmux/plugins/tpm"; then
+	git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+fi
