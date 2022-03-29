@@ -1,5 +1,5 @@
 -- Show tabs
-vim.opt.listchars="tab:▷▷"
+vim.opt.listchars="tab:▷▷,space:⋅,eol:↴"
 vim.opt.list = true
 
 -- Load gruvbox theme if available
