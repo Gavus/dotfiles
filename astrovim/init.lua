@@ -39,6 +39,11 @@ local config = {
       },
       { "aserowy/tmux.nvim" }, -- Make copypaste between tmux and vim work
       { "ellisonleao/gruvbox.nvim" }, -- The theme
+      { "sakhnik/nvim-gdb", -- Gdb wrapper
+        run = 'bash install.sh',
+        opt = true,
+        setup = [[vim.cmd('packadd nvim-gdb')]],
+      },
     },
     ["nvim-tree"] = { -- File explorer
       view = {
