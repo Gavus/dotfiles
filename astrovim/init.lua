@@ -1,6 +1,7 @@
--- Show tabs
+-- Various setting.
 vim.opt.listchars="tab:▷▷,space:⋅,eol:↴"
 vim.opt.list = true
+vim.g.vimwiki_list = {{path = '~/vimwiki', syntax = 'markdown', ext = '.md'}}
 
 -- Load gruvbox theme if available
 local colorscheme = "default_theme"
@@ -39,17 +40,20 @@ local config = {
       },
       { "aserowy/tmux.nvim" }, -- Make copypaste between tmux and vim work
       { "ellisonleao/gruvbox.nvim" }, -- The theme
-      { "sakhnik/nvim-gdb", -- Gdb wrapper
+      { "sakhnik/nvim-gdb", -- Gdb wrapper -> :GdbStart *args*
         run = 'bash install.sh',
         opt = true,
         setup = [[vim.cmd('packadd nvim-gdb')]],
       },
+      { "vimwiki/vimwiki", -- Add vimwiki.
+        setup = [[vim.cmd('packadd vimwiki')]],
+      },
     },
-    ["nvim-tree"] = { -- File explorer
-      view = {
-        number = true,
-        relativenumber = true,
-        side = "right",
+    ["neo-tree"] = { -- File explorer
+      close_if_last_window = true,
+      window = {
+        position = "right",
+        width = 30,
       },
     },
   },
@@ -64,6 +68,18 @@ local config = {
         name = "Goto",
         d = { "<cmd>lua vim.lsp.buf.definition()<CR>", "Definition" },
         D = { "<cmd>lua vim.lsp.buf.declaration()<CR>", "Declaration" },
+      },
+      v = {
+        name = "Vimwiki",
+        i = {"<cmd>VimwikiIndex<CR>", "Index"},
+        d = {"<cmd>VimwikiDiaryIndex<CR>", "Diary index"},
+        t = {"<cmd>VimwikiMakeDiaryNote<CR>", "Make diary note"},
+        y = {"<cmd>VimwikiMakeYesterdayDiaryNote<CR>", "Make yesterday diary note"},
+        g = {
+          name = "Generate",
+          d = {"<cmd>VimwikiDiaryGenerateLinks<CR>", "Update diary section"},
+          i = {"<cmd>VimwikiGenerateLinks<CR>", "Generate links"},
+        },
       },
     },
   },
