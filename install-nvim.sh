@@ -1,5 +1,12 @@
 #!/bin/bash -e
 
+force=0
+if test "$#" -eq 1; then
+	if test "$1" == "--force"; then
+		force=1
+	fi
+fi
+
 install-nvim() {
 	version=v0.6.1
 	dirname=nvim-linux64
@@ -10,7 +17,7 @@ install-nvim() {
 	
 	mkdir -p $binpath
 	
-	if test -d "$installpath"; then
+	if test -d "$installpath" && test "$force" -eq 0; then
 		echo "nvim $version is already installed"
 		return
 	fi
@@ -28,17 +35,14 @@ install-nvim() {
 }
 
 install-astrovim() {
-	if test "$(git -C ~/.config/nvim remote get-url origin)" == "https://github.com/kabinspace/AstroVim"; then
-		echo astrovim is already installed;
-	else
-		mkdir -p ~/.config
-		git clone https://github.com/kabinspace/AstroVim ~/.config/nvim
-		ln -srf ./astrovim ~/.config/nvim/lua/user
-	fi
-	nvim +PackerSync
+	mkdir -p ~/.config
+	rm -rf ~/.config/nvim ~/.local/nvim ~/.cache/nvim
+	git clone https://github.com/kabinspace/AstroVim ~/.config/nvim
 	ln -srf ./astrovim ~/.config/nvim/lua/user
+	nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
+	nvim --headless -c 'TSInstallSync maintained' -c q
+	nvim --headless -c 'LspInstall --sync bashls clangd gopls pyright remark_ls sumneko_lua vimls yamlls' -c q
 }
-
 
 install-dependencies-ubuntu() {
 	sudo apt install -y python3-pip clangd gcc unzip
