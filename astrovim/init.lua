@@ -36,7 +36,9 @@ local config = {
     init = {
       { "tpope/vim-fugitive" }, -- Git in nvim
       { "nmac427/guess-indent.nvim", -- Guess tabs or whitespace indention
-        config = function() require('guess-indent').setup {} end,
+        config = function() require('guess-indent').setup {
+          auto_cmd = true,
+        } end,
       },
       { "aserowy/tmux.nvim" }, -- Make copypaste between tmux and vim work
       { "ellisonleao/gruvbox.nvim" }, -- The theme
@@ -69,8 +71,8 @@ local config = {
   ["which-key"] = {
     -- Add bindings to the normal mode <leader> mappings
     register_n_leader = {
-      ["lk"] = { "<cmd>lua vim.lsp.buf.signature_help()<CR>", "Signature help" },
-      ["lh"] = { "<cmd>lua vim.lsp.buf.hover()<CR>", "Hover" },
+      lh = { "<cmd>lua vim.lsp.buf.signature_help()<CR>", "Signature help" },
+      lk = { "<cmd>lua vim.lsp.buf.hover()<CR>", "Hover" },
       lg = {
         name = "Goto",
         d = { "<cmd>lua vim.lsp.buf.definition()<CR>", "Definition" },
