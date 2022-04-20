@@ -8,9 +8,9 @@ if test "$#" -eq 1; then
 fi
 
 install-nvim() {
-	version=v0.6.1
+	version=v0.7.0
 	dirname=nvim-linux64
-	installpath=$HOME/.local/$dirname
+	installpath=$HOME/.local/$dirname-$version
 	tarfile=$dirname.tar.gz
 	url=https://github.com/neovim/neovim/releases/download/$version/$tarfile
 	binpath=$HOME/.local/bin
@@ -40,7 +40,7 @@ install-astrovim() {
 	git clone https://github.com/kabinspace/AstroVim ~/.config/nvim
 	ln -srf ./astrovim ~/.config/nvim/lua/user
 	nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
-	nvim --headless -c 'TSInstallSync maintained' -c q
+	nvim --headless -c 'TSInstallSync all' -c q
 	nvim --headless -c 'LspInstall --sync bashls clangd gopls pyright remark_ls sumneko_lua vimls yamlls' -c q
 }
 
