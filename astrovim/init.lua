@@ -58,13 +58,6 @@ local config = {
         width = 30,
       },
     },
-    bufferline = {
-      highlights = {
-        buffer_selected = {
-        	gui = "underline",
-      	},
-      },
-    },
   },
 
   -- Modify which-key registration
