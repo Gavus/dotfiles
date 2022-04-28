@@ -1,12 +1,5 @@
 #!/bin/bash -e
 
-force=0
-if test "$#" -eq 1; then
-	if test "$1" == "--force"; then
-		force=1
-	fi
-fi
-
 install-nvim() {
 	version=v0.7.0
 	dirname=nvim-linux64
@@ -37,8 +30,8 @@ install-nvim() {
 install-astrovim() {
 	mkdir -p ~/.config
 	rm -rf ~/.config/nvim ~/.local/nvim ~/.cache/nvim
-	git clone https://github.com/kabinspace/AstroVim ~/.config/nvim
-	ln -srf ./astrovim ~/.config/nvim/lua/user
+	git clone https://github.com/kabinspace/AstroNvim ~/.config/nvim
+	ln -srf ./astronvim ~/.config/nvim/lua/user
 	nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
 	nvim --headless -c 'TSInstallSync all' -c q
 	nvim --headless -c 'LspInstall --sync bashls clangd gopls pyright remark_ls sumneko_lua vimls yamlls' -c q
