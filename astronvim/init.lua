@@ -19,7 +19,6 @@ local config = {
     },
     highlights = function(highlights)
       local C = require "default_theme.colors"
-
       highlights.Normal = { fg = C.fg, bg = C.bg }
       return highlights
     end,
@@ -36,9 +35,7 @@ local config = {
     init = {
       { "tpope/vim-fugitive" }, -- Git in nvim
       { "nmac427/guess-indent.nvim", -- Guess tabs or whitespace indention
-        config = function() require('guess-indent').setup {
-          auto_cmd = true,
-        } end,
+        config = function() require('guess-indent').setup {} end,
       },
       { "aserowy/tmux.nvim" }, -- Make copypaste between tmux and vim work
       { "ellisonleao/gruvbox.nvim" }, -- The theme
@@ -53,10 +50,6 @@ local config = {
     },
     ["neo-tree"] = { -- File explorer
       close_if_last_window = true,
-      window = {
-        position = "right",
-        width = 30,
-      },
     },
   },
 
