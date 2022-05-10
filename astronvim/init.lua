@@ -24,11 +24,6 @@ local config = {
     end,
   },
 
-  -- Disable default plugins
-  enabled = {
-    neoscroll = false,
-  },
-
   -- Configure plugins
   plugins = {
     -- Add plugins, the packer syntax without the "use"
