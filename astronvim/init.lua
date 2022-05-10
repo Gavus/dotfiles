@@ -28,6 +28,7 @@ local config = {
   plugins = {
     -- Add plugins, the packer syntax without the "use"
     init = {
+      ["declancm/cinnamon.nvim"] = { disable = true },
       { "tpope/vim-fugitive" }, -- Git in nvim
       { "nmac427/guess-indent.nvim", -- Guess tabs or whitespace indention
         config = function() require('guess-indent').setup {} end,
