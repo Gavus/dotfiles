@@ -50,6 +50,12 @@ local config = {
     },
     ["neo-tree"] = { -- File explorer
       close_if_last_window = true,
+      window =  {
+        position = "right",
+      },
+    },
+     ["aerial"] = { -- symbols outline
+      default_direction = "prefer_left",
     },
   },
 
