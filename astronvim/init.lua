@@ -33,7 +33,13 @@ local config = {
       { "nmac427/guess-indent.nvim", -- Guess tabs or whitespace indention
         config = function() require('guess-indent').setup {} end,
       },
-      { "aserowy/tmux.nvim" }, -- Make copypaste between tmux and vim work
+      { "aserowy/tmux.nvim", -- merge nvim and tmux.
+        config = function() require("tmux").setup({
+          copy_sync = { enable = true, },
+          -- navigation = { enable_default_keybindings = true }, -- (C-hjkl)
+          resize = { enable_default_keybindings = true }, -- (A-hjkl)
+        }) end,
+      },
       { "ellisonleao/gruvbox.nvim" }, -- The theme
       { "sakhnik/nvim-gdb", -- Gdb wrapper -> :GdbStart *args*
         run = 'bash install.sh',
