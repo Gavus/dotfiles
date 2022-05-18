@@ -1,9 +1,7 @@
 #!/bin/bash -e
 
 if [ -f "/run/.containerenv" ]; then
-	TOOLBOX_NAME="$(cat /run/.containerenv | grep 'name=' | sed -e 's/^name="\(.*\)"$/\1/')"
-elif [ -f "/.dockerenv" ]; then
-	TOOLBOX_NAME="docker-$(cat /etc/os-release | grep 'VERSION=' | sed -e 's/^VERSION="\(.*\)"$/\1/')"
+	TOOLBOX_NAME=$(cat /run/.containerenv | grep -oP "(?<=name=\")[^\";]+")
 else
 	TOOLBOX_NAME="\h"
 fi
