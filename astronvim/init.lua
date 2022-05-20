@@ -36,16 +36,11 @@ local config = {
       { "aserowy/tmux.nvim", -- merge nvim and tmux.
         config = function() require("tmux").setup({
           copy_sync = { enable = true, },
-          -- navigation = { enable_default_keybindings = true }, -- (C-hjkl)
-          resize = { enable_default_keybindings = true }, -- (A-hjkl)
+          navigation = { enable_default_keybindings = false }, -- (C-hjkl)
+          resize = { enable_default_keybindings = false }, -- (A-hjkl)
         }) end,
       },
       { "ellisonleao/gruvbox.nvim" }, -- The theme
-      { "sakhnik/nvim-gdb", -- Gdb wrapper -> :GdbStart *args*
-        run = 'bash install.sh',
-        opt = true,
-        setup = [[vim.cmd('packadd nvim-gdb')]],
-      },
       { "vimwiki/vimwiki", -- Add vimwiki.
         setup = [[vim.cmd('packadd vimwiki')]],
       },
