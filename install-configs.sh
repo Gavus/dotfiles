@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 declare -a symlinks=(\
 	.bashrc \
@@ -8,8 +8,7 @@ declare -a symlinks=(\
 )
 
 for file in "${symlinks[@]}"; do
-	mv ~/$file ~/${file}.bak; true
-	ln -sr $file ~/$file
+	ln -srf $file ~/$file
 done
 
 if test ! -d "~/.tmux/plugins/tpm"; then
