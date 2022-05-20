@@ -1,5 +1,3 @@
-#!/bin/bash -e
-
 alias g="git"
 alias gs="echo 'Did you mean g s?'; g s"
 alias l="ls -lah"

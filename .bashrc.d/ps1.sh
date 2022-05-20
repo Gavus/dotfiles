@@ -1,5 +1,3 @@
-#!/bin/bash -e
-
 if [ -f "/run/.containerenv" ]; then
 	TOOLBOX_NAME=$(cat /run/.containerenv | grep -oP "(?<=name=\")[^\";]+")
 else

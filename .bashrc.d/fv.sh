@@ -1,5 +1,3 @@
-#!/bin/bash -e
-
 fv () {
 	if test "$#" -lt 1; then
 		echo "Searches for a file and opens it with nvim"

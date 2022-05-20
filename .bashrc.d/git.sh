@@ -1,5 +1,3 @@
-#!/bin/bash -e
-
-git-home() {
+function git-home() {
 	basename `git rev-parse --show-toplevel`
 }
