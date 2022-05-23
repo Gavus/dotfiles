@@ -30,7 +30,6 @@ local config = {
     init = {
       ["declancm/cinnamon.nvim"] = { disable = true },
       ["goolord/alpha-nvim"] = { disable = true },
-      { "tpope/vim-fugitive" }, -- Git in nvim
       { "nmac427/guess-indent.nvim", -- Guess tabs or whitespace indention
         config = function() require('guess-indent').setup {} end,
       },
