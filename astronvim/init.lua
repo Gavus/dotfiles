@@ -51,7 +51,7 @@ local config = {
         position = "right",
       },
     },
-     ["aerial"] = { -- symbols outline
+    { "aerial", -- symbols outline
       default_direction = "prefer_left",
     },
   },
