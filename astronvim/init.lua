@@ -2,7 +2,7 @@
 vim.opt.listchars="tab:▷▷,space:⋅,eol:↴"
 vim.opt.list = true
 vim.g.vimwiki_list = {{path = '~/vimwiki', syntax = 'markdown', ext = '.md'}}
-vim.g.vimwiki_key_mappings = { all_maps = 0 }
+vim.g.vimwiki_map_prefix = '<Leader>v'
 
 -- Load gruvbox theme if available
 local colorscheme = "default_theme"
@@ -68,18 +68,7 @@ local config = {
         d = { "<cmd>lua vim.lsp.buf.definition()<CR>", "Definition" },
         D = { "<cmd>lua vim.lsp.buf.declaration()<CR>", "Declaration" },
       },
-      v = {
-        name = "Vimwiki",
-        i = {"<Plug>VimwikiIndex", "Index"},
-        d = {"<Plug>VimwikiDiaryIndex", "Diary index"},
-        t = {"<Plug>VimwikiMakeDiaryNote", "Make diary note"},
-        y = {"<Plug>VimwikiMakeYesterdayDiaryNote", "Make yesterday diary note"},
-        g = {
-          name = "Generate",
-          d = {"<Plug>VimwikiDiaryGenerateLinks", "Update diary section"},
-          i = {"<Plug>VimwikiGenerateLinks", "Generate links"},
-        },
-      },
+      v = { name = "Vimwiki" },
     },
   },
 }
