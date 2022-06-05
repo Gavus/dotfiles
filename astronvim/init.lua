@@ -4,27 +4,7 @@ vim.opt.list = true
 vim.g.vimwiki_list = {{path = '~/vimwiki', syntax = 'markdown', ext = '.md'}}
 vim.g.vimwiki_map_prefix = '<Leader>v'
 
--- Load gruvbox theme if available
-local colorscheme = "default_theme"
-local colorscheme_avail, _ = pcall(require, "gruvbox")
-if colorscheme_avail then
-  colorscheme = "gruvbox"
-end
-
 local config = {
-  colorscheme = colorscheme,
-  default_theme = {
-    diagnostics_style = "none",
-    colors = {
-      fg = "#abb2bf",
-    },
-    highlights = function(highlights)
-      local C = require "default_theme.colors"
-      highlights.Normal = { fg = C.fg, bg = C.bg }
-      return highlights
-    end,
-  },
-
   -- Configure plugins
   plugins = {
     -- Add plugins, the packer syntax without the "use"
