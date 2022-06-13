@@ -1,19 +1,31 @@
--- Various setting.
-vim.opt.listchars="tab:▷▷,space:⋅,eol:↴"
-vim.opt.list = true
-vim.g.vimwiki_list = {{path = '~/vimwiki', syntax = 'markdown', ext = '.md'}}
-vim.g.vimwiki_map_prefix = '<Leader>v'
-
 local config = {
+  -- nvim options
+  options = {
+    opt = {
+      list = true,
+      listchars="tab:▷▷,eol:↴",
+      termguicolors = true,
+      wrap = true,
+    },
+    g = {
+      vimwiki_list = {{path = '~/vimwiki', syntax = 'markdown', ext = '.md'}},
+      vimwiki_map_prefix = '<Leader>v',
+    },
+  },
+
+  -- Default theme configuration.
+  default_theme = {
+    colors = {
+      grey_1 = "#afb2bb", -- Line numbers.
+      grey_2 = "#56b6c2", -- Comments.
+    },
+  },
   -- Configure plugins
   plugins = {
     -- Add plugins, the packer syntax without the "use"
     init = {
-      ["declancm/cinnamon.nvim"] = { disable = true },
-      ["goolord/alpha-nvim"] = { disable = true },
-      { "nmac427/guess-indent.nvim", -- Guess tabs or whitespace indention
-        config = function() require('guess-indent').setup {} end,
-      },
+      ["declancm/cinnamon.nvim"] = { disable = true }, --Disable cursor "animation".
+      ["goolord/alpha-nvim"] = { disable = true }, -- Disable dashboard.
       { "aserowy/tmux.nvim", -- merge nvim and tmux.
         config = function() require("tmux").setup({
           copy_sync = { enable = true, },
