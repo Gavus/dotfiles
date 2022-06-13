@@ -3,9 +3,10 @@ local config = {
   options = {
     opt = {
       list = true,
-      listchars="tab:▷▷,eol:↴",
+      listchars="tab:▷▷",
       termguicolors = true,
       wrap = true,
+      guicursor="a:blinkon10",
     },
     g = {
       vimwiki_list = {{path = '~/vimwiki', syntax = 'markdown', ext = '.md'}},
