@@ -2,6 +2,7 @@ return {
   ["declancm/cinnamon.nvim"] = { disable = true }, --Disable cursor "animation".
   ["goolord/alpha-nvim"] = { disable = true }, -- Disable dashboard.
   ["tpope/vim-fugitive"] = {}, -- Another git plugin.
+  ["ellisonleao/gruvbox.nvim"] = {}, -- Another theme.
   ["aserowy/tmux.nvim"] = { -- merge nvim and tmux.
     config = function() require("tmux").setup({
       copy_sync = { enable = true, },
