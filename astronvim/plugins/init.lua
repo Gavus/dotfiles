@@ -1,6 +1,7 @@
 return {
   ["declancm/cinnamon.nvim"] = { disable = true }, --Disable cursor "animation".
   ["goolord/alpha-nvim"] = { disable = true }, -- Disable dashboard.
+  ["Darazaki/indent-o-matic"] = { disable = true }, -- Disable crappy auto indention.
   ["tpope/vim-fugitive"] = {}, -- Another git plugin.
   ["ellisonleao/gruvbox.nvim"] = {}, -- Another theme.
   ["aserowy/tmux.nvim"] = { -- merge nvim and tmux.
@@ -12,5 +13,9 @@ return {
   },
   ["vimwiki/vimwiki"] = { -- Add vimwiki.
     setup = [[vim.cmd('packadd vimwiki')]],
+  },
+  ['nmac427/guess-indent.nvim'] = {
+    event = "BufReadPost",
+    config = function() require('guess-indent').setup {} end,
   },
 }
