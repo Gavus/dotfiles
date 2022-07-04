@@ -1,3 +1,5 @@
+#!/bin/bash
+
 function host() {
 	if test $(which flatpak-spawn); then
 		flatpak-spawn --host $@

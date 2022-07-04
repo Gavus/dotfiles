@@ -1,3 +1,5 @@
+#!/bin/bash
+
 alias g="git"
 alias gs="echo 'Did you mean g s?'; g s"
 alias l="ls -lah"
@@ -8,5 +10,3 @@ alias tl="toolbox list"
 alias v="nvim"
 alias vi="nvim"
 alias vim="nvim"
-alias vimwiki="vim -c VimwikiIndex"
-alias vw="vim -c VimwikiIndex"

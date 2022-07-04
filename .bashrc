@@ -1,5 +1,3 @@
-# .bashrc
-
 # Source global definitions.
 if test -f /etc/bashrc; then
 	. /etc/bashrc
