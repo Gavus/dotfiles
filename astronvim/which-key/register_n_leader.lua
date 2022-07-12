@@ -7,9 +7,4 @@ return {
     D = { "<cmd>lua vim.lsp.buf.declaration()<CR>", "Declaration" },
   },
   v = { name = "Vimwiki" },
-  j = { name = "Jump in buffer",
-    a = { "<cmd>HopAnywhere<CR>", "Anywhere" },
-    d = {"<cmd>HopAnywhereAC<CR>", "Down" },
-    u = {"<cmd>HopAnywhereBC<CR>", "Up" },
-  },
 }
