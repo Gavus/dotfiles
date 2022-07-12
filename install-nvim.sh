@@ -10,7 +10,7 @@ install-nvim() {
 	
 	mkdir -p $binpath
 	
-	if test -d "$installpath" && test "$force" -eq 0; then
+	if test -d "$installpath"; then
 		echo "nvim $version is already installed"
 		return
 	fi
@@ -23,8 +23,8 @@ install-nvim() {
 		rm $tarfile
 	fi
 	
-	mv $dirname $installpath
-	ln -srf $installpath/bin/* $binpath
+	mv "$dirname" "$installpath"
+	ln -srf "$installpath/bin/"* "$binpath"
 }
 
 install-astrovim() {
@@ -34,7 +34,6 @@ install-astrovim() {
 	ln -srf ./astronvim ~/.config/nvim/lua/user
 	nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
 	nvim --headless -c 'TSInstallSync all' -c q
-	nvim --headless -c 'LspInstall --sync bashls clangd gopls pyright remark_ls sumneko_lua vimls yamlls' -c q
 }
 
 install-dependencies-ubuntu() {
