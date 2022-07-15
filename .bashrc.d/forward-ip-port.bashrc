@@ -6,9 +6,9 @@ function forward-ip-port() {
 		return
 	fi
 
-	ip="$1"
-	srcport="$2"
-	destport="$3"
+	local ip="$1"
+	local srcport="$2"
+	local destport="$3"
 
 	nohup socat tcp-listen:"$destport",reuseaddr,fork tcp:"$ip":"$srcport" > /dev/null 2>&1 &
 	echo "Started nohup socat $ip:$srcport to localhost:$destport. PID $!"

@@ -1,4 +1,4 @@
 #!/bin/bash
 
 export VISUAL=nvim
-export EDITOR="$VISUAL"
+export EDITOR="nvim"
