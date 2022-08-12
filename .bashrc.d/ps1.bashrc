@@ -8,6 +8,7 @@ function _prompt_command() {
 	local green="\e[0;32m"
 	local blue="\e[1;34m"
 	local red="\e[0;31m"
+	local purple="\e[1;35]"
 	local stop_color="\e[m"
 	local hostname="${green}\h${stop_color}"
 	local branch=""
@@ -15,12 +16,16 @@ function _prompt_command() {
 	local workdir="${brown}\w${stop_color}"
 	local newline="\n\$"
 
+	# Getting branch
 	if test "$(git rev-parse --is-inside-work-tree 2>/dev/null)"; then
 		branch=" on ${red}$(git rev-parse --abbrev-ref HEAD)${stop_color}"
 	fi
 
-	if test -f "/run/.containerenv"; then
-		hostname="${green}$(grep -oP "(?<=name=\")[^\";]+" /run/.containerenv)${stop_color}"
+
+	if test -f "/run/.containerenv" || test -f "/.dockerenv"; then
+		user="🐋 ${user}"
+		source /etc/os-release
+		hostname="${green}${ID}-${VERSION_ID}${stop_color}"
 	fi
 
 	if test "$_exit" -eq 0; then
