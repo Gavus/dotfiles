@@ -16,12 +16,6 @@ function _prompt_command() {
 	local workdir="${brown}\w${stop_color}"
 	local newline="\n\$"
 
-	# Getting branch
-	if test "$(git rev-parse --is-inside-work-tree 2>/dev/null)"; then
-		branch=" on ${red}$(git rev-parse --abbrev-ref HEAD)${stop_color}"
-	fi
-
-
 	if test -f "/run/.containerenv" || test -f "/.dockerenv"; then
 		user="🐋 ${user}"
 		source /etc/os-release
@@ -34,5 +28,11 @@ function _prompt_command() {
 	__exit="[${red}${_exit}${stop_color}]"
 	fi
 
-	PS1="${user} at ${hostname} in ${workdir}${branch} ${__exit} ${newline} "
+	PS1="${user} ${hostname} ${workdir}"
+
+	if test "$(git rev-parse --is-inside-work-tree 2>/dev/null)"; then
+		branch="${red}$(git rev-parse --abbrev-ref HEAD)${stop_color}"
+		PS1="${PS1} ${branch}"
+	fi
+	PS1="${PS1} ${__exit} ${newline} "
 }
