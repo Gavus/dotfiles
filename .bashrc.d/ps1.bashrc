@@ -8,7 +8,6 @@ function _prompt_command() {
 	local green="\e[0;32m"
 	local blue="\e[1;34m"
 	local red="\e[0;31m"
-	local purple="\e[1;35]"
 	local stop_color="\e[m"
 	local hostname="${green}\h${stop_color}"
 	local branch=""

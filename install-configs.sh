@@ -1,10 +1,10 @@
 #!/bin/bash -e
 
 echo "Creating syslinks"
-ln -srf .bashrc $HOME/
-ln -srf .bashrc.d $HOME/
-ln -srf .inputrc $HOME/
-ln -srf .tmux.conf $HOME/
+ln -srf .bashrc "$HOME/"
+ln -srf .bashrc.d "$HOME/"
+ln -srf .inputrc "$HOME/"
+ln -srf .tmux.conf "$HOME/"
 
 mkdir -p "$HOME/.local/bin"
 ln -srf "./bin/"* "$HOME/.local/bin/"

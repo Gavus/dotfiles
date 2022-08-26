@@ -1,4 +1,6 @@
 #!/bin/bash
 
 export UID
-export GID="$(id -g)"
+declare GID
+GID="$(id -g)"
+export GID
