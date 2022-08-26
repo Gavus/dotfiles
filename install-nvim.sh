@@ -1,14 +1,14 @@
 #!/bin/bash -e
 
 install-nvim() {
-	version=v0.7.0
+	version=v0.7.2
 	dirname=nvim-linux64
 	installpath=$HOME/.local/$dirname-$version
 	tarfile=$dirname.tar.gz
 	url=https://github.com/neovim/neovim/releases/download/$version/$tarfile
 	binpath=$HOME/.local/bin
 	
-	mkdir -p $binpath
+	mkdir -p "$binpath"
 	
 	if test -d "$installpath"; then
 		echo "nvim $version is already installed"
