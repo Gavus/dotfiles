@@ -3,7 +3,7 @@
 install-nvim() {
 	version=v0.7.2
 	dirname=nvim-linux64
-	installpath=$HOME/.local/$dirname-$version
+	installpath=$HOME/.local/share/$dirname-$version
 	tarfile=$dirname.tar.gz
 	url=https://github.com/neovim/neovim/releases/download/$version/$tarfile
 	binpath=$HOME/.local/bin

@@ -2,7 +2,7 @@
 
 version=v16.16.0
 dirname=node-$version-linux-x64
-installpath=$HOME/.local/$dirname
+installpath=$HOME/.local/share/$dirname
 tarfile=$dirname.tar.xz
 url=https://nodejs.org/dist/$version/$tarfile
 binpath=$HOME/.local/bin
