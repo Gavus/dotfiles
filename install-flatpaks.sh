@@ -1,30 +1,17 @@
 #!/bin/bash -e
 
-echoerr() { echo "$@" 1>&2; }
 
-setup() {
-	echo "Starting setup"
-	if [[ ! -f $(which flatpak) ]]; then
-		echoerr "Flatpak is not found, you have to install it manually!"
-		exit 1
-	else
-		echo "Flatpak is installed."
-	fi
+if test ! $(command -v flatpak); then
+	echo "Flatpak is not found, you have to install it manually!"
+	exit 1
+fi
 
-	flatpak remote-list | grep -q flathub
-	if [ $? -ne 0 ]; then
-		echo "Adding flathub registry"
-		flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo --user
-	else 
-		echo "flathub already included."
-	fi
-	echo "Setup is done."
-}
+if test $(flatpak remote-list | grep -q flathub); then
+	echo "Adding flathub registry"
+	flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo --user
+fi
 
-# Main
-setup
-echo "Installing flatpaks"
-flatpak install flathub \
+flatpak install flathub --user \
 	com.discordapp.Discord \
 	com.microsoft.Teams \
 	com.mojang.Minecraft \
@@ -33,8 +20,9 @@ flatpak install flathub \
 	com.valvesoftware.Steam \
 	com.valvesoftware.Steam.CompatibilityTool.Proton \
 	com.valvesoftware.Steam.Utility.steamtinkerlaunch \
-	flathub org.gimp.GIMP \
 	org.remmina.Remmina \
 	org.telegram.desktop \
+	org.mozilla.firefox \
+	org.freedesktop.Platform.ffmpeg-full \
 	-y
 echo "Done"
