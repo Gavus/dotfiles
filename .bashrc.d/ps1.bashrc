@@ -11,13 +11,13 @@ function _prompt_command() {
 	local purple="\e[1;35m"
 	local cyan="\e[1;36m"
 	local stop_color="\e[m"
-	local user="${purple}\u${stop_color}"
+	local user="\u"
 	local distro=""
-	local hostname="${cyan}\h${stop_color}"
+	local hostname="\h"
 	local branch=""
-	local workdir="${green}\w${stop_color}"
-	local __exit="${red}0${stop_color}"
+	local workdir="\w"
 	local newline="\n\$"
+	local exitcolor="${yellow}"
 	PS1=""
 
 	if test -f "/run/.containerenv" || test -f "/.dockerenv"; then
@@ -25,14 +25,15 @@ function _prompt_command() {
 	fi
 
 	source /etc/os-release
-	distro="${blue}${ID}-${VERSION_ID}${stop_color}"
+	distro="${ID}-${VERSION_ID}"
 	
-	PS1="${PS1}${user} ${distro} ${hostname} ${workdir}"
+	PS1="${PS1}${purple}${user} ${blue}${distro} ${cyan}${hostname} ${green}${workdir}"
 
 	if test "$(git rev-parse --is-inside-work-tree 2>/dev/null)"; then
-		branch="${yellow}$(git rev-parse --abbrev-ref HEAD)${stop_color}"
-		PS1="${PS1} ${branch}"
+		branch="$(git rev-parse --abbrev-ref HEAD)${stop_color}"
+		PS1="${PS1} ${yellow}${branch}"
+		exitcolor="${red}"
 	fi
 
-	PS1="${PS1} ${__exit} ${newline} "
+	PS1="${PS1} ${exitcolor}${_exit} ${stop_color}${newline} "
 }
