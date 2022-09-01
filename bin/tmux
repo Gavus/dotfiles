@@ -1,0 +1,10 @@
+#!/bin/bash
+
+if test -f "/.dockerenv"; then
+	host tmux $@
+elif test -f "/usr/bin/tmux"; then
+	/usr/bin/tmux $@
+else
+	echo "Please install tmux."
+	exit 1
+fi
