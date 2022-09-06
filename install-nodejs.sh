@@ -7,7 +7,7 @@ tarfile=$dirname.tar.xz
 url=https://nodejs.org/dist/$version/$tarfile
 binpath=$HOME/.local/bin
 
-mkdir -p $binpath
+mkdir -p "$binpath"
 
 if test -d "$installpath"; then
 	echo "nodejs $version is already installed"
@@ -20,5 +20,5 @@ if test ! -f ./$tarfile && test ! -d ./$dirname; then
 	rm $tarfile
 fi
 
-mv $dirname $installpath
-ln -srf $installpath/bin/* $binpath
+mv "$dirname" "$installpath"
+ln -srf "$installpath/bin/"* "$binpath"
