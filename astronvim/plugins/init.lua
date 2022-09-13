@@ -1,7 +1,6 @@
 return {
   ["declancm/cinnamon.nvim"] = { disable = true }, --Disable cursor "animation".
   ["goolord/alpha-nvim"] = { disable = true }, -- Disable dashboard.
-  ["Darazaki/indent-o-matic"] = { disable = true }, -- Disable crappy auto indention.
   ["tpope/vim-fugitive"] = {}, -- Another git plugin.
   ["ellisonleao/gruvbox.nvim"] = {}, -- Another theme.
   ["aserowy/tmux.nvim"] = { -- merge nvim and tmux.
