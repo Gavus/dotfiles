@@ -29,7 +29,7 @@ install-nvim() {
 
 install-astrovim() {
 	mkdir -p ~/.config
-	rm -rf ~/.config/nvim ~/.local/nvim ~/.cache/nvim
+	rm -rf ~/.config/nvim ~/.local/nvim ~/.cache/nvim ~/.local/share/nvim
 	git clone https://github.com/kabinspace/AstroNvim ~/.config/nvim
 	ln -srf ./astronvim ~/.config/nvim/lua/user
 	nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
