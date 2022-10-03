@@ -8,6 +8,7 @@ return {
     listchars = "tab:▷▷", -- Show tabs.
     tabstop = 4, -- Tab is the same width as 4 whitespaces.
     shiftwidth = 0, -- Match tabstop instead.
+    colorcolumn = "80",
   },
   g = {
     vimwiki_list = {{path = '~/vimwiki', syntax = 'markdown', ext = '.md'}}, -- Make vimwiki use markdown.
