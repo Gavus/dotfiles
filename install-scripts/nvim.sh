@@ -1,30 +1,13 @@
 #!/bin/bash -e
 
 install-nvim() {
-	version=v0.7.2
-	dirname=nvim-linux64
-	installpath=$HOME/.local/share/$dirname-$version
-	tarfile=$dirname.tar.gz
-	url=https://github.com/neovim/neovim/releases/download/$version/$tarfile
-	binpath=$HOME/.local/bin
-	
+	local version="v0.8.0"
+	local url="https://github.com/neovim/neovim/releases/download/$version/nvim.appimage"
+	local binpath="$HOME/.local/bin"
+
 	mkdir -p "$binpath"
-	
-	if test -d "$installpath"; then
-		echo "nvim $version is already installed"
-		return
-	fi
-	
-	if test ! -d "$dirname"; then
-		if [ ! -f "$tarfile" ]; then
-			wget $url
-		fi
-		tar -xzvf $tarfile
-		rm $tarfile
-	fi
-	
-	mv "$dirname" "$installpath"
-	ln -srf "$installpath/bin/"* "$binpath"
+	wget "$url" -O "$binpath/nvim"
+	chmod a+x "$binpath/nvim"
 }
 
 install-astrovim() {
@@ -33,7 +16,27 @@ install-astrovim() {
 	git clone https://github.com/kabinspace/AstroNvim ~/.config/nvim
 	ln -srf ./astronvim ~/.config/nvim/lua/user
 	nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
+}
+
+install-treesitters() {
 	nvim --headless -c 'TSInstallSync all' -c q
+}
+
+install-mason-packages() {
+	local packages=(\
+		bash-language-server
+		clangd
+		codespell
+		grammarly-languageserver
+		misspell
+		pyright
+		shellcheck
+		sourcery
+	)
+
+	for i in "${!packages[@]}"; do
+	nvim --headless -c "MasonInstall ${packages[i]}" -c "qall"
+	done
 }
 
 install-dependencies-ubuntu() {
@@ -41,5 +44,11 @@ install-dependencies-ubuntu() {
 	pip3 install pynvim
 }
 
-install-nvim
-install-astrovim
+# Only run if executed, not sourced.
+if test "$0" = "${BASH_SOURCE[0]}"; then
+	cd "$(git rev-parse --show-toplevel)"
+	install-nvim
+	install-astrovim
+	install-treesitters
+	install-mason-packages
+fi
