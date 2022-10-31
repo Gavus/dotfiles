@@ -2,12 +2,30 @@
 
 install-nvim() {
 	local version="v0.8.0"
-	local url="https://github.com/neovim/neovim/releases/download/$version/nvim.appimage"
+	local dirname="nvim-linux64"
+	local installpath="$HOME/.local/share/$dirname-$version"
+	local tarfile="$dirname.tar.gz"
+	local url="https://github.com/neovim/neovim/releases/download/$version/$tarfile"
 	local binpath="$HOME/.local/bin"
 
 	mkdir -p "$binpath"
-	wget "$url" -O "$binpath/nvim"
-	chmod a+x "$binpath/nvim"
+
+	if test -d "$installpath"; then
+		echo "nvim $version is already installed"
+		ln -srf "$installpath/bin/"* "$binpath"
+		return
+	fi
+
+	if test ! -d "$dirname"; then
+		if [ ! -f "$tarfile" ]; then
+			wget $url
+		fi
+		tar -xzvf $tarfile
+		rm $tarfile
+	fi
+
+	mv "$dirname" "$installpath"
+	ln -srf "$installpath/bin/"* "$binpath"
 }
 
 install-astrovim() {
