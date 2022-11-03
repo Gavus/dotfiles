@@ -1,3 +1,0 @@
-return {
-  stages = "static",
-}
