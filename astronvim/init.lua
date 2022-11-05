@@ -1,7 +1,6 @@
 local config = {
   updater = {
     channel = "stable", -- "stable" or "nightly"
-    version = "v2.5.*",
     auto_reload = true,
     auto_quit = true,
   },
@@ -16,7 +15,7 @@ local config = {
       colorcolumn = "80",
     },
     g = {
-      vimwiki_list = {{path = '~/vimwiki', syntax = 'markdown', ext = '.md'}}, -- make vimwiki use markdown.
+      vimwiki_list = { { path = '~/vimwiki', syntax = 'markdown', ext = '.md' } }, -- make vimwiki use markdown.
       vimwiki_map_prefix = '<leader>v', -- change vimwiki leader key to space v.
       vimwiki_links_space_char = '-', -- make vimwiki create names with - instead of space.
     },
