@@ -32,6 +32,7 @@ local config = {
   mappings = {
     n = {
       ["<leader>lH"] = { "<cmd>ClangdSwitchSourceHeader<cr>", desc = "Switch Source/Header" },
+      ["<leader>v"] = { "empty", desc = "VimWiki" },
     },
   },
 
