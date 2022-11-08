@@ -43,6 +43,7 @@ local config = {
       { "vimwiki/vimwiki", setup = [[vim.cmd('packadd vimwiki')]], },
       { "aserowy/tmux.nvim" },
     },
+    ["aerial"] = { layout = { default_direction = "prefer_left", }, },
     ["neo-tree"] = { window = { position = "right", }, },
     ["notify"] = { stages = "static", },
     ["smart-splits"] = { tmux_integration = false, },
