@@ -40,9 +40,8 @@ local config = {
     init = {
       ["goolord/alpha-nvim"] = { disable = true }, -- Remove dashboard.
       { "ellisonleao/gruvbox.nvim" },
-      { "ntpeters/vim-better-whitespace" },
       { "vimwiki/vimwiki", setup = [[vim.cmd('packadd vimwiki')]], },
-      { "aserowy/tmux.nvim", config = { copy_sync = { enable = true, }, }, },
+      { "aserowy/tmux.nvim" },
     },
     ["neo-tree"] = { window = { position = "right", }, },
     ["notify"] = { stages = "static", },
