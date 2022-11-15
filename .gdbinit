@@ -31,13 +31,13 @@ python
 import ast
 import io
 import itertools
+import math
 import os
 import re
 import struct
 import traceback
 
 # Common attributes ------------------------------------------------------------
-
 
 class R():
 
@@ -1316,6 +1316,237 @@ A value of 0 uses the whole height.''',
         else:
             self.offset = 0
 
+class Assembly(Dashboard.Module):
+    '''Show the disassembled code surrounding the program counter.
+
+The instructions constituting the current statement are marked, if available.'''
+
+    def __init__(self):
+        self.offset = 0
+        self.cache_key = None
+        self.cache_asm = None
+
+    def label(self):
+        return 'Assembly'
+
+    def lines(self, term_width, term_height, style_changed):
+        # skip if the current thread is not stopped
+        if not gdb.selected_thread().is_stopped():
+            return []
+        # flush the cache if the style is changed
+        if style_changed:
+            self.cache_key = None
+        # prepare the highlighter
+        try:
+            flavor = gdb.parameter('disassembly-flavor')
+        except:
+            flavor = 'att'  # not always defined (see #36)
+        highlighter = Beautifier(flavor, tab_size=None)
+        # fetch the assembly code
+        line_info = None
+        frame = gdb.selected_frame()  # PC is here
+        height = self.height or (term_height - 1)
+        try:
+            # disassemble the current block
+            asm_start, asm_end = self.fetch_function_boundaries()
+            asm = self.fetch_asm(asm_start, asm_end, False, highlighter)
+            # find the location of the PC
+            pc_index = next(index for index, instr in enumerate(asm)
+                            if instr['addr'] == frame.pc())
+            # compute the instruction range
+            start = pc_index - int(height / 2) + self.offset
+            end = start + height
+            # extra at start
+            extra_start = 0
+            if start < 0:
+                extra_start = min(-start, height)
+                start = 0
+            # extra at end
+            extra_end = 0
+            if end > len(asm):
+                extra_end = min(end - len(asm), height)
+                end = len(asm)
+            else:
+                end = max(end, 0)
+            # fetch actual interval
+            asm = asm[start:end]
+            # if there are line information then use it, it may be that
+            # line_info is not None but line_info.last is None
+            line_info = gdb.find_pc_line(frame.pc())
+            line_info = line_info if line_info.last else None
+        except (gdb.error, RuntimeError, StopIteration):
+            # if it is not possible (stripped binary or the PC is not present in
+            # the output of `disassemble` as per issue #31) start from PC
+            try:
+                extra_start = 0
+                extra_end = 0
+                # allow to scroll down nevertheless
+                clamped_offset = min(self.offset, 0)
+                asm = self.fetch_asm(frame.pc(), height - clamped_offset, True, highlighter)
+                asm = asm[-clamped_offset:]
+            except gdb.error as e:
+                msg = '{}'.format(e)
+                return [ansi(msg, R.style_error)]
+        # fetch function start if available (e.g., not with @plt)
+        func_start = None
+        if self.show_function and frame.function():
+            func_start = to_unsigned(frame.function().value())
+        # compute the maximum offset size
+        if asm and func_start:
+            max_offset = max(len(str(abs(asm[0]['addr'] - func_start))),
+                             len(str(abs(asm[-1]['addr'] - func_start))))
+        # return the machine code
+        breakpoints = fetch_breakpoints()
+        max_length = max(instr['length'] for instr in asm) if asm else 0
+        inferior = gdb.selected_inferior()
+        out = []
+        for index, instr in enumerate(asm):
+            addr = instr['addr']
+            length = instr['length']
+            text = instr['asm']
+            addr_str = format_address(addr)
+            if self.show_opcodes:
+                # fetch and format opcode
+                region = inferior.read_memory(addr, length)
+                opcodes = (' '.join('{:02x}'.format(ord(byte)) for byte in region))
+                opcodes += (max_length - len(region)) * 3 * ' ' + '  '
+            else:
+                opcodes = ''
+            # compute the offset if available
+            if self.show_function:
+                if func_start:
+                    offset = '{:+d}'.format(addr - func_start)
+                    offset = offset.ljust(max_offset + 1)  # sign
+                    func_info = '{}{}'.format(frame.function(), offset)
+                else:
+                    func_info = '?'
+            else:
+                func_info = ''
+            format_string = '{}{}{}{}{}{}'
+            indicator = '  '
+            text = ' ' + text
+            if addr == frame.pc():
+                if not R.ansi:
+                    indicator = '> '
+                addr_str = ansi(addr_str, R.style_selected_1)
+                indicator = ansi(indicator, R.style_selected_1)
+                opcodes = ansi(opcodes, R.style_selected_1)
+                func_info = ansi(func_info, R.style_selected_1)
+                if not highlighter.active or self.highlight_line:
+                    text = ansi(text, R.style_selected_1)
+            elif line_info and line_info.pc <= addr < line_info.last:
+                if not R.ansi:
+                    indicator = ': '
+                addr_str = ansi(addr_str, R.style_selected_2)
+                indicator = ansi(indicator, R.style_selected_2)
+                opcodes = ansi(opcodes, R.style_selected_2)
+                func_info = ansi(func_info, R.style_selected_2)
+                if not highlighter.active or self.highlight_line:
+                    text = ansi(text, R.style_selected_2)
+            else:
+                addr_str = ansi(addr_str, R.style_low)
+                func_info = ansi(func_info, R.style_low)
+            # check for breakpoint presence
+            enabled = None
+            for breakpoint in breakpoints:
+                addresses = breakpoint['addresses']
+                is_root_enabled = addresses[0]['enabled']
+                for address in addresses:
+                    if address['address'] == addr:
+                        enabled = enabled or (address['enabled'] and is_root_enabled)
+            if enabled is None:
+                breakpoint = ' '
+            else:
+                breakpoint = ansi('!', R.style_critical) if enabled else ansi('-', R.style_low)
+            out.append(format_string.format(breakpoint, addr_str, indicator, opcodes, func_info, text))
+        # return the output along with scroll indicators
+        if len(out) <= height:
+            extra = [ansi('~', R.style_low)]
+            return extra_start * extra + out + extra_end * extra
+        else:
+            return out
+
+    def commands(self):
+        return {
+            'scroll': {
+                'action': self.scroll,
+                'doc': 'Scroll by relative steps or reset if invoked without argument.'
+            }
+        }
+
+    def attributes(self):
+        return {
+            'height': {
+                'doc': '''Height of the module.
+
+A value of 0 uses the whole height.''',
+                'default': 10,
+                'type': int,
+                'check': check_ge_zero
+            },
+            'opcodes': {
+                'doc': 'Opcodes visibility flag.',
+                'default': False,
+                'name': 'show_opcodes',
+                'type': bool
+            },
+            'function': {
+                'doc': 'Function information visibility flag.',
+                'default': True,
+                'name': 'show_function',
+                'type': bool
+            },
+            'highlight-line': {
+                'doc': 'Decide whether the whole current line should be highlighted.',
+                'default': False,
+                'name': 'highlight_line',
+                'type': bool
+            }
+        }
+
+    def scroll(self, arg):
+        if arg:
+            self.offset += int(arg)
+        else:
+            self.offset = 0
+
+    def fetch_function_boundaries(self):
+        frame = gdb.selected_frame()
+        # parse the output of the disassemble GDB command to find the function
+        # boundaries, this should handle cases in which a function spans
+        # multiple discontinuous blocks
+        disassemble = run('disassemble')
+        for block_start, block_end in re.findall(r'Address range 0x([0-9a-f]+) to 0x([0-9a-f]+):', disassemble):
+            block_start = int(block_start, 16)
+            block_end = int(block_end, 16)
+            if block_start <= frame.pc() < block_end:
+                return block_start, block_end - 1 # need to be inclusive
+        # if function information is available then try to obtain the
+        # boundaries by looking at the superblocks
+        block = frame.block()
+        if frame.function():
+            while block and (not block.function or block.function.name != frame.function().name):
+                block = block.superblock
+            block = block or frame.block()
+        return block.start, block.end - 1
+
+    def fetch_asm(self, start, end_or_count, relative, highlighter):
+        # fetch asm from cache or disassemble
+        if self.cache_key == (start, end_or_count):
+            asm = self.cache_asm
+        else:
+            kwargs = {
+                'start_pc': start,
+                'count' if relative else 'end_pc': end_or_count
+            }
+            asm = gdb.selected_frame().architecture().disassemble(**kwargs)
+            self.cache_key = (start, end_or_count)
+            self.cache_asm = asm
+            # syntax highlight the cached entry
+            for instr in asm:
+                instr['asm'] = highlighter.process(instr['asm'])
+        return asm
+
 class Variables(Dashboard.Module):
     '''Show arguments and locals of the selected frame.'''
 
@@ -1720,6 +1951,125 @@ The length defaults to 16 bytes.''',
         value = gdb.parse_and_eval(expression)
         return to_unsigned(value)
 
+class Registers(Dashboard.Module):
+    '''Show the CPU registers and their values.'''
+
+    def __init__(self):
+        self.table = {}
+
+    def label(self):
+        return 'Registers'
+
+    def lines(self, term_width, term_height, style_changed):
+        # skip if the current thread is not stopped
+        if not gdb.selected_thread().is_stopped():
+            return []
+        # obtain the registers to display
+        if style_changed:
+            self.table = {}
+        if self.register_list:
+            register_list = self.register_list.split()
+        else:
+            register_list = Registers.fetch_register_list()
+        # fetch registers status
+        registers = []
+        for name in register_list:
+            # exclude registers with a dot '.' or parse_and_eval() will fail
+            if '.' in name:
+                continue
+            value = gdb.parse_and_eval('${}'.format(name))
+            string_value = Registers.format_value(value)
+            # exclude unavailable registers (see #255)
+            if string_value == '<unavailable>':
+                continue
+            changed = self.table and (self.table.get(name, '') != string_value)
+            self.table[name] = string_value
+            registers.append((name, string_value, changed))
+        # compute lengths considering an extra space between and around the
+        # entries (hence the +2 and term_width - 1)
+        max_name = max(len(name) for name, _, _ in registers)
+        max_value = max(len(value) for _, value, _ in registers)
+        max_width = max_name + max_value + 2
+        columns = min(int((term_width - 1) / max_width) or 1, len(registers))
+        rows = int(math.ceil(float(len(registers)) / columns))
+        # build the registers matrix
+        if self.column_major:
+            matrix = list(registers[i:i + rows] for i in range(0, len(registers), rows))
+        else:
+            matrix = list(registers[i::columns] for i in range(columns))
+        # compute the lengths column wise
+        max_names_column = list(max(len(name) for name, _, _ in column) for column in matrix)
+        max_values_column = list(max(len(value) for _, value, _ in column) for column in matrix)
+        line_length = sum(max_names_column) + columns + sum(max_values_column)
+        extra = term_width - line_length
+        # compute padding as if there were one more column
+        base_padding = int(extra / (columns + 1))
+        padding_column = [base_padding] * columns
+        # distribute the remainder among columns giving the precedence to
+        # internal padding
+        rest = extra % (columns + 1)
+        while rest:
+            padding_column[rest % columns] += 1
+            rest -= 1
+        # format the registers
+        out = [''] * rows
+        for i, column in enumerate(matrix):
+            max_name = max_names_column[i]
+            max_value = max_values_column[i]
+            for j, (name, value, changed) in enumerate(column):
+                name = ' ' * (max_name - len(name)) + ansi(name, R.style_low)
+                style = R.style_selected_1 if changed else ''
+                value = ansi(value, style) + ' ' * (max_value - len(value))
+                padding = ' ' * padding_column[i]
+                item = '{}{} {}'.format(padding, name, value)
+                out[j] += item
+        return out
+
+    def attributes(self):
+        return {
+            'column-major': {
+                'doc': 'Show registers in columns instead of rows.',
+                'default': False,
+                'name': 'column_major',
+                'type': bool
+            },
+            'list': {
+                'doc': '''String of space-separated register names to display.
+
+The empty list (default) causes to show all the available registers.''',
+                'default': '',
+                'name': 'register_list',
+            }
+        }
+
+    @staticmethod
+    def format_value(value):
+        try:
+            if value.type.code in [gdb.TYPE_CODE_INT, gdb.TYPE_CODE_PTR]:
+                int_value = to_unsigned(value, value.type.sizeof)
+                value_format = '0x{{:0{}x}}'.format(2 * value.type.sizeof)
+                return value_format.format(int_value)
+        except (gdb.error, ValueError):
+            # convert to unsigned but preserve code and flags information
+            pass
+        return str(value)
+
+    @staticmethod
+    def fetch_register_list(*match_groups):
+        names = []
+        for line in run('maintenance print register-groups').split('\n'):
+            fields = line.split()
+            if len(fields) != 7:
+                continue
+            name, _, _, _, _, _, groups = fields
+            if not re.match('\w', name):
+                continue
+            for group in groups.split(','):
+                if group in (match_groups or ('general',)):
+                    names.append(name)
+                    break
+        return names
+
 class Threads(Dashboard.Module):
     '''List the currently available threads.'''
 
@@ -1969,7 +2319,6 @@ end
 
 # Better GDB defaults ----------------------------------------------------------
 
-set history save
 set verbose off
 set print pretty on
 set print array off
@@ -1980,25 +2329,6 @@ define db
     dashboard -layout source stack variables threads
     dashboard source -style height 30
 end
-
-# define hookpost-up
-#     dashboard
-# end
-# define hookpost-down
-#     dashboard
-# end
-# define hookpost-thread
-#     dashboard
-# end
-# define hookpost-delete
-#     dashboard
-# end
-# define hookpost-clear
-#     dashboard
-# end
-# define hookpost-break
-#     dashboard
-# end
 
 # Start ------------------------------------------------------------------------
 
