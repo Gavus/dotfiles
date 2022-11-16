@@ -2326,7 +2326,7 @@ set print array-indexes on
 set python print-stack full
 
 define db
-    dashboard -layout source stack variables threads
+    dashboard -layout source stack threads variables
     dashboard source -style height 30
 end
 
