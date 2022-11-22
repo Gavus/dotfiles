@@ -2,4 +2,4 @@
 *.swp
 .vim
 fonts
-.bashrc.d/work.bashrc
+bashrc.d/work.bashrc

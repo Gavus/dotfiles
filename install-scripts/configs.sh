@@ -3,11 +3,11 @@
 toplevel="$(git rev-parse --show-toplevel)"
 
 echo "Creating syslinks"
-ln -srf "$toplevel/.bashrc" "$HOME/"
-ln -srf "$toplevel/.bashrc.d" "$HOME/"
-ln -srf "$toplevel/.inputrc" "$HOME/"
-ln -srf "$toplevel/.tmux.conf" "$HOME/"
-ln -srf "$toplevel/.gdbinit" "$HOME/"
+ln -srf "$toplevel/bashrc" "$HOME/.bashrc"
+ln -srf "$toplevel/bashrc.d" "$HOME/.bashrc.d"
+ln -srf "$toplevel/inputrc" "$HOME/.inputrc"
+ln -srf "$toplevel/tmux.conf" "$HOME/.tmux.conf"
+ln -srf "$toplevel/gdbinit" "$HOME/.gdbinit"
 
 mkdir -p "$HOME/.local/bin"
 ln -srf "$toplevel/bin/"* "$HOME/.local/bin/"
