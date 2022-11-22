@@ -1,0 +1,9 @@
+#!/bin/bash
+
+port=8000
+if test "$#" -eq 1; then
+  echo port
+  port="$1"
+fi
+
+python3 -m http.server "$port"
