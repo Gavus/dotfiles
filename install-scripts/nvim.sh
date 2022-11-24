@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 install-nvim() {
-	local version="v0.8.0"
+	local version="v0.8.1"
 	local dirname="nvim-linux64"
 	local installpath="$HOME/.local/share/$dirname-$version"
 	local tarfile="$dirname.tar.gz"
