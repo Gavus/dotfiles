@@ -1,5 +1,6 @@
 #!/bin/bash -e
 
+# shellcheck disable=2046
 
 if test ! $(command -v flatpak); then
 	echo "Flatpak is not found, you have to install it manually!"
@@ -20,9 +21,11 @@ flatpak install flathub --user \
 	com.valvesoftware.Steam \
 	com.valvesoftware.Steam.CompatibilityTool.Proton \
 	com.valvesoftware.Steam.Utility.steamtinkerlaunch \
+	org.freedesktop.Platform.ffmpeg-full \
+	org.mozilla.firefox \
 	org.remmina.Remmina \
 	org.telegram.desktop \
-	org.mozilla.firefox \
-	org.freedesktop.Platform.ffmpeg-full \
+	org.videolan.VLC \
 	-y
+
 echo "Done"
