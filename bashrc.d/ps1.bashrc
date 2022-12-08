@@ -1,4 +1,5 @@
 #!/bin/bash
+# shellcheck disable=2016,1091
 
 PROMPT_COMMAND=_prompt_command # Function to generate PS1 after CMDs.
 
@@ -11,29 +12,25 @@ function _prompt_command() {
 	local purple="\e[1;35m"
 	local cyan="\e[1;36m"
 	local stop_color="\e[m"
+	local container=""
 	local user="\u"
 	local distro=""
 	local hostname="\h"
 	local branch=""
 	local workdir="\w"
-	local newline="\n\$"
-	local exitcolor="${yellow}"
+	local newline="\n≻"
 	PS1=""
 
 	if test -f "/run/.containerenv" || test -f "/.dockerenv"; then
-		PS1="${PS1}🐋 "
+		container="🐋 "
 	fi
 
 	source /etc/os-release
 	distro="${ID}-${VERSION_ID}"
-	
-	PS1="${PS1}${purple}${user} ${blue}${distro} ${cyan}${hostname} ${green}${workdir}"
 
-	if test "$(git rev-parse --is-inside-work-tree 2>/dev/null)"; then
-		branch="$(git rev-parse --abbrev-ref HEAD)${stop_color}"
-		PS1="${PS1} ${yellow}${branch}"
-		exitcolor="${red}"
-	fi
+	source "$HOME/.bashrc.d/git-prompt.bashrc"
+	branch='$(__git_ps1 " %s ")'
 
-	PS1="${PS1} ${exitcolor}${_exit} ${stop_color}${newline} "
+	PS1="${container}${purple}${user} ${blue}${distro} ${cyan}${hostname} \
+${green}${workdir} ${yellow}${branch}${red}${_exit}${stop_color}${newline} "
 }
