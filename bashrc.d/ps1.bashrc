@@ -18,7 +18,7 @@ function _prompt_command() {
 	local hostname="\h"
 	local branch=""
 	local workdir="\w"
-	local newline="\n≻"
+	local newline="\n➤ "
 	PS1=""
 
 	if test -f "/run/.containerenv" || test -f "/.dockerenv"; then
@@ -32,5 +32,5 @@ function _prompt_command() {
 	branch='$(__git_ps1 " %s ")'
 
 	PS1="${container}${purple}${user} ${blue}${distro} ${cyan}${hostname} \
-${green}${workdir} ${yellow}${branch}${red}${_exit}${stop_color}${newline} "
+${green}${workdir} ${yellow}${branch}${red}${_exit}${stop_color}${newline}"
 }
