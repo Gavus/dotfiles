@@ -1,5 +1,6 @@
 #!/bin/bash -e
 
+
 install-nvim() {
 	local version="v0.8.1"
 	local dirname="nvim-linux64"
@@ -18,55 +19,62 @@ install-nvim() {
 
 	if test ! -d "$dirname"; then
 		if [ ! -f "$tarfile" ]; then
-			wget $url
+			wget "$url"
 		fi
-		tar -xzvf $tarfile
-		rm $tarfile
+		tar -xzvf "$tarfile"
+		rm "$tarfile"
 	fi
 
 	mv "$dirname" "$installpath"
 	ln -srf "$installpath/bin/"* "$binpath"
 }
 
-install-astrovim() {
-	mkdir -p ~/.config
-	rm -rf ~/.config/nvim ~/.local/nvim ~/.cache/nvim ~/.local/share/nvim
-	git clone https://github.com/kabinspace/AstroNvim ~/.config/nvim
-	ln -srf ./astronvim ~/.config/nvim/lua/user
-	nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
+
+remove-astronvim() {
+	rm -rf "$HOME/.cache/nvim"
+	rm -rf "$HOME/.local/share/nvim"
+	rm -rf "$HOME/.local/site/nvim"
+	rm -rf "$HOME/.config/nvim"
 }
+
+
+install-astronvim() {
+	mkdir -p "$HOME/.config"
+	git clone "https://github.com/kabinspace/AstroNvim" "$HOME/.config/nvim"
+	ln -srf "./astronvim" "$HOME/.config/nvim/lua/user"
+	nvim --headless -c 'autocmd User PackerComplete quitall'
+}
+
 
 install-treesitters() {
 	nvim --headless -c 'TSInstallSync all' -c q
 }
 
+
 install-mason-packages() {
 	local packages=(\
-		bash-language-server
-		clangd
-		codespell
-		grammarly-languageserver
-		misspell
-		pyright
-		shellcheck
-		sourcery
+		"bash-language-server"
+		"clangd"
+		"codespell"
+		"grammarly-languageserver"
+		"misspell"
+		"pyright"
+		"shellcheck"
+		"sourcery"
 	)
 
-	for i in "${!packages[@]}"; do
-	nvim --headless -c "MasonInstall ${packages[i]}" -c "qall"
+	for pkg in "${packages[@]}"; do
+		nvim --headless -c "MasonInstall ${pkg}" -c "qall"
 	done
 }
 
-install-dependencies-ubuntu() {
-	sudo apt install -y python3-pip clangd gcc unzip
-	pip3 install pynvim
-}
 
 # Only run if executed, not sourced.
 if test "$0" = "${BASH_SOURCE[0]}"; then
 	cd "$(git rev-parse --show-toplevel)"
+	remove-astronvim
 	install-nvim
-	install-astrovim
+	install-astronvim
 	install-treesitters
 	install-mason-packages
 fi
