@@ -2325,7 +2325,14 @@ set print array off
 set print array-indexes on
 set python print-stack full
 
+# dashboard shortcut.
 define db
+    dashboard -layout source stack variables
+    dashboard source -style height 30
+end
+
+# dashboard shortcut with threads.
+define db2
     dashboard -layout source stack threads variables
     dashboard source -style height 30
 end
