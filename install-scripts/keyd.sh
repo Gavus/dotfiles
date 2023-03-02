@@ -2,7 +2,7 @@
 
 #Keyd is used to remap capslock into esc when tapped and control when held.
 
-git clone https://github.com/rvaiya/keyd
+git clone https://github.com/rvaiya/keyd -b v2.4.2
 bash -c "cd keyd && make && sudo make install"
 rm -rf keyd 
 sudo systemctl enable keyd
