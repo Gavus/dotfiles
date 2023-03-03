@@ -7,7 +7,6 @@ ln -srf "$toplevel/bashrc" "$HOME/.bashrc"
 ln -srf "$toplevel/bashrc.d" "$HOME/.bashrc.d"
 ln -srf "$toplevel/inputrc" "$HOME/.inputrc"
 ln -srf "$toplevel/tmux.conf" "$HOME/.tmux.conf"
-ln -srf "$toplevel/gdbinit" "$HOME/.gdbinit"
 
 mkdir -p "$HOME/.local/bin"
 ln -srf "$toplevel/bin/"* "$HOME/.local/bin/"
