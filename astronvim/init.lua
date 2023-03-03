@@ -24,7 +24,7 @@ local config = {
   lsp = {
     formatting = { format_on_save = { enabled = false, }, },
     ["server-settings"] = {
-      clangd = { capabilities = { offsetEncoding = 'utf-8' }, },
+      clangd = { capabilities = { offsetEncoding = 'utf-8' }, cmd = { "clangd", "--background-index",},},
       sourcery = { init_options = { token = '' }, },
     },
   },
