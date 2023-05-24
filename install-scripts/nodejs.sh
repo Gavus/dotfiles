@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-version=v16.16.0
+version=v18.16.0
 dirname=node-$version-linux-x64
 installpath=$HOME/.local/share/$dirname
 tarfile=$dirname.tar.xz

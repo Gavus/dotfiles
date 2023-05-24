@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-version=1.18
+version=1.20.4
 installpath=~/.local/share/go${version}
 tarfile=go${version}.linux-amd64.tar.gz
 

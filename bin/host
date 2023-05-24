@@ -10,11 +10,4 @@ if test ! -f "/.dockerenv" && test ! -f "/run/.containerenv"; then
 	exit 1
 fi
 
-if test "$(which flatpak-spawn)"; then
-	flatpak-spawn --host "$@"
-elif test -f "/usr/libexec/flatpak-xdg-utils/flatpak-spawn"; then 
-	/usr/libexec/flatpak-xdg-utils/flatpak-spawn --host "$@"
-else
-	echo "flatpak-xdg-utils not installed."
-	exit 1
-fi
+distrobox-host-exec "$@"

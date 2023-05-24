@@ -1,6 +1,6 @@
 #!/bin/bash
 
-version="0.36.0"
+version="0.38.2"
 installdir="$HOME/.local/bin"
 url="https://github.com/jesseduffield/lazygit/releases/download/v${version}/lazygit_${version}_Linux_32-bit.tar.gz"
 

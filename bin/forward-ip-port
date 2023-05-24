@@ -9,5 +9,5 @@ ip="$1"
 srcport="$2"
 destport="$3"
 
-nohup socat tcp-listen:"$destport",reuseaddr,fork tcp:"$ip":"$srcport" > /dev/null 2>&1 &
-echo "Started nohup socat $ip:$srcport to localhost:$destport. PID $!"
+echo "Starting nohup socat $ip:$srcport to localhost:$destport."
+nohup socat tcp-listen:"$destport",reuseaddr,fork tcp:"$ip":"$srcport"
