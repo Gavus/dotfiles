@@ -1,8 +1,11 @@
 #!/bin/bash
 
+tag="v0.17.2"
 initpath="$HOME/.gdbinit"
+url="https://raw.githubusercontent.com/cyrus-and/gdb-dashboard/$tag/.gdbinit"
+
 rm -f "$initpath"
-wget -P ~ https://git.io/.gdbinit
+wget -P ~ "$url"
 pip install pygments
 
 sed -i '/Better GDB defaults/a \
