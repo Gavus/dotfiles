@@ -3,13 +3,10 @@ $include /etc/inputrc
 set bell-style none
 set colored-stats On
 set completion-ignore-case On
-set completion-ignore-case on
 set completion-prefix-display-length 3
 set mark-symlinked-directories On
 set show-all-if-ambiguous On
-set show-all-if-ambiguous on
 set show-all-if-unmodified On
-set show-all-if-unmodified on
 set visible-stats On
 
 "\e[A": history-search-backward
