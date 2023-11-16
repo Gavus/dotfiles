@@ -4,6 +4,7 @@ alias l="ls -lah"
 alias v="nvim"
 alias vi="nvim"
 alias vim="nvim"
+alias vimhuge="nvim -u NONE"
 
 alias d="distrobox"
 alias de="distrobox enter"
