@@ -19,4 +19,4 @@ end \
 define db2 \
     dashboard -layout source stack threads variables \
     dashboard source -style height 30 \
-end' "$initpath"
+    end' "$initpath"
