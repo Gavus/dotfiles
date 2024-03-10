@@ -7,7 +7,7 @@ fi
 
 # User specific aliases and functions
 if test -d "$HOME/.bashrc.d"; then
-    for rc in "$HOME/.bashrc.d/"*".bashrc"; do
+    for rc in "$HOME/.bashrc.d/"*".sh"; do
         if test -f "$rc"; then
             source "$rc"
         fi
