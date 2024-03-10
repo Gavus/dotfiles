@@ -2,6 +2,14 @@
 
 toplevel="$(git rev-parse --show-toplevel)"
 
+echo "Remove old syslinks"
+rm \
+    "$HOME/.bashrc" \
+    "$HOME/.bashrc.d" \
+    "$HOME/.inputrc" \
+    "$HOME/.tmux.conf" \
+    -f
+
 echo "Creating syslinks"
 ln -srf "$toplevel/bashrc" "$HOME/.bashrc"
 ln -srf "$toplevel/bashrc.d" "$HOME/.bashrc.d"

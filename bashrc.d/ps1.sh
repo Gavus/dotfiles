@@ -28,7 +28,7 @@ function _prompt_command() {
     source /etc/os-release
     distro="${ID}-${VERSION_ID}"
 
-    source "$HOME/.bashrc.d/git-prompt.bashrc"
+    source "$HOME/.bashrc.d/git-prompt.sh"
     branch='$(__git_ps1 " %s ")'
 
     PS1="${container}${purple}${user} ${blue}${distro} ${cyan}${hostname} \
