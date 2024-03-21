@@ -14,8 +14,13 @@
 # This is performed by using tmux send-keys to the shell.
 # This script handles updating $DISPLAY within vim also
 
-NEW_DISPLAY=$DISPLAY
+NEW_DISPLAY="$DISPLAY"
 NEW_XAUTH="$(xauth list "$DISPLAY")"
+
+if [[ -n "$NEW_DISPLAY" || -n "$NEW_XAUTH" ]]; then
+    exit 1
+fi
+
 # NEW_DISPLAY=$(tmux show-env | sed -n 's/^DISPLAY=//p')
 
 # Update $DISPLAY in bash, zsh and vim/nvim
