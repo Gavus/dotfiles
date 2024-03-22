@@ -1,9 +1,13 @@
 #!/bin/bash
 
+# Always enter tmux if possible
+[ "$TMUX" = ""  ] && { tmux attach || exec tmux new-session && exit;}
+
 # Source global definitions.
 if test -f "/etc/bashrc"; then
     source "/etc/bashrc"
 fi
+
 
 # User specific aliases and functions
 if test -d "$HOME/.bashrc.d"; then
