@@ -5,6 +5,7 @@ alias v="nvim"
 alias vi="nvim"
 alias vim="nvim"
 alias vimhuge="nvim -u NONE"
+alias vw="nvim +VimwikiIndex"
 
 alias d="docker"
 alias de="distrobox enter"
