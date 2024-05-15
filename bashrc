@@ -1,4 +1,3 @@
-#!/bin/bash
 # shellcheck disable=1091,1090
 
 # Always enter tmux if possible
@@ -18,10 +17,8 @@ fi
 
 # User specific aliases and functions
 if [[ -d "$HOME/.bashrc.d" ]]; then
-    for rc in "$HOME/.bashrc.d/"*".bashrc"; do
-        if [[ -f "$rc" ]]; then
-            source "$rc"
-        fi
+    for rc in "$HOME/.bashrc.d/"*".bash"; do
+        source "$rc"
     done
     unset rc
 fi

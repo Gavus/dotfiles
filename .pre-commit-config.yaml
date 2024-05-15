@@ -8,4 +8,4 @@ repos:
     rev: v6.2.1
     hooks:
     - id: beautysh
-      exclude: git-prompt.bashrc
+      exclude: git-prompt.bash

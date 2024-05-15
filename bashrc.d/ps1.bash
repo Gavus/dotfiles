@@ -1,4 +1,3 @@
-#!/bin/bash
 # shellcheck disable=2016,1091
 
 PROMPT_COMMAND=_prompt_command # Function to generate PS1 after CMDs.
@@ -28,7 +27,7 @@ function _prompt_command() {
     source /etc/os-release
     distro="${ID}-${VERSION_ID}"
 
-    source "$HOME/.bashrc.d/git-prompt.bashrc"
+    source "$HOME/.bashrc.d/git-prompt.bash"
     branch='$(__git_ps1 " %s ")'
 
     PS1="${container}${purple}${user} ${blue}${distro} ${cyan}${hostname} \
