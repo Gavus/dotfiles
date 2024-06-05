@@ -14,6 +14,7 @@ function _prompt_command() {
     local container=""
     local user="\u"
     local distro=""
+    local container_id=""
     local hostname="\h"
     local branch=""
     local workdir="\w"
@@ -22,6 +23,7 @@ function _prompt_command() {
 
     if test -f "/run/.containerenv" || test -f "/.dockerenv"; then
         container="🐋 "
+        container_id=" ${CONTAINER_ID}"
     fi
 
     source /etc/os-release
@@ -30,6 +32,7 @@ function _prompt_command() {
     source "$HOME/.bashrc.d/git-prompt.bash"
     branch='$(__git_ps1 " %s ")'
 
-    PS1="${container}${purple}${user} ${blue}${distro} ${cyan}${hostname} \
-${green}${workdir} ${yellow}${branch}${red}${_exit}${stop_color}${newline}"
+    PS1="${container}${purple}${user}@${hostname}${blue}${container_id} \
+${cyan}${distro} ${green}${workdir} ${yellow}${branch}${red}${_exit} \
+${stop_color}${newline}"
 }
