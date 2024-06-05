@@ -1,7 +1,8 @@
 #!/bin/bash
 
 if test "$#" -lt 3; then
-    echo "help: $0  ip src-port dest-port"
+    echo "help: $0 ip src-port dest-port"
+    echo "If you wanna forward port 80 or 443: sudo setcap CAP_NET_BIND=+eip /usr/bin/socat"
     exit 1
 fi
 
