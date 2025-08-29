@@ -1,13 +1,12 @@
 #!/bin/bash
 
-if test "${#}" -lt 1; then
-    echo "$0 <command to execute outside of container>."
+if [ "${#}" -lt 1 ]; then
+    >&2 echo "$0 <command to execute outside of container>."
     exit 1
 fi
 
-if test ! -f "/.dockerenv" && test ! -f "/run/.containerenv"; then
-    echo "$0 must be executed in a container."
-    exit 1
+if [ ! -f "/.dockerenv" ] && [ ! -f "/run/.containerenv" ]; then
+    bash -c "source $HOME/.bashrc && $*"
+else
+    distrobox-host-exec bash -c "source $HOME/.bashrc && ${*}"
 fi
-
-distrobox-host-exec bash -c "source $HOME/.bashrc && $*"
