@@ -2,16 +2,16 @@
 
 toplevel="$(git rev-parse --show-toplevel)"
 
-echo "Creating syslinks"
-ln -srf "$toplevel/bashrc" "$HOME/.bashrc"
-ln -srf "$toplevel/bashrc.d" "$HOME/.bashrc.d"
-ln -srf "$toplevel/inputrc" "$HOME/.inputrc"
-ln -srf "$toplevel/tmux.conf" "$HOME/.tmux.conf"
+mkdir -p "$HOME/.bashrc.d"
+cp -f "$toplevel/bashrc" "$HOME/.bashrc"
+cp -f "$toplevel/bashrc.d/"* "$HOME/.bashrc.d/"
+cp -f "$toplevel/inputrc" "$HOME/.inputrc"
+cp -f "$toplevel/tmux.conf" "$HOME/.tmux.conf"
 
 mkdir -p "$HOME/.local/bin"
-ln -srf "$toplevel/bin/"* "$HOME/.local/bin/"
+cp -f --remove-destination "$toplevel/bin/"* "$HOME/.local/bin/"
 
-if test ! -d "$HOME/.tmux/plugins/tpm"; then
+if [[ ! -d "$HOME/.tmux/plugins/tpm" ]]; then
     echo "Cloning tmux plugin manager"
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 fi
