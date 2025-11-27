@@ -2,13 +2,13 @@
 
 # Source global definitions.
 if [[ -f "/etc/bashrc" ]]; then
-    source "/etc/bashrc"
+  source "/etc/bashrc"
 fi
 
-# User specific aliases and functions
-if [[ -d "$HOME/.bashrc.d" ]]; then
-    for rc in "$HOME/.bashrc.d/"*".bash"; do
-        source "$rc"
-    done
-    unset rc
+if [[ -n "$PS1" ]]; then
+  mapfile -t sourcefiles < <(find ~/.bashrc.d/ -not -type d -exec realpath {} \;)
+  for rc in "${sourcefiles[@]}"; do
+    source "$rc"
+  done
+  unset rc
 fi
