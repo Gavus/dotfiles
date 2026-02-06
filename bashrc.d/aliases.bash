@@ -14,3 +14,4 @@ alias pc="podman-compose"
 
 alias g="git"
 alias gs="echo 'Did you mean g s?'; g s"
+alias copilot="nvim +CopilotChat +only"
