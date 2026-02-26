@@ -1,0 +1,11 @@
+{
+  "github.copilot.nextEditSuggestions.enabled": true,
+  "python.analysis.diagnosticSeverityOverrides": {
+
+  },
+  "extensions.experimental.affinity": {
+    "asvetliakov.vscode-neovim": 1
+  },
+  "vscode-neovim.neovimExecutablePaths.linux": "nvim",
+  "chat.viewSessions.orientation": "stacked",
+}

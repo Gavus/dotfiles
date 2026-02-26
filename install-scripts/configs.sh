@@ -5,6 +5,7 @@ bashdir="$HOME/.bashrc.d"
 bindir="$HOME/.local/bin"
 tpmdir="$HOME/.tmux/plugins/tpm"
 tpmurl="https://github.com/tmux-plugins/tpm"
+vscodedir="$HOME/.config/Code/User"
 
 # Remove symlink if any.
 if [[ -L "$bashdir" ]]; then
@@ -24,6 +25,10 @@ if [[ ! -d "$tpmdir" ]]; then
     mkdir -p "$(dirname "$tpmdir")"
     echo "Cloning tmux plugin manager"
     git clone "$tpmurl" --depth=1 "$tpmdir"
+fi
+
+if [[ -d "$vscodedir" ]]; then
+    cp --remove-destination "$toplevel/vscode/"* "$vscodedir"
 fi
 
 echo "Done"
