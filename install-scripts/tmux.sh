@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-version="3.2a"
+version="3.5a"
 url="https://github.com/nelsonenzo/tmux-appimage/releases/download/$version/tmux.appimage"
 install_path="$HOME/.local/bin"
 
