@@ -30,7 +30,7 @@ PS1_MACHINE=""
 PS1_NEWLINE="\n➤ "
 
 if [[ -f "/run/.containerenv" || -f "/.dockerenv" ]]; then
-    PS1_CONTAINER="🐋 "
+    PS1_CONTAINER=" "
     PS1_CONTAINER_ID=" ${CONTAINER_ID}"
 fi
 
