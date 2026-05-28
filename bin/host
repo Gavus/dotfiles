@@ -5,8 +5,15 @@ if [ "${#}" -lt 1 ]; then
     exit 1
 fi
 
+printf -v host_command '%q ' "$@"
+host_env=()
+
+while IFS='=' read -r -d '' name value; do
+    host_env+=("${name}=${value}")
+done < <(env -0)
+
 if [ ! -f "/.dockerenv" ] && [ ! -f "/run/.containerenv" ]; then
-    bash -c "source $HOME/.bashrc && $*"
+    env "${host_env[@]}" bash -lc "${host_command}"
 else
-    distrobox-host-exec bash -c "source $HOME/.bashrc && ${*}"
+    distrobox-host-exec env "${host_env[@]}" bash -lc "${host_command}"
 fi
