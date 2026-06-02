@@ -13,13 +13,13 @@ if [[ -L "$bashdir" ]]; then
 fi
 
 mkdir -p "$bashdir"
-cp --remove-destination "$toplevel/bashrc" "$HOME/.bashrc"
-cp --remove-destination "$toplevel/bashrc.d/"* "$bashdir"
-cp --remove-destination "$toplevel/inputrc" "$HOME/.inputrc"
-cp --remove-destination "$toplevel/tmux.conf" "$HOME/.tmux.conf"
+ln -srf "$toplevel/bashrc" "$HOME/.bashrc"
+ln -srf "$toplevel/bashrc.d/"* "$bashdir/"
+ln -srf "$toplevel/inputrc" "$HOME/.inputrc"
+ln -srf "$toplevel/tmux.conf" "$HOME/.tmux.conf"
 
 mkdir -p "$bindir"
-cp --remove-destination "$toplevel/bin/"* "$bindir"
+ln -srf "$toplevel/bin/"* "$bindir/"
 
 if [[ ! -d "$tpmdir" ]]; then
     mkdir -p "$(dirname "$tpmdir")"
