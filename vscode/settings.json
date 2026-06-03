@@ -6,5 +6,8 @@
   },
   "vscode-neovim.neovimExecutablePaths.linux": "nvim",
   "chat.viewSessions.orientation": "stacked",
-  "terminal.integrated.defaultProfile.linux": "bash"
+  "terminal.integrated.defaultProfile.linux": "bash",
+  "workbench.startupEditor": "none",
+  "workbench.colorTheme": "Alt Catppuccin Latte",
+  "editor.minimap.enabled": false
 }

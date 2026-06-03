@@ -28,7 +28,7 @@ if [[ ! -d "$tpmdir" ]]; then
 fi
 
 if [[ -d "$vscodedir" ]]; then
-    cp --remove-destination "$toplevel/vscode/"* "$vscodedir"
+    ln -srf "$toplevel/vscode/"* "$vscodedir"
 fi
 
 echo "Done"
