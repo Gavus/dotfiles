@@ -1,0 +1,47 @@
+#!/bin/bash
+
+set -euo pipefail
+
+if [[ "${#}" -gt 1 ]]; then
+    echo "usage: $0 [session-target]" >&2
+    exit 1
+fi
+
+session_target="${1:-$(tmux display-message -p '#{session_id}' 2>/dev/null || true)}"
+if [[ -z "$session_target" ]]; then
+    echo "failed to resolve tmux session target" >&2
+    exit 1
+fi
+vars=(DISPLAY WAYLAND_DISPLAY XAUTHORITY DBUS_SESSION_BUS_ADDRESS XDG_RUNTIME_DIR SSH_AUTH_SOCK)
+pane_command=""
+
+for var_name in "${vars[@]}"; do
+    entry="$(tmux show-environment -g "$var_name" 2>/dev/null || true)"
+
+    if [[ "$entry" == "-$var_name" ]]; then
+        pane_command+="unset $var_name; "
+        continue
+    fi
+
+    if [[ "$entry" == "$var_name="* ]]; then
+        value="${entry#*=}"
+        printf -v escaped_value '%q' "$value"
+        pane_command+="export $var_name=$escaped_value; "
+    fi
+done
+
+if [[ -z "$pane_command" ]]; then
+    exit 0
+fi
+
+# Push current tmux session env into interactive shell panes.
+tmux list-panes -t "$session_target" -F "#{pane_id} #{pane_current_command} #{pane_in_mode}" |
+    while read -r pane_id pane_cmd pane_in_mode; do
+        case "$pane_cmd" in
+        bash | zsh | sh)
+            if [[ "$pane_in_mode" == "0" ]]; then
+                tmux send-keys -t "$pane_id" "$pane_command" C-m || true
+            fi
+            ;;
+        esac
+    done
