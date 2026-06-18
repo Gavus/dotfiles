@@ -9,5 +9,8 @@
   "terminal.integrated.defaultProfile.linux": "bash",
   "workbench.startupEditor": "none",
   "workbench.colorTheme": "Alt Catppuccin Latte",
-  "editor.minimap.enabled": false
+  "axos.baseDirectory": "/mnt/build",
+  "axos.copilotIntegration": false,
+  "editor.minimap.enabled": false,
+  "update.showReleaseNotes": false
 }
