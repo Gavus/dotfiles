@@ -1,0 +1,229 @@
+#!/usr/bin/env python3
+"""A small password-authenticated SFTP server.
+
+Install the only dependency with:
+    python -m pip install paramiko
+
+Example:
+    python sftp_server.py --username alice --password change-me --root ./uploads
+
+Then connect with:
+    sftp -P 2222 alice@127.0.0.1
+"""
+
+import argparse
+import errno
+import logging
+import os
+import socket
+import threading
+import time
+from pathlib import Path
+
+import paramiko
+
+LOG = logging.getLogger("sftp_server")
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description="Run a simple SFTP server.",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
+    parser.add_argument(
+        "--host", default="127.0.0.1", help="Address to bind (default: %(default)s)"
+    )
+    parser.add_argument(
+        "--port", type=int, default=2222, help="TCP port to bind (default: %(default)s)"
+    )
+    parser.add_argument("--username", help="SFTP username", default="user")
+    parser.add_argument("--password", help="SFTP password", default="pass")
+    parser.add_argument(
+        "--root",
+        type=Path,
+        default=Path(os.getenv("PWD", ".")),
+        help="Directory exposed through SFTP (default: %(default)s)",
+    )
+    parser.add_argument(
+        "--host-key",
+        type=Path,
+        default=Path("./sftp_host_key"),
+        help="Private host-key path; generated when absent (default: %(default)s)",
+    )
+    return parser.parse_args()
+
+
+def load_or_create_host_key(path: Path) -> paramiko.RSAKey:
+    if path.exists():
+        return paramiko.RSAKey.from_private_key_file(str(path))
+
+    key = paramiko.RSAKey.generate(2048)
+    key.write_private_key_file(str(path))
+    os.chmod(path, 0o600)
+    LOG.warning(
+        "Generated host key at %s; preserve it so clients can verify this server.", path
+    )
+    # Print key sha256 fingerprint for convenience.
+    LOG.info(f"Host key sha256 base65 {key.get_base64()}")
+    return key
+
+
+class PasswordServer(paramiko.ServerInterface):
+    def __init__(self, username: str, password: str) -> None:
+        self.username = username
+        self.password = password
+
+    def check_auth_password(self, username: str, password: str) -> int:
+        if username == self.username and password == self.password:
+            return paramiko.AUTH_SUCCESSFUL
+        return paramiko.AUTH_FAILED
+
+    def get_allowed_auths(self, username: str) -> str:
+        return "password"
+
+    def check_channel_request(self, kind: str, chanid: int) -> int:
+        if kind == "session":
+            return paramiko.OPEN_SUCCEEDED
+        return paramiko.OPEN_FAILED_ADMINISTRATIVELY_PROHIBITED
+
+
+class RootedSFTPServer(paramiko.SFTPServerInterface):
+    def __init__(self, server: paramiko.ServerInterface, root: Path) -> None:
+        super().__init__(server)
+        self.root = root.resolve()
+
+    def local_path(self, remote_path: str) -> Path:
+        # Paths from Paramiko are POSIX-like and may begin with "/".
+        candidate = (self.root / remote_path.lstrip("/")).resolve(strict=False)
+        try:
+            candidate.relative_to(self.root)
+        except ValueError:
+            raise OSError(errno.EACCES, "Path escapes SFTP root")
+        return candidate
+
+    @staticmethod
+    def sftp_error(error: OSError) -> int:
+        return paramiko.SFTPServer.convert_errno(error.errno or errno.EIO)
+
+    def list_folder(self, path: str):
+        try:
+            entries = []
+            for entry in self.local_path(path).iterdir():
+                attributes = paramiko.SFTPAttributes.from_stat(entry.stat())
+                attributes.filename = entry.name
+                entries.append(attributes)
+            return entries
+        except OSError as error:
+            return self.sftp_error(error)
+
+    def stat(self, path: str):
+        try:
+            return paramiko.SFTPAttributes.from_stat(self.local_path(path).stat())
+        except OSError as error:
+            return self.sftp_error(error)
+
+    def lstat(self, path: str):
+        try:
+            return paramiko.SFTPAttributes.from_stat(self.local_path(path).lstat())
+        except OSError as error:
+            return self.sftp_error(error)
+
+    def open(self, path: str, flags: int, attr: paramiko.SFTPAttributes):
+        try:
+            fd = os.open(self.local_path(path), flags, attr.st_mode or 0o666)
+            mode = (
+                "r+b" if flags & os.O_RDWR else ("wb" if flags & os.O_WRONLY else "rb")
+            )
+            handle = paramiko.SFTPHandle(flags)
+            file_obj = os.fdopen(fd, mode)
+            if flags & os.O_WRONLY:
+                handle.writefile = file_obj
+            else:
+                handle.readfile = file_obj
+            return handle
+        except OSError as error:
+            return self.sftp_error(error)
+
+    def remove(self, path: str) -> int:
+        try:
+            self.local_path(path).unlink()
+            return paramiko.SFTP_OK
+        except OSError as error:
+            return self.sftp_error(error)
+
+    def mkdir(self, path: str, attr: paramiko.SFTPAttributes) -> int:
+        try:
+            self.local_path(path).mkdir(mode=attr.st_mode or 0o777)
+            return paramiko.SFTP_OK
+        except OSError as error:
+            return self.sftp_error(error)
+
+    def rmdir(self, path: str) -> int:
+        try:
+            self.local_path(path).rmdir()
+            return paramiko.SFTP_OK
+        except OSError as error:
+            return self.sftp_error(error)
+
+    def rename(self, oldpath: str, newpath: str) -> int:
+        try:
+            self.local_path(oldpath).rename(self.local_path(newpath))
+            return paramiko.SFTP_OK
+        except OSError as error:
+            return self.sftp_error(error)
+
+
+def handle_client(
+    client: socket.socket,
+    address: tuple[str, int],
+    host_key: paramiko.RSAKey,
+    args: argparse.Namespace,
+) -> None:
+    transport = paramiko.Transport(client)
+    transport.add_server_key(host_key)
+    transport.set_subsystem_handler(
+        "sftp", paramiko.SFTPServer, RootedSFTPServer, args.root
+    )
+    try:
+        transport.start_server(server=PasswordServer(args.username, args.password))
+        channel = transport.accept(timeout=30)
+        if channel is None:
+            LOG.warning("Timed out waiting for an SSH channel from %s", address[0])
+            return
+        while transport.is_active():
+            time.sleep(0.25)
+    except (OSError, paramiko.SSHException) as error:
+        LOG.warning("Connection from %s failed: %s", address[0], error)
+    finally:
+        transport.close()
+
+
+def main() -> None:
+    args = parse_args()
+    if not 1 <= args.port <= 65535:
+        raise SystemExit("--port must be between 1 and 65535")
+
+    args.root.mkdir(parents=True, exist_ok=True)
+    args.root = args.root.resolve()
+    host_key = load_or_create_host_key(args.host_key)
+
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as listener:
+        listener.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        listener.bind((args.host, args.port))
+        listener.listen(100)
+        LOG.info("Serving %s on sftp://%s:%d", args.root, args.host, args.port)
+        try:
+            while True:
+                client, address = listener.accept()
+                threading.Thread(
+                    target=handle_client,
+                    args=(client, address, host_key, args),
+                    daemon=True,
+                ).start()
+        except KeyboardInterrupt:
+            LOG.info("Stopping SFTP server.")
+
+
+if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
+    main()
