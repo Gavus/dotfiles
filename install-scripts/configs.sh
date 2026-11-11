@@ -15,6 +15,7 @@ ln -srf "$toplevel/bashrc" "$HOME/.bashrc"
 ln -srf "$toplevel/bashrc.d/"* "$bashdir/"
 ln -srf "$toplevel/inputrc" "$HOME/.inputrc"
 ln -srf "$toplevel/zellij.kdl" "$HOME/.config/zellij/config.kdl"
+ln -srf "$toplevel/kitty" "$HOME/.config/kitty"
 
 mkdir -p "$bindir"
 ln -srf "$toplevel/bin/"* "$bindir/"
