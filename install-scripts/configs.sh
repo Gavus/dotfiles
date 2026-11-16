@@ -3,7 +3,6 @@
 toplevel="$(git rev-parse --show-toplevel)"
 bashdir="$HOME/.bashrc.d"
 bindir="$HOME/.local/bin"
-vscodedir="$HOME/.config/Code/User"
 
 # Remove symlink if any.
 if [[ -L "$bashdir" ]]; then
@@ -19,9 +18,5 @@ ln -srf "$toplevel/kitty" "$HOME/.config/kitty"
 
 mkdir -p "$bindir"
 ln -srf "$toplevel/bin/"* "$bindir/"
-
-if [[ -d "$vscodedir" ]]; then
-    ln -srf "$toplevel/vscode/"* "$vscodedir"
-fi
 
 echo "Done"
